@@ -78,8 +78,14 @@
         { o: 'cam', x: 86, y: 14, w: 180, rot: 6, m: { x: 62, y: 90, w: 32 } }
       ],
       words: [
-        { t: "NOBODY'S POSTING SHIT", x: 44, y: 22, m: { x: 6, y: 94 } },
-        { t: '35MM',                  x: 78, y: 50, c: 'dim' }
+        { t: 'Phones get confiscated at the door,',    x: 58.3, y: 3.4,  c: 'say' },
+        { t: "you'll live.",                            x: 82.0, y: 9.4,  c: 'say' },
+        { t: 'No you cannot check it real quick,',      x: 19.2, y: 40.1, c: 'say' },
+        { t: 'PUT THE FUCKING PHONE IN THE BOX.',       x: 40.5, y: 43.6, c: 'say' },
+        { t: 'Everybody shoots film and disposables,',  x: 22.8, y: 54.7, c: 'say' },
+        { t: 'pictures turn up here a week later,',     x: 73.7, y: 67.6, c: 'say' },
+        { t: "no I'm not putting them on Instagram.",   x: 7.4,  y: 80.4, c: 'say' },
+        { t: '35MM',                                    x: 90.0, y: 52.0, c: 'dim' }
       ]
     },
 
@@ -97,7 +103,11 @@
         { o: 'disp', x: 50, y: 50, w: 172, rot: -10, m: { x: 62, y: 90, w: 31 } }
       ],
       words: [
-        { t: 'SHOOT YOUR SHOT', x: 54, y: 20, m: { x: 8, y: 94 } }
+        { t: 'It rained on Volume One',                 x: 80.8, y: 3.2,  c: 'say' },
+        { t: 'and we did it anyway.',                   x: 80.8, y: 26.8, c: 'say' },
+        { t: '7 rolls, 16 frames I liked enough to post.', x: 72.5, y: 39.4, c: 'say' },
+        { t: 'Volume Two is September 25,',             x: 72.5, y: 66.2, c: 'say' },
+        { t: 'RSVP by the 20th.',                       x: 50.0, y: 76.3, c: 'say' }
       ]
     }
   };
