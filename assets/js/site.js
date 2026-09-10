@@ -26,6 +26,7 @@
      shape: 'sq' for tight portraits, 'wide' for 3:2 frames.
      -------------------------------------------------------- */
   var PRINTS = [
+    { kind: 'title', shape: 'sq', alt: 'Going Analog' },
     { f: 'R7-000A', shape: 'sq',   alt: 'A man laughing behind a disposable camera raised to his eye' },
     { f: 'R5-012A', shape: 'sq',   alt: 'A woman tilting her head back to shoot a point-and-shoot camera' },
     { f: 'R4-009A', shape: 'sq',   alt: 'Close portrait of a man in a white shirt grinning under flash' },
@@ -158,11 +159,19 @@
       fig.style.setProperty('--rot', rot.toFixed(2) + 'deg');
       var win = document.createElement('div');
       win.className = 'print__win';
-      var img = document.createElement('img');
-      img.alt = p.alt;
-      img.decoding = 'async';
-      img.dataset.src = 'photos/' + p.f + '.jpg';
-      win.appendChild(img);
+      if (p.kind === 'title') {
+        win.className += ' print__win--title';
+        var ttl = document.createElement('span');
+        ttl.className = 'print__title';
+        ttl.textContent = 'GOING ANALOG';
+        win.appendChild(ttl);
+      } else {
+        var img = document.createElement('img');
+        img.alt = p.alt;
+        img.decoding = 'async';
+        img.dataset.src = 'photos/' + p.f + '.jpg';
+        win.appendChild(img);
+      }
       var lip = document.createElement('div');
       lip.className = 'print__lip';
       fig.appendChild(win); fig.appendChild(lip);
@@ -174,7 +183,7 @@
     function preload() {
       for (var k = 0; k < 5 && k < order.length; k++) {
         var img = els[order[k]].querySelector('img');
-        if (img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
+        if (img && img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
       }
     }
 
@@ -187,13 +196,20 @@
         el.style.visibility = pos < 9 ? 'visible' : 'hidden';
       });
       var p = PRINTS[order[0]];
-      var roll = p.f.slice(1, 2), frame = p.f.slice(3);
-      var n = String(order.length ? (PRINTS.indexOf(p) + 1) : 0);
-      cap.textContent =
-        (n.length < 2 ? '0' + n : n) + ' ROLL ' + roll + ', FRAME ' + frame + '\n' +
-        'JOB: ' + JOB + ', SCANNED: ' + SCANNED + '\n' +
-        'DIMENSIONS: ' + DIMS;
-      count.textContent = (n.length < 2 ? '0' + n : n) + ' / ' + PRINTS.length;
+      var shots = PRINTS.length - 1;
+      var pad = function (v) { v = String(v); return v.length < 2 ? '0' + v : v; };
+      var n;
+      if (p.kind === 'title') {
+        n = '00';
+        cap.textContent = '00 GOING ANALOG\nGO.A807, 08.08.2026\n7 ROLLS, ' + shots + ' FRAMES KEPT';
+      } else {
+        n = pad(PRINTS.indexOf(p));
+        cap.textContent =
+          n + ' ROLL ' + p.f.slice(1, 2) + ', FRAME ' + p.f.slice(3) + '\n' +
+          'JOB: ' + JOB + ', SCANNED: ' + SCANNED + '\n' +
+          'DIMENSIONS: ' + DIMS;
+      }
+      count.textContent = n + ' / ' + pad(shots);
       preload();
     }
 
