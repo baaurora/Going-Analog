@@ -1,0 +1,447 @@
+<title>GOING ANALOG - Brand Assessment + Asset Brief</title>
+<style>
+:root{
+  --paper:#FFFFFF; --ink:#000000; --grey:#6E6E6A; --rule:#CFCEC8;
+  --wash:#F1F0EB; --live:#E8290B; --band:#000000; --bandink:#FFFFFF;
+  --shadow:rgba(0,0,0,.16);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0A0A; --ink:#F4F3EF; --grey:#8C8C86; --rule:#2E2E2C;
+    --wash:#161615; --live:#FF4F30; --band:#F4F3EF; --bandink:#0A0A0A;
+    --shadow:rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0A0A0A; --ink:#F4F3EF; --grey:#8C8C86; --rule:#2E2E2C;
+  --wash:#161615; --live:#FF4F30; --band:#F4F3EF; --bandink:#0A0A0A;
+  --shadow:rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Helvetica Neue",Helvetica,"Neue Haas Grotesk Text",Arial,sans-serif;
+  font-size:15px; line-height:1.5; letter-spacing:.005em;
+  font-variant-numeric:tabular-nums;
+}
+.dsp{
+  font-family:"DIN Condensed","DIN Alternate","Oswald","Archivo Narrow","Arial Narrow",Haettenschweiler,sans-serif;
+  text-transform:uppercase; font-weight:700;
+}
+
+/* ---- full-bleed film cards ---- */
+.card{background:var(--band); color:var(--bandink); padding:76px 24px; text-align:center}
+.card + .card{border-top:1px solid color-mix(in srgb, var(--bandink) 18%, transparent)}
+.card .tag{font-size:clamp(12px,2.1vw,19px); letter-spacing:.055em; font-weight:500; line-height:1.35; max-width:44ch; margin:0 auto}
+.card .mark{font-size:clamp(46px,10vw,110px); letter-spacing:-.005em; line-height:.9; margin:0}
+.card .cap{font-size:10px; letter-spacing:.22em; margin:22px 0 0; opacity:.42}
+.roll{display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:clamp(16px,4vw,46px)}
+.roll .old{font-size:clamp(24px,4.4vw,46px); line-height:.9; opacity:.3}
+.roll .arw{font-size:clamp(20px,3.4vw,34px); line-height:.9; opacity:.3}
+.roll .now{font-size:clamp(40px,8.4vw,92px); line-height:.9; letter-spacing:-.005em}
+
+/* ---- page shell ---- */
+.wrap{max-width:1140px; margin:0 auto; padding:0 28px}
+.mast{display:flex; flex-wrap:wrap; gap:28px 56px; justify-content:space-between;
+  align-items:flex-end; padding:44px 0 20px; border-bottom:2px solid var(--ink)}
+.mast h1{margin:0; font-size:clamp(38px,6vw,68px); line-height:.92; letter-spacing:-.01em}
+.mast .sub{font-size:13px; color:var(--grey); max-width:34ch; line-height:1.45}
+
+section{display:grid; grid-template-columns:132px minmax(0,1fr); gap:0 40px;
+  padding:52px 0; border-bottom:1px solid var(--rule); align-items:start}
+.rail{position:sticky; top:20px; display:flex; flex-direction:column; gap:6px}
+.serial{font-size:34px; line-height:.85; letter-spacing:-.01em}
+.railmeta{font-size:10px; letter-spacing:.16em; color:var(--grey); text-transform:uppercase; line-height:1.6}
+.col{display:flex; flex-direction:column; gap:26px; min-width:0}
+h2{margin:0; font-size:clamp(26px,3.6vw,40px); line-height:.98; letter-spacing:-.005em; text-wrap:balance}
+h3{margin:0 0 10px; font-size:11px; letter-spacing:.19em; text-transform:uppercase;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; font-weight:700}
+p{margin:0 0 11px; max-width:66ch}
+p:last-child{margin-bottom:0}
+.blk{display:flex; flex-direction:column; gap:0}
+.lead{font-size:19px; line-height:1.34; max-width:52ch}
+a{color:var(--ink)}
+
+/* lists */
+ol,ul{margin:0; padding-left:1.15em; max-width:66ch; display:flex; flex-direction:column; gap:7px}
+li::marker{color:var(--grey)}
+
+/* pull quotes from the form */
+.quotes{display:flex; flex-direction:column; gap:0; border-top:1px solid var(--rule)}
+.q{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px 20px; align-items:baseline;
+  padding:11px 0; border-bottom:1px solid var(--rule)}
+.q i{font-style:normal; font-size:15px; line-height:1.35}
+.q b{font-weight:400; font-size:10px; letter-spacing:.14em; color:var(--grey); text-transform:uppercase; white-space:nowrap}
+
+/* contact sheet */
+.sheet{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; background:#000; padding:10px}
+.sheet img{width:100%; display:block; aspect-ratio:16/9; object-fit:cover}
+figcaption{font-size:11px; color:var(--grey); margin-top:9px; max-width:66ch}
+figure{margin:0}
+
+/* type match */
+.match{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule)}
+.match > div{background:var(--paper); padding:20px; display:flex; flex-direction:column; gap:12px; justify-content:space-between}
+.match img{width:100%; max-width:280px; display:block}
+.match .live{font-size:clamp(34px,5vw,54px); line-height:.9}
+.match small{font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--grey)}
+
+/* swatches */
+.sw{display:grid; grid-template-columns:repeat(auto-fit,minmax(128px,1fr)); gap:12px}
+.sw div{display:flex; flex-direction:column; gap:7px}
+.sw i{display:block; height:56px; border:1px solid var(--rule)}
+.sw b{font-weight:700; font-size:11px; letter-spacing:.13em; text-transform:uppercase}
+.sw span{font-size:11px; color:var(--grey); line-height:1.4}
+
+/* tables */
+.scroll{overflow-x:auto; border-top:1px solid var(--ink)}
+table{border-collapse:collapse; width:100%; min-width:520px; font-size:13px}
+th{text-align:left; font-size:10px; letter-spacing:.16em; text-transform:uppercase; font-weight:700;
+  padding:10px 14px 10px 0; border-bottom:1px solid var(--rule); color:var(--grey); vertical-align:bottom}
+td{padding:11px 14px 11px 0; border-bottom:1px solid var(--rule); vertical-align:top; line-height:1.4}
+td:first-child,th:first-child{padding-left:0}
+tr td:first-child{white-space:nowrap; font-weight:700}
+
+/* callouts */
+.note{border:2px solid var(--ink); padding:22px; display:flex; flex-direction:column; gap:11px}
+.note.flag{border-color:var(--live); color:var(--ink)}
+.note .hd{font-size:11px; letter-spacing:.19em; text-transform:uppercase; font-weight:700}
+.note.flag .hd{color:var(--live)}
+.wash{background:var(--wash); padding:22px; display:flex; flex-direction:column; gap:11px}
+
+/* copy blocks */
+.copy{border:1px solid var(--rule); background:var(--wash); display:flex; flex-direction:column}
+.copy .lbl{font-size:10px; letter-spacing:.19em; text-transform:uppercase; font-weight:700;
+  padding:9px 16px; border-bottom:1px solid var(--rule); color:var(--grey)}
+.copy .txt{padding:16px; font-size:13.5px; line-height:1.55; margin:0; white-space:pre-wrap; max-width:none}
+
+/* timeline */
+.tl{display:flex; flex-direction:column; gap:0; border-top:1px solid var(--ink)}
+.tl div{display:grid; grid-template-columns:150px minmax(0,1fr); gap:6px 20px; padding:14px 0; border-bottom:1px solid var(--rule)}
+.tl b{font-weight:700; font-size:13px; letter-spacing:.04em}
+.pill{display:inline-block; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; font-weight:700;
+  color:var(--live); border:1px solid var(--live); padding:2px 7px; margin-left:8px; vertical-align:1px}
+
+footer{padding:44px 0 72px; display:flex; flex-wrap:wrap; gap:16px 40px; justify-content:space-between;
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--grey)}
+
+@media (max-width:720px){
+  section{grid-template-columns:1fr; gap:18px; padding:40px 0}
+  .rail{position:static; flex-direction:row; align-items:baseline; gap:14px}
+  .serial{font-size:26px}
+  .q{grid-template-columns:1fr}
+  .card{padding:52px 20px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<div class="card">
+  <p class="tag dsp">Because the best memories don't involve a phone in hand.</p>
+  <p class="cap dsp">Title card 01 &nbsp;/&nbsp; 07.9s</p>
+</div>
+<div class="card">
+  <p class="mark dsp">GO.A807</p>
+  <p class="cap dsp">Title card 02 &nbsp;/&nbsp; 09.1s</p>
+</div>
+<div class="card">
+  <div class="roll">
+    <span class="old dsp">GO.A807</span>
+    <span class="arw dsp">&#8594;</span>
+    <span class="now dsp">GO.A0925</span>
+  </div>
+  <p class="cap dsp">The mark rolls with the date &nbsp;/&nbsp; Volume Two, 25.09.2026</p>
+</div>
+
+<div class="wrap">
+
+<div class="mast">
+  <h1 class="dsp">Brand Assessment<br>+ Asset Brief</h1>
+  <div class="sub">
+    Prepared 10 September 2026 for Bianca and Judy.<br>
+    Source material: MOV_5631.mov, 9.8 seconds, 540&#215;960, and the live RSVP form.
+  </div>
+</div>
+
+<section>
+  <div class="rail"><div class="serial dsp">01</div><div class="railmeta">The<br>Assessment</div></div>
+  <div class="col">
+    <h2 class="dsp">There is already a brand here. It is stronger than you think.</h2>
+    <p class="lead">Nine seconds of footage and one Google Form contain a complete identity: two marks, a photographic language, a typeface, a voice, and a ritual. Almost nothing needs inventing. It needs deciding.</p>
+
+    <div class="blk">
+      <h3>The marks</h3>
+      <p>Two pieces of identity are already locked, and they appear above exactly as the film sets them. White, all caps, centered, on true black. No logo, no icon, no rules. That restraint is the single biggest asset and it should survive contact with the website.</p>
+      <p><b>GO.A807</b> reads as GOING ANALOG plus a date code, and you have confirmed it rolls: the current mark is <b>GO.A0925</b>. That makes the wordmark a serial number rather than a logo, which is the single best structural idea in the brand. It means the identity is dated the way a roll of film is dated, it can never go stale, and every past event keeps its own mark instead of being absorbed into a generic one.</p>
+<p>Two consequences for the build. The mark is a variable, not an image, so it gets set live in type and swapped by editing one string. And the site needs somewhere for retired marks to live, which is what makes the About timeline load-bearing rather than decorative.</p>
+    </div>
+
+    <figure>
+      <h3>The photography is the actual brand engine</h3>
+      <div class="sheet">__IMG_A__ __IMG_B__ __IMG_C__ __IMG_D__</div>
+      <figcaption>Four frames, 4.9s to 7.6s. Every frame shares the same signature: direct unsoftened on-camera flash, blown highlights and pink skin, extremely fast falloff so anything two feet back is pure black, handheld motion blur, warm tungsten as the only ambient color, visible grain, mild vignette.</figcaption>
+    </figure>
+    <p>This is disposable-camera flash photography and it does all the emotional work. Faces are laughing, mid-sentence, mid-peace-sign. Nobody is performing for a feed. The design system's only job is to get out of its way, which is the entire argument for a white page and black type.</p>
+
+    <div class="blk">
+      <h3>Typography in the film</h3>
+      <div class="match">
+        <div>
+          <img src="__IMG_MARK__" alt="The GO.A807 wordmark as it appears in the film, enlarged">
+          <small>Film, enlarged 3&#215;</small>
+        </div>
+        <div>
+          <div class="live dsp">GO.A0925</div>
+          <small>Live type, DIN Condensed, current mark</small>
+        </div>
+      </div>
+      <p style="margin-top:14px">An industrial condensed grotesque in the DIN family, set two ways. Spurred G, flat-topped 7, tight geometric 8, flat terminals, straight tick apostrophes, straight-legged R. The tagline is lighter and more condensed with wide letterspacing. The wordmark is heavier, wider, tightly tracked. It reads as a stencil on a road case, not a startup logo. This entire document is set in that face so you can judge it at length.</p>
+    </div>
+
+    <div class="blk">
+      <h3>The voice, pulled verbatim from the form</h3>
+      <div class="quotes">
+        <div class="q"><i>&#8220;Headline: Anthropic researcher says more than 10% chance AI could kill all humans...so fuck it we ball.&#8221;</i><b>Form title</b></div>
+        <div class="q"><i>&#8220;You know the drill: We are GOING ANALOG so phones will be confiscated upon entry.&#8221;</i><b>Description</b></div>
+        <div class="q"><i>&#8220;$10-20 sliding scale donation ($100 if you work at an AI-startup, I know you can afford it).&#8221;</i><b>Description</b></div>
+        <div class="q"><i>&#8220;Yourself, a few friends, work colleagues, your crush (shoot your shot or lose the chance to)&#8221;</i><b>What to bring</b></div>
+        <div class="q"><i>&#8220;Fuck, Marry, Kill: Claude, Gemini, ChatGPT&#8221;</i><b>Required field</b></div>
+        <div class="q"><i>&#8220;PUT DIS SHIT ON YOUR CALENDAR. EXPECT AN EMAIL/TEXT SHORTLY. PAY TO CONFIRM.&#8221;</i><b>Confirmation</b></div>
+      </div>
+      <p style="margin-top:14px">What actually characterizes it: direct address, second person, with a real person audibly behind it rather than a brand. Comma splices and run-ons, because it is typed like a text and not written like a manifesto. Parenthetical asides that undercut anything sincere. Profanity is load-bearing, and sanding it off turns this into a wellness retreat. It never moralizes about screen time, because the bit is &#8220;we are all cooked, so let's hang,&#8221; not &#8220;digital detox.&#8221;</p>
+
+      <div class="note flag" style="margin-top:6px">
+        <div class="hd">Banned in all copy for this brand</div>
+        <ul>
+          <li><b>No rhetorical triplets.</b> Three parallel examples in a row is the single loudest AI tell. Use one, or two, and then stop.</li>
+          <li><b>No metaphors, no analogies, no imagery.</b> This brand does not reach for a picture to make a point. It just says the thing.</li>
+          <li><b>No aphorisms.</b> If a sentence would look at home cross-stitched on a pillow, cut it. &#8220;The part we forgot was the point&#8221; is exactly the failure.</li>
+          <li><b>No em-dashes and no semicolons</b>, per your standing rule.</li>
+          <li><b>Never explain the thesis earnestly.</b> The anti-phone position only ever arrives as a joke. The moment it argues for itself it becomes a digital detox retreat.</li>
+        </ul>
+        <p>Test for any line: would Judy text this? If it reads like it was composed, it is wrong.</p>
+      </div>
+    </div>
+
+    <div class="blk">
+      <h3>The ritual is the product</h3>
+      <p>Phones are confiscated at the door. Everything else, the film cameras and the delayed photos and this website, is downstream of one physical act at a threshold. Which is why your phone-jail idea is not a gimmick. It is the only part of the party a website can actually reproduce, and it should be the first thing that happens.</p>
+      <p>Money and cause need to sit on the page plainly, without a fundraising-page tone: sliding scale, $100 AI-startup tier, proceeds to the Nepal Prime Minister's Disaster Relief Fund.</p>
+    </div>
+
+    <div class="note flag">
+      <div class="hd">The one real tension, and how the build resolves it</div>
+      <p>The film brand is black, nocturnal, industrial, DIN. The references you sent are white, Swiss, editorial, paper. Right now those are two different brands.</p>
+      <p><b>The resolution: white is daylight, black is the party.</b> The site is the archive, the morning after, the contact sheet on the studio wall. It is white paper and black type. Black appears in exactly two places, the entry gate and the photographs themselves. The flash photos become the only color on the page, and every time black floods the screen it means something is happening. This document is built on that rule, which is why it opens on two black cards and then turns to paper.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="rail"><div class="serial dsp">02</div><div class="railmeta">The<br>System</div></div>
+  <div class="col">
+    <h2 class="dsp">Type, color, motion</h2>
+
+    <div class="blk">
+      <h3>Color</h3>
+      <div class="sw">
+        <div><i style="background:#FFFFFF"></i><b>Paper</b><span>#FFFFFF<br>Ground</span></div>
+        <div><i style="background:#000000"></i><b>Ink</b><span>#000000<br>All type</span></div>
+        <div><i style="background:#6E6E6A"></i><b>Grey 55</b><span>#6E6E6A<br>Metadata</span></div>
+        <div><i style="background:#CFCEC8"></i><b>Rule</b><span>#CFCEC8<br>Hairlines</span></div>
+        <div><i style="background:#F1F0EB"></i><b>Wash</b><span>#F1F0EB<br>Block fills</span></div>
+        <div><i style="background:#E8290B"></i><b>Live</b><span>#E8290B<br>Optional</span></div>
+      </div>
+      <p style="margin-top:14px">No brand color. The photographs supply every warm tone on the page. The greys are biased slightly warm toward the paper rather than sitting neutral, so they read as chosen. If you ever want an accent, reserve that one red strictly for live states like the RSVP button and a spots-remaining counter, so red always means &#8220;something is happening right now.&#8221; That red is quoted directly from the Samson Leung site you sent. Your call, and the site works with zero accent.</p>
+    </div>
+
+    <div class="blk">
+      <h3>Type</h3>
+      <p>Locked: <b>Archivo</b>, and only Archivo. It is free under the Open Font License, it is variable with both a weight and a width axis, and that one family covers the condensed tagline and the bold wordmark without mixing anything. No paid tier, no second family, nothing to license. The font files get committed into the repo and self-hosted rather than loaded from Google's CDN, so the site keeps working offline, loads faster, and never leaks visitors to a third party. That last part matters for a group whose entire thesis is not being surveilled.</p>
+<p>One note on this document specifically. It is set in <b>DIN Condensed</b>, which ships free with macOS and is almost exactly the face in the film. That is why the specimen above matches so closely. Do not use it for the website, because visitors on Windows and Android do not have it and would silently fall back to something wrong. Use it freely for anything you make locally in Figma, InDesign, or Canva.</p>
+      <div class="scroll"><table>
+        <tr><th>Role</th><th>Setting</th></tr>
+        <tr><td>Wordmark</td><td>Bold to Black, width ~95, caps, tracking -1%</td></tr>
+        <tr><td>Section heads</td><td>Condensed SemiBold, caps, tracking +8%</td></tr>
+        <tr><td>Big text block</td><td>Medium, 28 to 40px, 1.15 line height, hanging indents, ragged right</td></tr>
+        <tr><td>Body and captions</td><td>Regular, 13 to 15px</td></tr>
+        <tr><td>Data and timeline</td><td>Regular, tabular figures, 12 to 13px</td></tr>
+      </table></div>
+    </div>
+
+    <div class="blk">
+      <h3>Motion</h3>
+      <p>Slow, physical, weighted. Polaroids get inertia and settle rather than snapping. Nothing eases out with a bounce. With the cursor follower cut, motion now lives in three places only: the gate unlocking, the polaroid flip, and the nav fanning open. Restraint here is what separates this from every AI-generated party site.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="rail"><div class="serial dsp">03</div><div class="railmeta">The Site,<br>Organized</div></div>
+  <div class="col">
+    <h2 class="dsp">Your brain-dump, turned into a structure</h2>
+
+    <div class="blk">
+      <h3>Entry gate, before the site</h3>
+      <p>Black screen. The cursor is a smartphone. Drag it into the phone jail to unlock. On release the screen flips from black to white and the site is behind it. Mobile has no cursor, so mobile becomes a tap-and-drag of the phone into the box, or a press-and-hold &#8220;surrender your phone&#8221; button.</p>
+    </div>
+
+    <div class="blk">
+      <h3>Home</h3>
+      <p>White. Left half is a physical pile of polaroids you flip through by hand, one at a time, with rotation and drop shadow. Right half is a large block of black text, Samson Leung structure but black rather than red: the name, then the thesis, one dense column with hanging indents.</p>
+    </div>
+
+    <div class="blk">
+      <h3>The pile &#8212; received and processed</h3>
+      <p>Judy's folder had <b>23 lab scans off 7 rolls</b>, 3637&#215;2444 TIFFs, delivered 11 August, three days after the party. All 23 are downloaded and converted to web JPEGs in <code>~/going-analog/photos</code>, 4.6MB for the whole set. Nothing is blocking the build anymore.</p>
+      <p><b>Framing decision, and it is not Polaroid.</b> These are 35mm, and 35mm is 3:2. Forcing every frame into a square Polaroid crop cuts people out of the wide group shots, including the entire room shot on R2-025A. But the square crop does look punchier on the tight portraits, so the pile carries <b>both shapes</b>: square-cropped prints for the portraits and centered groups, 3:2 prints for anything wide. A real pile of prints from a lab is not uniform, and the mixed shapes are what will make it read as physical objects instead of a grid of identical cards.</p>
+      <p><b>Pile order</b>, strongest first. R7-000A opens it, because a man photographing you with a disposable camera is the entire thesis in one frame. R5-012A is the same idea from the other side. Then R4-009A, R2-018A, R4-016A, R6-023A, R1-000A, R3-019A, R5-010A, R4-012A, R2-003A, R5-019A, R2-025A, R2-020A, R7-006A, R3-018A. That is 16. The remaining 7 are underexposed or soft and are better held back than padded in.</p>
+      <p>One thing worth raising once and then dropping: roughly forty identifiable people are in these frames, and the site puts them on the open web. The brand's own line is that the photos go here and nowhere else, so publishing is the point. Just worth Judy having said it out loud to the group rather than assumed.</p>
+    </div>
+
+    <div class="blk">
+      <h3>Navigation</h3>
+      <p>Semi-hidden, Studio Dogu style. A small stack of slightly rotated labels tucked in a corner that fans out on hover. Three items, all scrolling to sections on one page rather than routing anywhere: Home, RSVP, About.</p>
+    </div>
+
+    <div class="blk">
+      <h3>RSVP</h3>
+      <p>A custom form set in the site's own type, not a Google Forms embed. It posts straight to the existing Google Form, which lives in <b>Judy's Drive</b>, so every response and the whole email list stay in her account and nothing routes through yours. No credentials, no API keys, no sharing required, and it keeps working if you hand the project off. I pulled the live field IDs already, and the fields mirror the current form exactly.</p>
+      <div class="scroll"><table>
+        <tr><th>#</th><th>Field</th><th>Type</th><th>Field ID</th></tr>
+        <tr><td>1</td><td>Name</td><td>Short answer, required</td><td>entry.616408853</td></tr>
+        <tr><td>2</td><td>Phone #</td><td>Short answer, required</td><td>entry.1364684743</td></tr>
+        <tr><td>3</td><td>Email</td><td>Short answer, required</td><td>entry.1522419440</td></tr>
+        <tr><td>4</td><td>Fuck, Marry, Kill: Claude, Gemini, ChatGPT</td><td>Short answer, required</td><td>entry.833081614</td></tr>
+        <tr><td>5</td><td>Going analog on Sept 25? Yes / No, I love AI</td><td>Multiple choice, required</td><td>entry.1310116275</td></tr>
+        <tr><td>6</td><td>Who sent you this</td><td>Short answer, required</td><td>entry.2095789134</td></tr>
+      </table></div>
+      <p style="margin-top:14px">The email column in that sheet is the mailing list. Export to CSV, or point a Mailchimp or Buttondown import at it. Two honest caveats: this approach has no spam protection beyond a honeypot field, and it breaks silently if anyone edits the questions on the Google Form. Both are manageable, and you need to know about them before we ship.</p>
+    </div>
+
+    <div class="blk">
+      <h3>About</h3>
+      <div class="tl">
+        <div><b>GO.A807<br>August 8, 2026</b><span>The birth of Going Analog. Rain tried to stop us, but it couldn't.</span></div>
+        <div><b>GO.A0925<br>September 25, 2026<span class="pill">Next</span></b><span>Volume Two, 8:30pm. Location drops the day of. RSVP by 9/20.</span></div>
+      </div>
+    </div>
+
+    <div class="blk">
+      <h3>Ambient layer</h3>
+      <p><b>Cut:</b> the polaroid camera that follows the cursor. Good call. It was the one element fighting the Swiss references, it would have been the first thing to read as a gimmick, and it made every scroll feel slightly haunted.</p>
+      <p><b>Kept:</b> scattered analog-object cutouts sitting on the white like objects left on a desk, each with its own soft contact shadow, at rest and not reacting to the pointer. The Global Citizen IRL and Studio Dogu references both work exactly this way. Objects on paper, photographed, still.</p>
+      <p>This does not touch the entry gate. The phone that drags into the jail is a deliberate one-time interaction at a threshold, not ambient decoration, and it stays.</p>
+    </div>
+
+    <div class="copy">
+      <div class="lbl">Copy for the big text block &#8212; rewritten in the form's voice</div>
+      <p class="txt">GOING ANALOG
+
+You know the drill. We take your phone at the door.
+
+Come for a good hang, meet new people, question the meaning of life together. No algorithms, no phones involved.
+
+We shoot everything on film, so nobody sees a picture until the roll comes back. Takes about a week. They're mostly blurry. We put them up here and that's the only place they go.
+
+Started August 2026. Rain tried to stop us, it didn't work.
+
+Anthropic says there's a more than 10% chance AI kills all humans, so fuck it, we ball.</p>
+    </div>
+
+    <div class="wash">
+      <h3 style="margin:0">House rules for the About section</h3>
+      <ol>
+        <li>Phones go in the box. All of them. No &#8220;I'll just keep it in my pocket.&#8221;</li>
+        <li>Bring a disposable if you have one. If you don't, we've got some.</li>
+        <li>Talk to someone you didn't come with.</li>
+        <li>$10-20 sliding scale. $100 if you work at an AI startup, I know you can afford it.</li>
+        <li>Photos go up here about a week later. That's the only place they go.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="rail"><div class="serial dsp">04</div><div class="railmeta">Assets to<br>Request</div></div>
+  <div class="col">
+    <h2 class="dsp">What to ask ChatGPT for, and what not to</h2>
+
+    <div class="note flag">
+      <div class="hd">Read this before you generate anything</div>
+      <p><b>Do not ask it to put polaroid borders on your real party photos.</b> Image models redraw faces when they re-render a photo, and your friends will come back looking like slightly wrong strangers. This is now settled: I have the 23 originals, and the frames, rotation, shadow and flip get built in code from the untouched scans, sharp at any screen size. Nothing about the pile needs to go near an image model.</p>
+      <p><b>Do not ask it to cut objects out of your real photos either.</b> macOS does that for free. Right click the image in Finder, then Quick Actions, then Remove Background.</p>
+      <p><b>Do ask it for the invented objects.</b> Everything in the table below is generated art, which is what these models are genuinely good at.</p>
+    </div>
+
+    <div class="copy">
+      <div class="lbl">The house style block &#8212; paste at the end of every object prompt</div>
+      <p class="txt">Photographic product shot, not an illustration. Single object, centered, generous margin. Shot on a 50mm lens, shallow depth of field, studio softbox key light from the upper left, one soft contact shadow beneath the object. Slightly desaturated, mild film grain, very slightly warm white balance. Pure transparent background, no scene, no surface, no text, no watermarks, no logos, no hands, no people. Square 1:1, high resolution.</p>
+    </div>
+    <p>That block is what makes twelve separately generated files look like one set instead of a clip-art bin. It is not optional. If you only have appetite for a few, generate A1, A2, A7 and A8 first, since those are the four the site cannot open without.</p>
+
+    <div class="scroll"><table>
+      <tr><th>#</th><th>Asset</th><th>Used for</th><th>Prompt to paste before the house style block</th></tr>
+      <tr><td>A1</td><td>Polaroid camera</td><td>Hero decoration</td><td>A vintage Polaroid SX-70 style instant camera in cream and brown, three-quarter front view, lens facing the viewer, closed flash bar, slightly rotated to the left, one instant photo half ejected from the front slot, the ejected photo is blank white.</td></tr>
+      <tr><td>A2</td><td>Disposable camera</td><td>Scattered decor</td><td>A 1990s single-use disposable film camera in a yellow and green paper wrapper with a plastic winding wheel and a small flash window, front three-quarter view, slightly worn and creased.</td></tr>
+      <tr><td>A3</td><td>35mm canister</td><td>Scattered decor</td><td>A single 35mm film canister standing upright, matte black plastic with a paper label, a short tongue of film pulled out.</td></tr>
+      <tr><td>A4</td><td>Negative strip</td><td>Scattered decor</td><td>A curled strip of developed 35mm film negatives, five frames long, sprocket holes along both edges, orange-brown negative base, the frames empty and abstract.</td></tr>
+      <tr><td>A5</td><td>Photo booth strip</td><td>Scattered decor</td><td>A vertical black and white photo booth strip, four empty white frames, edges slightly curled.</td></tr>
+      <tr><td>A6</td><td>Flash bulb</td><td>Small accent</td><td>A single vintage magicube flash bulb, clear glass with a silver base, unfired.</td></tr>
+      <tr><td>A7</td><td>Phone jail box</td><td>Entry gate target</td><td>A small matte black metal lock box with a hinged lid open toward the viewer, a simple hasp latch on the front, empty interior, straight-on three-quarter view.</td></tr>
+      <tr><td>A8</td><td>Dead smartphone</td><td>Entry gate draggable</td><td>A modern black smartphone lying flat, screen facing up and completely off, pure black glass, no icons, no reflections of any scene, slightly angled.</td></tr>
+      <tr><td>A9</td><td>Locking pouch</td><td>Alternate for A7</td><td>A grey neoprene phone pouch with a magnetic lock button at the top, empty and slightly open.</td></tr>
+      <tr><td>A10</td><td>Masking tape</td><td>Collage detail</td><td>Three separate torn pieces of beige masking tape, each roughly rectangular with frayed torn ends, laid flat.</td></tr>
+      <tr><td>A11</td><td>Binder clip</td><td>Collage detail</td><td>A single black metal binder clip, silver handles folded up, three-quarter view.</td></tr>
+      <tr><td>A12</td><td>Blank polaroid</td><td>Loading and empty states</td><td>A single blank Polaroid instant photo, pure white image area, the classic wide bottom border, very slight paper texture and one soft crease at a corner.</td></tr>
+    </table></div>
+
+    <div class="copy">
+      <div class="lbl">Research prompt 1 &#8212; references</div>
+      <p class="txt">I am art directing a website for an underground party series called Going Analog. The identity is built on direct-flash disposable camera photography, true black and white only, and a condensed industrial grotesque in the DIN family. My references are Samson Leung's portfolio, Studio Dogu, and Swiss editorial print collateral photographed as cutouts on white paper. Give me twelve reference websites and six print or exhibition identities sitting in this exact intersection of Swiss grid, scanned physical objects, and flash party photography. For each one, tell me the specific technique I should steal.</p>
+    </div>
+
+    <div class="copy">
+      <div class="lbl">Research prompt 2 &#8212; the typeface</div>
+      <p class="txt">Identify the typeface most likely used for the words GO.A807 and BECAUSE THE BEST MEMORIES DON'T INVOLVE A PHONE IN HAND, set in white caps on black in a CapCut style video. It is a condensed industrial grotesque with flat terminals, a spurred G, a flat-topped 7, and straight tick apostrophes. Give me the five closest free Google Fonts matches and the three closest paid matches, with a specific note on which single variable family can handle both a bold wide wordmark and a light condensed caption.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="rail"><div class="serial dsp">05</div><div class="railmeta">From You,<br>Not ChatGPT</div></div>
+  <div class="col">
+    <h2 class="dsp">Four things still outstanding</h2>
+    <ol>
+      <li><s>The original photo files from August 8.</s> <b>Received.</b> 23 scans off 7 rolls, pulled from Judy's folder and processed. This was the blocker and it is cleared.</li>
+      <li><b>The source video at full resolution.</b> Judy's folder has MOV_5631.mov at 10.3MB against the 1.1MB copy on your desktop, so a better master exists. Worth confirming whether that one is also 540&#215;960 or larger before I use it anywhere.</li>
+      <li><b>The final thesis and house rules copy</b>, or a yes on the placeholder in section 03.</li>
+      <li><b>The 9/25 location</b>, or a yes to building a &#8220;location drops the day of&#8221; placeholder you fill in later.</li>
+      <li><b>A wordmark file</b> if one exists as vector or PNG. Otherwise it gets set live in type, which is better anyway.</li>
+    </ol>
+  </div>
+</section>
+
+<section style="border-bottom:none">
+  <div class="rail"><div class="serial dsp">06</div><div class="railmeta">Open<br>Questions</div></div>
+  <div class="col">
+    <h2 class="dsp">Five decisions still open</h2>
+    <ol>
+      <li><b>Zero-padding convention.</b> You wrote 0925, but 807 was not padded. If the rule is MMDD then August was really GO.A0807, and a November 4 event would be GO.A1104. If the rule is unpadded then September should read GO.A925. I need one rule, because it governs every future mark. My recommendation is <b>MMDD, always four digits</b>, since it stays sorted and never reads ambiguously.</li>
+<li><b>Does 807 get retconned?</b> Either the August mark stays GO.A807 as a first-edition quirk, which is charming and I would keep it, or it becomes GO.A0807 for consistency. Also worth resolving: 807 reads as August 7, but your timeline says the party was August 8.</li>
+      <li><b>Is the public name &#8220;Going Analog&#8221; or &#8220;GO.A&#8221;?</b> The film only ever shows GO.A807. The full name has never actually appeared anywhere.</li>
+      <li><b>Mobile entry gate.</b> There is no cursor on a phone. Tap-and-drag, press-and-hold, or should mobile skip the gate and go straight in?</li>
+      <li><b>Should the gate be skippable?</b> A hard gate in front of all content loses some people and is bad for anyone on a screen reader. My recommendation is a small skip that fades in after about eight seconds.</li>
+      <li><b>Where does this deploy?</b> GitHub Pages under your account like Kitty Corner and Pride Weekend, or does Judy need to own hosting too?</li>
+      <li><b>Whose project is this, socially?</b> The form and the response data already sit in Judy's Drive, which is the right call. The open half is the repo and the domain. My recommendation is that those start under Judy too, because migrating a live domain after people have the link is the kind of chore that quietly kills a Volume Three.</li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div>Going Analog &nbsp;/&nbsp; GO.A0925 &nbsp;/&nbsp; Brand assessment</div>
+  <div>Nothing built yet &nbsp;/&nbsp; Awaiting section 05</div>
+  <div>10.09.2026</div>
+</footer>
+
+</div>
