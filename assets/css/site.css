@@ -57,8 +57,10 @@ a{color:inherit;text-decoration:none}
 .gate__stage{position:relative;width:min(560px,88vw);height:min(300px,42vh);touch-action:none}
 .gate__jail{position:absolute;right:2%;top:50%;transform:translateY(-50%);width:min(215px,38vw)}
 .gate__jail svg{width:100%;height:auto;overflow:visible}
-.jail-lid{transform-origin:113px 34px;transition:transform .55s cubic-bezier(.34,.2,.2,1)}
-.gate__jail.is-shut .jail-lid{transform:rotate(170deg) translateY(6px)}
+.jail-lid{transition:opacity .3s ease, transform .5s cubic-bezier(.3,.8,.3,1)}
+.jail-lid--shut{opacity:0;transform:translateY(-16px)}
+.gate__jail.is-shut .jail-lid--open{opacity:0;transform:translateY(-10px) scaleY(.55)}
+.gate__jail.is-shut .jail-lid--shut{opacity:1;transform:translateY(0);transition-delay:.12s}
 .gate__jail.is-hot svg{stroke:var(--red)}
 .gate__jail.is-hot .gate__label{color:var(--red)}
 .gate__label{
@@ -160,10 +162,7 @@ a{color:inherit;text-decoration:none}
 
 .next{margin:0;font-size:11.5px;letter-spacing:.14em;line-height:1.95}
 .next__k{display:block;color:var(--grey);letter-spacing:.2em;font-size:9.5px;margin-bottom:5px}
-.kicker{
-  margin:0;font-family:var(--display);font-weight:600;
-  font-size:clamp(16px,1.75vw,22px);line-height:1.2;max-width:46ch;
-}
+
 
 /* ============================ SECTIONS ============================ */
 .rsvp,.about{
@@ -178,6 +177,9 @@ a{color:inherit;text-decoration:none}
 .sec__head{
   margin:0;font-family:var(--display);font-weight:700;
   font-size:clamp(40px,6.2vw,80px);line-height:.94;letter-spacing:.002em;
+}
+.sec__head--quote{
+  font-size:clamp(27px,3.9vw,54px);line-height:.98;max-width:15ch;
 }
 .sec__lede{margin:0;font-size:13px;line-height:1.6;max-width:58ch;color:var(--ink)}
 

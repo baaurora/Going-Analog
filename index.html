@@ -9,7 +9,7 @@
 <meta property="og:title" content="GOING ANALOG / GO.A0925">
 <meta property="og:description" content="We take your phone at the door. Friday September 25, 8:30pm.">
 <meta property="og:type" content="website">
-<link rel="stylesheet" href="assets/css/site.css?v=1789067156">
+<link rel="stylesheet" href="assets/css/site.css?v=1789068433">
 </head>
 <body>
 
@@ -21,10 +21,16 @@
     <div class="gate__jail" id="jail" aria-hidden="true">
       <svg viewBox="-6 -18 214 178" fill="none" stroke="#fff" stroke-width="2.6"
            stroke-linecap="round" stroke-linejoin="round">
-        <!-- lid, drawn like it was scribbled in one go -->
-        <g class="jail-lid">
+        <!-- lid, open: flap standing up behind the box -->
+        <g class="jail-lid jail-lid--open">
           <path d="M50 36 Q45 20 46 5 Q47 1 54 1 L163 -3 Q170 -3 171 2 Q174 18 177 32"/>
           <path d="M49 34 Q47 21 48 7" opacity=".55"/>
+        </g>
+        <!-- lid, shut: sitting down over the opening -->
+        <g class="jail-lid jail-lid--shut">
+          <path d="M21 67 Q32 52 47 33 Q49 29 56 29 L172 26 Q179 26 177 31 Q165 47 152 62 Q150 66 143 66 L28 69 Q21 69 21 67 Z"/>
+          <path d="M25 66 Q36 52 49 34" opacity=".5"/>
+          <path d="M96 44 Q104 43 112 44" stroke-width="2.2"/>
         </g>
         <!-- opening -->
         <path d="M24 70 Q35 55 50 37 Q52 34 58 34 L170 31 Q177 31 175 35 Q163 50 151 66"/>
@@ -96,8 +102,6 @@
         <span class="d">09.25.2026</span>, 8:30PM<br>
         LOCATION DROPS THE DAY OF
       </p>
-
-      <p class="kicker">Anthropic says there's a more than 10% chance AI kills all humans, so fuck it, we ball.</p>
     </div>
   </section>
 
@@ -106,9 +110,9 @@
     <div class="sec__rail"><span class="sec__num">RSVP</span><span class="sec__sub">VOLUME TWO</span></div>
 
     <div class="sec__body">
-      <h2 class="sec__head">Volume Two<br>Friday, September 25</h2>
+      <h2 class="sec__head sec__head--quote">Anthropic says there's a more than 10% chance AI kills all humans, so fuck it, we ball.</h2>
       <p class="sec__lede">This is the RSVP for <b>GO.A0925</b>, the second Going Analog, on Friday 25 September at 8:30pm. Same as the first one. Phones get confiscated at the door, location drops the day of, and proceeds go to the Nepal Prime Minister's Disaster Relief Fund. RSVP by the 20th, and if you invite people make sure they RSVP too.</p>
-      <p class="form__for"><span class="d">GO.A0925</span> &nbsp;/&nbsp; 09.25.2026, 8:30PM &nbsp;/&nbsp; RSVP CLOSES 09.20.2026</p>
+      <p class="form__for"><span class="d">GO.A0925</span> &nbsp;/&nbsp; VOLUME TWO &nbsp;/&nbsp; FRIDAY 09.25.2026, 8:30PM &nbsp;/&nbsp; RSVP CLOSES 09.20.2026</p>
 
       <form class="form" id="form"
             action="https://docs.google.com/forms/d/e/1FAIpQLSdUDQPVcOPS2AT-Hpd-s4RHmVv7YThyYOamKc8rPdRBKEF4eA/formResponse"
@@ -194,6 +198,6 @@
   </footer>
 </div>
 
-<script src="assets/js/site.js?v=1789067156"></script>
+<script src="assets/js/site.js?v=1789068433"></script>
 </body>
 </html>
