@@ -220,6 +220,14 @@ a{color:inherit;text-decoration:none}
 .submit:hover{background:var(--red)}
 .submit[disabled]{opacity:.45;cursor:default}
 .form__err{margin:12px 0 0;font-size:11px;color:var(--red);letter-spacing:.06em}
+.cal{margin:0}
+.cal a{
+  display:inline-block;font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(15px,1.5vw,20px);letter-spacing:.04em;line-height:1.15;
+  border-bottom:2px solid var(--ink);padding-bottom:3px;
+  transition:color .2s,border-color .2s;
+}
+.cal a:hover,.cal a:focus-visible{color:var(--red);border-color:var(--red)}
 .done{padding-top:4px;display:flex;flex-direction:column;gap:10px;max-width:52ch}
 .done h3{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(27px,4vw,46px);line-height:1;letter-spacing:.02em}
 .done p{margin:0;font-size:13px;line-height:1.6}
