@@ -314,6 +314,7 @@
 
       if (hp) hp.disabled = true;   /* keep the honeypot out of the sheet */
       btn.disabled = true;
+      btn.classList.add('is-sending');
       btn.textContent = 'SENDING…';
 
       sink.addEventListener('load', function () {
@@ -326,7 +327,8 @@
       setTimeout(function () {
         if (!form.hidden) {
           btn.disabled = false;
-          btn.textContent = 'PUT DIS SHIT ON YOUR CALENDAR';
+          btn.classList.remove('is-sending');
+          btn.textContent = 'SEND IT';
           if (hp) hp.disabled = false;
           err.textContent = 'That did not go through. Try again, or text Judy.';
           err.hidden = false;

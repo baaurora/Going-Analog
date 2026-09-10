@@ -211,10 +211,12 @@ a{color:inherit;text-decoration:none}
 .r input{accent-color:#000;width:14px;height:14px;margin:0}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .submit{
-  margin-top:22px;align-self:flex-start;background:var(--ink);color:#fff;border:0;
-  font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;padding:14px 22px;
-  cursor:pointer;transition:background .2s;
+  margin-top:26px;align-self:flex-start;background:var(--ink);color:#fff;border:0;
+  font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.18em;
+  padding:19px 40px;cursor:pointer;transition:background .2s;
 }
+.submit::after{content:'\2192';margin-left:1.1em;display:inline-block}
+.submit.is-sending::after{content:'';margin:0}
 .submit:hover{background:var(--red)}
 .submit[disabled]{opacity:.45;cursor:default}
 .form__err{margin:12px 0 0;font-size:11px;color:var(--red);letter-spacing:.06em}
