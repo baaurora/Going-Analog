@@ -12,13 +12,29 @@
      e.g. { file:'A3-film-canister.png', sel:'.about', x:82, y:18, w:120, rot:-8 }
      -------------------------------------------------------- */
   var OBJECTS = [
-    { file:'A11-binder-clip.png',      sel:'.home',  x:8,  y:10, w:46,  rot:-16 },
-    { file:'A4-negative-strip.png',    sel:'.home',  x:57, y:87, w:280, rot:-6  },
-    { file:'A1-polaroid-camera.png',   sel:'.rsvp',  x:77, y:5,  w:180, rot:5   },
-    { file:'A3-film-canister.png',     sel:'.rsvp',  x:88, y:54, w:88,  rot:-9  },
-    { file:'A2-disposable-camera.png', sel:'.about', x:75, y:8,  w:195, rot:-7  },
-    { file:'A12-blank-polaroid.png',   sel:'.about', x:85, y:58, w:155, rot:11  }
+    /* Home: a drift of objects across the open lower right, Studio Dogu style */
+    { file:'A11-binder-clip.png',      sel:'.home',  x:8,  y:9,  w:46,  rot:-16 },
+    { file:'A4-negative-strip.png',    sel:'.home',  x:36, y:59, w:330, rot:-7  },
+    { file:'A12-blank-polaroid.png',   sel:'.home',  x:74, y:52, w:152, rot:-13 },
+    { file:'A1-polaroid-camera.png',   sel:'.home',  x:58, y:71, w:205, rot:6   },
+    { file:'A3-film-canister.png',     sel:'.home',  x:50, y:88, w:96,  rot:11  },
+    { file:'A2-disposable-camera.png', sel:'.home',  x:82, y:79, w:180, rot:4   },
+
+    /* RSVP: vertical scatter down the empty right half beside the form */
+    { file:'A2-disposable-camera.png', sel:'.rsvp',  x:68, y:5,  w:198, rot:-9  },
+    { file:'A12-blank-polaroid.png',   sel:'.rsvp',  x:84, y:24, w:162, rot:14  },
+    { file:'A3-film-canister.png',     sel:'.rsvp',  x:71, y:44, w:104, rot:-6  },
+    { file:'A4-negative-strip.png',    sel:'.rsvp',  x:62, y:63, w:300, rot:8   },
+    { file:'A11-binder-clip.png',      sel:'.rsvp',  x:86, y:57, w:52,  rot:22  },
+
+    /* About: right margin, then a low band under the columns */
+    { file:'A1-polaroid-camera.png',   sel:'.about', x:75, y:5,  w:212, rot:5   },
+    { file:'A12-blank-polaroid.png',   sel:'.about', x:86, y:31, w:158, rot:-11 },
+    { file:'A3-film-canister.png',     sel:'.about', x:69, y:50, w:100, rot:9   },
+    { file:'A4-negative-strip.png',    sel:'.about', x:38, y:72, w:318, rot:-5  },
+    { file:'A2-disposable-camera.png', sel:'.about', x:78, y:68, w:188, rot:-14 }
   ];
+
 
   /* --------------------------------------------------------
      THE PILE
