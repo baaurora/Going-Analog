@@ -8,12 +8,11 @@
 <meta name="theme-color" content="#000000">
 <meta property="og:title" content="GOING ANALOG / GO.A0925">
 <meta property="og:description" content="We take your phone at the door. Friday September 25, 8:30pm.">
-<meta property="og:type" content="website">
-<link rel="stylesheet" href="assets/css/site.css?v=1789079845">
+<link rel="stylesheet" href="assets/css/site.css?v=2">
 </head>
 <body>
 
-<!-- ================= ENTRY GATE ================= -->
+<!-- ================= ENTRY GATE (kept from v1) ================= -->
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-tag">
   <p class="gate__tag" id="gate-tag">Because the best memories don't involve a phone in hand.</p>
 
@@ -21,26 +20,20 @@
     <div class="gate__jail" id="jail" aria-hidden="true">
       <svg viewBox="-6 -18 214 178" fill="none" stroke="#fff" stroke-width="2.6"
            stroke-linecap="round" stroke-linejoin="round">
-        <!-- lid, open: flap standing up behind the box -->
         <g class="jail-lid jail-lid--open">
           <path d="M50 36 Q45 20 46 5 Q47 1 54 1 L163 -3 Q170 -3 171 2 Q174 18 177 32"/>
           <path d="M49 34 Q47 21 48 7" opacity=".55"/>
         </g>
-        <!-- lid, shut: sitting down over the opening -->
         <g class="jail-lid jail-lid--shut">
           <path d="M21 67 Q32 52 47 33 Q49 29 56 29 L172 26 Q179 26 177 31 Q165 47 152 62 Q150 66 143 66 L28 69 Q21 69 21 67 Z"/>
           <path d="M25 66 Q36 52 49 34" opacity=".5"/>
           <path d="M96 44 Q104 43 112 44" stroke-width="2.2"/>
         </g>
-        <!-- opening -->
         <path d="M24 70 Q35 55 50 37 Q52 34 58 34 L170 31 Q177 31 175 35 Q163 50 151 66"/>
-        <!-- front face, gone over twice like a marker sketch -->
         <path d="M24 70 Q22 71 23 78 L26 132 Q26 138 32 138 L147 136 Q153 136 152 130 L151 66"/>
         <path d="M26 74 Q25 80 27 129" opacity=".5"/>
         <path d="M31 137 Q80 135 145 134" opacity=".45"/>
-        <!-- right cheek -->
         <path d="M151 66 Q164 50 175 35 Q177 46 178 62 L177 101 Q166 118 152 132"/>
-        <!-- latch -->
         <path d="M79 68 Q78 76 79 84 Q79 87 84 87 L94 86 Q99 86 98 82 L97 67" stroke-width="2.2"/>
       </svg>
       <span class="gate__label">PHONE JAIL</span>
@@ -63,84 +56,84 @@
 <!-- ================= SITE ================= -->
 <div class="site" id="site" inert>
 
-  <header class="bar">
-    <a class="bar__mark" href="#home">GOING&nbsp;ANALOG</a>
-    <nav class="bar__nav" aria-label="Sections">
-      <a href="#home" data-nav="home">HOME</a>
+  <header class="top">
+    <a class="mark" href="#home">GOING ANALOG</a>
+    <nav class="menu" aria-label="Sections">
+      <a href="#home" data-nav="home">Home</a>
+      <a href="#what" data-nav="what">About</a>
       <a href="#rsvp" data-nav="rsvp">RSVP</a>
-      <a href="#about" data-nav="about">ABOUT</a>
     </nav>
   </header>
 
-  <!-- ---------------- HOME ---------------- -->
   <main>
-  <section class="home" id="home">
 
-    <div class="pile-col">
-      <div class="pile" id="pile" aria-label="Photographs from GO.A807"></div>
-      <div class="pile__meta">
-        <p class="pile__caption" id="caption"></p>
-        <div class="pile__ctl">
-          <button id="prev" aria-label="Previous photograph">&larr;</button>
-          <button id="next" aria-label="Next photograph">&rarr;</button>
-          <span class="pile__count" id="count"></span>
-        </div>
+  <!-- ---------- HOME: the pile, clipped, draggable ---------- -->
+  <section class="scene" id="home">
+    <div class="things" data-things="home" aria-hidden="true"></div>
+    <div class="words" data-words="home" aria-hidden="true"></div>
+    <div class="says">
+      <div class="mission" id="mission">
+        <p>Phones get confiscated at the door, you'll live. No you cannot check it real quick, PUT THE FUCKING PHONE IN THE BOX.</p>
+        <p>Everybody shoots film and disposables, pictures turn up here a week later, no I'm not putting them on Instagram.</p>
+        <p>It rained on Volume One and we did it anyway. 7 rolls, 16 frames I liked enough to post. Volume Two is September 25, RSVP by the 20th.</p>
       </div>
-    </div>
-
-    <div class="text-col">
-      <div class="thesis">
-        <h1 class="thesis__name">GOING ANALOG</h1>
-        <p class="thesis__body">You know the drill. We take your phone at the door. Come for a good hang, meet new people, question the meaning of life together. No algorithms, no phones involved.</p>
-        <p class="thesis__body">We shoot everything on film, so nobody sees a picture until the roll comes back. Takes about a week. They're mostly blurry.</p>
-        <p class="thesis__body">We put them up here and that's the only place they go.</p>
-      </div>
-
-      <p class="next">
-        <span class="next__k">NEXT</span>
-        GO.A0925<br>
-        <span class="d">09.25.2026</span>, 8:30PM<br>
-        LOCATION DROPS THE DAY OF
-      </p>
+      <p class="drag-note">Everything on this page moves. Drag it.</p>
     </div>
   </section>
 
-  <!-- ---------------- RSVP ---------------- -->
-  <section class="rsvp" id="rsvp">
-    <div class="sec__rail"><span class="sec__num">RSVP</span><span class="sec__sub">VOLUME TWO</span></div>
+  <!-- ---------- WHAT: the explanation, scattered ---------- -->
+  <section class="scene scene--tall" id="what">
+    <div class="things" data-things="what" aria-hidden="true"></div>
+    <div class="words" data-words="what" aria-hidden="true"></div>
+    <h2 class="scene__head">What this is</h2>
+    <div class="says says--wide">
+      <ol class="rules">
+        <li>Phones go in the box. All of them. No &ldquo;I'll just keep it in my pocket.&rdquo;</li>
+        <li>Bring a disposable if you have one. If you don't, we've got some.</li>
+        <li>Talk to someone you didn't come with.</li>
+        <li>$10-20 sliding scale. $100 if you work at an AI startup, I know you can afford it.</li>
+        <li>Photos go up here about a week later. That's the only place they go.</li>
+      </ol>
+    </div>
+  </section>
 
-    <div class="sec__body">
-      <h2 class="sec__head sec__head--quote">Anthropic says there's a more than 10% chance AI kills all humans, so fuck it, we ball.</h2>
-      <p class="sec__lede">This is the RSVP for <b>GO.A0925</b>, the second Going Analog, on Friday 25 September at 8:30pm. Same as the first one. Phones get confiscated at the door, location drops the day of, and proceeds go to the Nepal Prime Minister's Disaster Relief Fund. RSVP by the 20th, and if you invite people make sure they RSVP too.</p>
-      <p class="form__for"><span class="d">GO.A0925</span> &nbsp;/&nbsp; VOLUME TWO &nbsp;/&nbsp; FRIDAY 09.25.2026, 8:30PM &nbsp;/&nbsp; RSVP CLOSES 09.20.2026</p>
+  <!-- ---------- RSVP ---------- -->
+  <section class="scene scene--tall" id="rsvp">
+    <div class="things" data-things="rsvp" aria-hidden="true"></div>
+    <div class="words" data-words="rsvp" aria-hidden="true"></div>
+
+    <div class="volumes">
+      <h2 class="scene__head">Volumes</h2>
+      <div class="vol">
+        <span class="vol__mark">GO.A807</span>
+        <span class="vol__date">08.08.2026</span>
+        <span class="vol__txt">The first one. Rain tried to stop us, it didn't work. 7 rolls shot, 16 frames kept.</span>
+      </div>
+      <div class="vol">
+        <span class="vol__mark">GO.A0925</span>
+        <span class="vol__date on">09.25.2026</span>
+        <span class="vol__txt">Volume Two. Friday, 8:30pm. Location drops the day of. <b class="on">RSVP open</b></span>
+      </div>
+    </div>
+
+    <div class="reg">
+      <h3 class="reg__head">Anthropic says there's a more than 10% chance AI kills all humans, so fuck it, we ball.</h3>
+      <p class="reg__sub">Register for Volume Two. Phones get confiscated at the door, location drops the day of, proceeds go to the Nepal Prime Minister's Disaster Relief Fund. RSVP by the 20th.</p>
 
       <form class="form" id="form"
             action="https://docs.google.com/forms/d/e/1FAIpQLSdUDQPVcOPS2AT-Hpd-s4RHmVv7YThyYOamKc8rPdRBKEF4eA/formResponse"
             method="POST" target="ga-sink" novalidate>
-
-        <label class="f"><span class="f__k">01 &nbsp;NAME</span>
-          <input name="entry.616408853" type="text" autocomplete="name" required></label>
-
-        <label class="f"><span class="f__k">02 &nbsp;PHONE</span>
-          <input name="entry.1364684743" type="tel" autocomplete="tel" required></label>
-
-        <label class="f"><span class="f__k">03 &nbsp;EMAIL</span>
-          <input name="entry.1522419440" type="email" autocomplete="email" required></label>
-
-        <label class="f"><span class="f__k">04 &nbsp;FUCK, MARRY, KILL: CLAUDE, GEMINI, CHATGPT</span>
-          <input name="entry.833081614" type="text" required></label>
-
+        <label class="f"><span class="f__k">Name</span><input name="entry.616408853" type="text" autocomplete="name" required></label>
+        <label class="f"><span class="f__k">Phone</span><input name="entry.1364684743" type="tel" autocomplete="tel" required></label>
+        <label class="f"><span class="f__k">Email</span><input name="entry.1522419440" type="email" autocomplete="email" required></label>
+        <label class="f"><span class="f__k">Fuck, marry, kill: Claude, Gemini, ChatGPT</span><input name="entry.833081614" type="text" required></label>
         <fieldset class="f f--radio">
-          <legend class="f__k">05 &nbsp;GOING ANALOG WITH US ON SEPTEMBER 25?</legend>
+          <legend class="f__k">Going analog with us on September 25?</legend>
           <label class="r"><input type="radio" name="entry.1310116275" value="Yes" required><span>Yes</span></label>
           <label class="r"><input type="radio" name="entry.1310116275" value="No, I love AI"><span>No, I love AI</span></label>
         </fieldset>
-
-        <label class="f"><span class="f__k">06 &nbsp;WHO SENT YOU THIS</span>
-          <input name="entry.2095789134" type="text" required></label>
-
+        <label class="f"><span class="f__k">Who sent you this</span><input name="entry.2095789134" type="text" required></label>
         <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="_hp" tabindex="-1" autocomplete="off"></label></div>
-
         <button class="submit" id="submit" type="submit">SUBMIT</button>
         <p class="form__err" id="err" role="alert" hidden></p>
       </form>
@@ -148,72 +141,20 @@
       <div class="done" id="done" hidden>
         <h3>You're in.</h3>
         <p>Volume Two. Friday September 25, 8:30pm. Expect an email or a text shortly. Pay to confirm. Location drops the day of.</p>
-        <p class="done__sub">And leave the phone at home, or don't, we're taking it either way.</p>
       </div>
 
-      <p class="cal">
-        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=GOING%20ANALOG%20%2F%20GO.A0925&amp;dates=20260925T203000%2F20260926T003000&amp;ctz=America%2FNew_York&amp;details=You%20know%20the%20drill.%20We%20take%20your%20phone%20at%20the%20door.%0A%0APhones%20get%20confiscated%20at%20the%20door.%20%2410-20%20sliding%20scale%2C%20%24100%20if%20you%20work%20at%20an%20AI%20startup.%20Proceeds%20go%20to%20the%20Nepal%20Prime%20Minister%27s%20Disaster%20Relief%20Fund.%0A%0ALocation%20drops%20the%20day%20of.%20Bring%20a%20disposable%20if%20you%20have%20one.&amp;location=TBA" target="_blank" rel="noopener">Put dis shit on your calendar &rarr;</a>
-      </p>
-
+      <p class="cal"><a href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=GOING%20ANALOG%20%2F%20GO.A0925&amp;dates=20260925T203000%2F20260926T003000&amp;ctz=America%2FNew_York&amp;details=You%20know%20the%20drill.%20We%20take%20your%20phone%20at%20the%20door.%0A%0APhones%20get%20confiscated%20at%20the%20door.%20%2410-20%20sliding%20scale%2C%20%24100%20if%20you%20work%20at%20an%20AI%20startup.%20Proceeds%20go%20to%20the%20Nepal%20Prime%20Minister%27s%20Disaster%20Relief%20Fund.%0A%0ALocation%20drops%20the%20day%20of.%20Bring%20a%20disposable%20if%20you%20have%20one.&amp;location=TBA" target="_blank" rel="noopener">Put dis shit on your calendar &rarr;</a></p>
       <iframe name="ga-sink" id="sink" title="form target" hidden></iframe>
     </div>
   </section>
 
-  <!-- ---------------- ABOUT ---------------- -->
-  <section class="about" id="about">
-    <div class="sec__rail"><span class="sec__num">ABOUT</span><span class="sec__sub">EST. 2026</span></div>
-
-    <div class="sec__body">
-      <h2 class="sec__head">What this is</h2>
-
-      <p class="about__mid">Going Analog is a collective. The phone goes in the box at the door and everything else follows from that.</p>
-
-      <div class="cols">
-        <div class="cols__grp">
-          <h3>House rules</h3>
-          <ol class="rules">
-            <li>Phones go in the box. All of them. No &ldquo;I'll just keep it in my pocket.&rdquo;</li>
-            <li>Bring a disposable if you have one. If you don't, we've got some.</li>
-            <li>Talk to someone you didn't come with.</li>
-            <li>$10-20 sliding scale. $100 if you work at an AI startup, I know you can afford it.</li>
-            <li>Photos go up here about a week later. That's the only place they go.</li>
-          </ol>
-        </div>
-
-        <div class="cols__grp">
-          <h3>The photos</h3>
-          <p>Everything gets shot on film and disposables. The rolls go to a lab and come back about a week later, and whatever survives goes up here.</p>
-          <p>Nothing gets posted anywhere else. No stories, no tagging, no algorithm deciding who got to see you having a good time.</p>
-          <p>GO.A807 was 7 rolls. 16 frames made it.</p>
-        </div>
-
-        <div class="cols__grp">
-          <h3>Volumes</h3>
-          <div class="tline">
-            <div class="tline__row">
-              <span class="tline__mark">GO.A807</span>
-              <span class="tline__date d">08.08.2026</span>
-              <span class="tline__txt">The birth of Going Analog. Rain tried to stop us, but it couldn't.</span>
-            </div>
-            <div class="tline__row">
-              <span class="tline__mark">GO.A0925</span>
-              <span class="tline__date d">09.25.2026</span>
-              <span class="tline__txt">Volume Two. 8:30pm, location drops the day of. <b class="now">RSVP OPEN</b></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
   </main>
 
   <footer class="foot">
-    <span>GOING ANALOG</span>
-    <span>GO.A0925</span>
-    <span>NO ALGORITHMS, NO PHONES INVOLVED</span>
+    <span>Going Analog</span><span>GO.A0925</span><span>No algorithms, no phones involved</span>
   </footer>
 </div>
 
-<script src="assets/js/site.js?v=1789079845"></script>
+<script src="assets/js/site.js?v=2"></script>
 </body>
 </html>
