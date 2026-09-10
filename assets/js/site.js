@@ -328,7 +328,7 @@
         if (!form.hidden) {
           btn.disabled = false;
           btn.classList.remove('is-sending');
-          btn.textContent = 'SEND IT';
+          btn.textContent = 'SUBMIT';
           if (hp) hp.disabled = false;
           err.textContent = 'That did not go through. Try again, or text Judy.';
           err.hidden = false;
