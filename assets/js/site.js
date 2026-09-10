@@ -6,7 +6,10 @@
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var TOP = 10;                       /* running z within the things layer */
-  var SMALL = function () { return window.innerWidth <= 820; };
+  /* ask the same question the stylesheet asks, so layout and script can
+     never disagree about which mode the page is in */
+  var MQ = window.matchMedia ? window.matchMedia('(max-width: 820px)') : null;
+  var SMALL = function () { return MQ ? MQ.matches : window.innerWidth <= 820; };
 
   /* ---- the 16 kept frames, plus the title card at 0 ---- */
   var P = [
@@ -39,86 +42,62 @@
   };
 
   /* ---- what sits where. x/y are % of the scene, w is px at 1440. ---- */
+  /* Prints cascade down the page in overlapping clusters with real size
+     variance, so you meet them as you scroll. Objects appear once each:
+     one clip, one blank polaroid, one Polaroid camera, one disposable. */
   var SCENES = {
     home: {
-      /* a real pile: tight offsets, small rotations, clip holding the top.
-         drag any of them out and they stay where you drop them. */
       prints: [
-        { i: 7, x: 20, y: 38, w: 250, rot: -11 },
-        { i: 6, x: 10, y: 34, w: 268, rot: 8   },
-        { i: 5, x: 19, y: 31, w: 244, rot: -4  },
-        { i: 4, x: 11, y: 28, w: 262, rot: 12  },
-        { i: 3, x: 18, y: 25, w: 252, rot: -7  },
-        { i: 2, x: 12, y: 22, w: 266, rot: 3   },
-        { i: 1, x: 17, y: 20, w: 258, rot: -3  },
-        { i: 0, x: 13, y: 18, w: 280, rot: 5   }
+        { i: 3, x: 17, y: 40, w: 236, rot: -10, m: { x: 18, y: 34, w: 44 } },
+        { i: 2, x: 10, y: 33, w: 252, rot: 7,   m: { x: 6,  y: 25, w: 46 } },
+        { i: 1, x: 18, y: 25, w: 244, rot: -4,  m: { x: 17, y: 15, w: 44 } },
+        { i: 0, x: 12, y: 17, w: 284, rot: 5,   m: { x: 10, y: 4,  w: 49 } }
       ],
-      clip: { x: 20, y: 14, w: 70, rot: -13 },
+      clip: { x: 19, y: 13, w: 70, rot: -13, m: { x: 30, y: 0, w: 13 } },
       objs: [
-        { o: 'pola', x: 39, y: 10, w: 128, rot: 9   },
-        { o: 'can',  x: 55, y: 20, w: 84,  rot: 12  },
-        { o: 'neg',  x: 36, y: 52, w: 300, rot: -8  },
-        { o: 'disp', x: 63, y: 40, w: 172, rot: -6  },
-        { o: 'cam',  x: 47, y: 74, w: 196, rot: 4   },
-        { o: 'pola', x: 72, y: 66, w: 118, rot: -15 },
-        { o: 'can',  x: 30, y: 84, w: 78,  rot: -9  },
-        { o: 'disp', x: 79, y: 88, w: 150, rot: 11  },
-        { o: 'clip', x: 60, y: 58, w: 46,  rot: 24  },
-        { o: 'neg',  x: 42, y: 8,  w: 208, rot: 6   }
+        { o: 'pola', x: 46, y: 12, w: 132, rot: 9, m: { x: 68, y: 62, w: 24 } }
       ],
       words: [
-        { t: 'PHONES IN THE BOX',     x: 41, y: 36 },
-        { t: 'FUCK IT WE BALL',       x: 57, y: 50, c: 'hot' },
-        { t: "NOBODY'S POSTING SHIT", x: 30, y: 67, c: 'dim' },
-        { t: '7 ROLLS, 16 KEPT',      x: 86, y: 46, c: 'dim' },
-        { t: 'BRING A DISPOSABLE',    x: 44, y: 90 }
+        { t: 'PHONES IN THE BOX', x: 44, y: 40, m: { x: 5, y: 90 } },
+        { t: 'GO.A807',           x: 74, y: 62, c: 'dim' }
       ]
     },
+
+    /* cascade part one: drifts right and down, clustered and overlapping */
     what: {
       prints: [
-        { i: 8,  x: 3,  y: 44, w: 244, rot: -6 },
-        { i: 9,  x: 27, y: 70, w: 214, rot: 7  },
-        { i: 10, x: 60, y: 18, w: 234, rot: -4 },
-        { i: 11, x: 79, y: 52, w: 194, rot: 8  },
-        { i: 12, x: 48, y: 84, w: 252, rot: -9 }
+        { i: 4,  x: 44, y: 4,  w: 150, rot: 6,   m: { x: 50, y: 4,  w: 40 } },
+        { i: 5,  x: 56, y: 10, w: 300, rot: -5,  m: { x: 10, y: 14, w: 48 } },
+        { i: 6,  x: 40, y: 26, w: 210, rot: 9,   m: { x: 46, y: 28, w: 44 } },
+        { i: 7,  x: 62, y: 36, w: 168, rot: -8,  m: { x: 12, y: 44, w: 42 } },
+        { i: 8,  x: 46, y: 52, w: 336, rot: 4,   m: { x: 40, y: 58, w: 52 } },
+        { i: 9,  x: 30, y: 72, w: 190, rot: -11, m: { x: 8,  y: 76, w: 40 } },
+        { i: 10, x: 68, y: 76, w: 244, rot: 7 }
       ],
       objs: [
-        { o: 'cam',  x: 45, y: 5,  w: 180, rot: 6   },
-        { o: 'can',  x: 45, y: 36, w: 84,  rot: -14 },
-        { o: 'neg',  x: 64, y: 76, w: 284, rot: 5   },
-        { o: 'clip', x: 89, y: 28, w: 50,  rot: 20  },
-        { o: 'pola', x: 7,  y: 80, w: 142, rot: -11 },
-        { o: 'disp', x: 68, y: 6,  w: 162, rot: 9   },
-        { o: 'pola', x: 88, y: 88, w: 120, rot: 7   },
-        { o: 'can',  x: 72, y: 40, w: 76,  rot: 15  }
+        { o: 'cam', x: 86, y: 14, w: 180, rot: 6, m: { x: 62, y: 90, w: 32 } }
       ],
       words: [
-        { t: 'SHOOT YOUR SHOT',       x: 43, y: 22 },
-        { t: 'KILL CHATGPT, OBVIOUSLY', x: 62, y: 44, c: 'hot' },
-        { t: '$10-20 SLIDING SCALE',  x: 47, y: 58, c: 'dim' },
-        { t: 'AI STARTUP PAYS $100',  x: 14, y: 90 },
-        { t: 'PROCEEDS GO TO NEPAL',  x: 78, y: 14, c: 'dim' }
+        { t: "NOBODY'S POSTING SHIT", x: 44, y: 22, m: { x: 6, y: 94 } },
+        { t: '35MM',                  x: 78, y: 50, c: 'dim' }
       ]
     },
+
+    /* cascade part two: swings back left, then down and out */
     rsvp: {
       prints: [
-        { i: 13, x: 58, y: 8,  w: 254, rot: 6  },
-        { i: 14, x: 82, y: 32, w: 214, rot: -7 },
-        { i: 15, x: 64, y: 58, w: 234, rot: 4  },
-        { i: 16, x: 86, y: 80, w: 204, rot: -5 }
+        { i: 11, x: 58, y: 3,  w: 258, rot: -6, m: { x: 8,  y: 4,  w: 46 } },
+        { i: 12, x: 80, y: 14, w: 160, rot: 8,  m: { x: 56, y: 12, w: 40 } },
+        { i: 13, x: 54, y: 26, w: 214, rot: 5,  m: { x: 14, y: 38, w: 48 } },
+        { i: 14, x: 74, y: 44, w: 300, rot: -4, m: { x: 44, y: 56, w: 46 } },
+        { i: 15, x: 56, y: 62, w: 176, rot: 10, m: { x: 6,  y: 74, w: 42 } },
+        { i: 16, x: 72, y: 78, w: 262, rot: -7 }
       ],
       objs: [
-        { o: 'disp', x: 50, y: 38, w: 172, rot: -10 },
-        { o: 'can',  x: 74, y: 20, w: 86,  rot: 8   },
-        { o: 'neg',  x: 46, y: 74, w: 292, rot: 6   },
-        { o: 'pola', x: 92, y: 52, w: 138, rot: 13  },
-        { o: 'cam',  x: 60, y: 90, w: 168, rot: -8  },
-        { o: 'clip', x: 55, y: 24, w: 48,  rot: -20 }
+        { o: 'disp', x: 50, y: 50, w: 172, rot: -10, m: { x: 62, y: 90, w: 31 } }
       ],
       words: [
-        { t: 'ADDRESS DROPS THAT DAY', x: 52, y: 18, c: 'dim' },
-        { t: 'FRIDAY, 830PM',          x: 78, y: 46, c: 'hot' },
-        { t: 'PAY TO CONFIRM',         x: 70, y: 70 }
+        { t: 'SHOOT YOUR SHOT', x: 54, y: 20, m: { x: 8, y: 94 } }
       ]
     }
   };
@@ -207,31 +186,48 @@
 
   /* ================= DRAGGING ================= */
   function draggable(el) {
-    var id = null, sx = 0, sy = 0, bl = 0, bt = 0;
-    el.addEventListener('pointerdown', function (e) {
-      if (SMALL()) return;
-      if (e.pointerType === 'mouse' && e.button !== 0) return;
-      id = e.pointerId;
-      el.setPointerCapture(id);
+    var id = null, sx = 0, sy = 0, bl = 0, bt = 0, arm = null;
+
+    function begin(pid) {
+      id = pid;
+      try { el.setPointerCapture(id); } catch (e) {}
       el.classList.add('is-held');
       el.style.zIndex = String(++TOP);
       el.dataset.moved = '1';
-      sx = e.clientX; sy = e.clientY;
       bl = parseFloat(el.style.left) || 0;
       bt = parseFloat(el.style.top) || 0;
-      e.preventDefault();
+    }
+
+    el.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      sx = e.clientX; sy = e.clientY;
+      if (e.pointerType === 'mouse') { begin(e.pointerId); e.preventDefault(); return; }
+      /* touch: press and hold to pick something up, so an ordinary swipe
+         still scrolls the page instead of dragging a photograph */
+      var pid = e.pointerId;
+      arm = setTimeout(function () {
+        arm = null;
+        el.classList.add('is-armed');
+        begin(pid);
+      }, 220);
     });
+
     el.addEventListener('pointermove', function (e) {
-      if (id === null) return;
-      /* track deltas rather than offsets, because every thing carries a rotation
-         and a rotated bounding box would drift on grab */
+      if (id === null) {
+        if (arm && (Math.abs(e.clientX - sx) > 10 || Math.abs(e.clientY - sy) > 10)) {
+          clearTimeout(arm); arm = null;      /* they meant to scroll */
+        }
+        return;
+      }
       el.style.left = (bl + e.clientX - sx) + 'px';
       el.style.top = (bt + e.clientY - sy) + 'px';
+      if (e.cancelable) e.preventDefault();
     });
+
     function up() {
-      if (id === null) return;
-      el.classList.remove('is-held');
-      id = null;
+      if (arm) { clearTimeout(arm); arm = null; }
+      if (id !== null) { el.classList.remove('is-held'); id = null; }
+      el.classList.remove('is-armed');
     }
     el.addEventListener('pointerup', up);
     el.addEventListener('pointercancel', up);
@@ -239,9 +235,20 @@
   }
 
   /* ================= BUILD THE SCENES ================= */
-  function place(el, host, x, y, w) {
+  function place(el, host, x, y, w, m) {
+    var small = SMALL();
+    if (small && !m) { el.style.display = 'none'; return; }
+    el.style.display = '';
     if (el.dataset.moved) return;
     var r = host.getBoundingClientRect();
+    if (small) {
+      var mp = Math.round(r.width * m.w / 100);
+      el.style.left = Math.round(r.width * m.x / 100) + 'px';
+      el.style.top = Math.round(r.height * m.y / 100) + 'px';
+      el.style.width = mp + 'px';
+      el.style.setProperty('--pw', mp + 'px');
+      return;
+    }
     el.style.left = Math.round(r.width * x / 100) + 'px';
     el.style.top = Math.round(r.height * y / 100) + 'px';
     var px = Math.round(w * Math.min(1, r.width / 1440));
@@ -295,39 +302,62 @@
     (cfg.prints || []).forEach(function (spec) {
       var el = makePrint(spec);
       host.appendChild(el); draggable(el);
-      placements.push({ el: el, host: host, x: spec.x, y: spec.y, w: spec.w });
+      placements.push({ el: el, host: host, x: spec.x, y: spec.y, w: spec.w, m: spec.m });
     });
 
     (cfg.objs || []).forEach(function (spec) {
       var el = makeObj(OBJ[spec.o]);
       el.style.transform = 'rotate(' + spec.rot + 'deg)';
       host.appendChild(el); draggable(el);
-      placements.push({ el: el, host: host, x: spec.x, y: spec.y, w: spec.w });
+      placements.push({ el: el, host: host, x: spec.x, y: spec.y, w: spec.w, m: spec.m });
     });
 
     if (cfg.clip) {
       var c = makeObj(OBJ.clip, ' thing--clip');
       c.style.transform = 'rotate(' + cfg.clip.rot + 'deg)';
       host.appendChild(c); draggable(c);
-      placements.push({ el: c, host: host, x: cfg.clip.x, y: cfg.clip.y, w: cfg.clip.w });
+      placements.push({ el: c, host: host, x: cfg.clip.x, y: cfg.clip.y, w: cfg.clip.w, m: cfg.clip.m });
     }
 
     var wordHost = document.querySelector('[data-words="' + key + '"]');
-    if (wordHost && cfg.words) {
+    if (cfg.words) {
       cfg.words.forEach(function (w) {
-        var s = document.createElement('span');
-        s.className = 'word' + (w.c ? ' ' + w.c : '');
-        s.textContent = w.t;
-        s.style.left = w.x + '%';
-        s.style.top = w.y + '%';
-        wordHost.appendChild(s);
+        var el = document.createElement('span');
+        el.className = 'word' + (w.c ? ' ' + w.c : '');
+        el.textContent = w.t;
+        placements.push({ el: el, host: host, wordHost: wordHost, word: w });
       });
     }
   });
 
-  function layout() { placements.forEach(function (p) { place(p.el, p.host, p.x, p.y, p.w); }); }
+  function placeWord(p) {
+    var small = SMALL();
+    if (small && !p.word.m) { if (p.el.parentNode) p.el.remove(); return; }
+    var host = small ? p.host : p.wordHost;
+    if (!host) { if (p.el.parentNode) p.el.remove(); return; }
+    if (p.el.parentNode !== host) host.appendChild(p.el);
+    p.el.classList.toggle('word--m', small);
+    var c = small ? p.word.m : p.word;
+    p.el.style.left = c.x + '%';
+    p.el.style.top = c.y + '%';
+  }
+
+  function layout() {
+    placements.forEach(function (p) {
+      if (p.word) { placeWord(p); return; }
+      place(p.el, p.host, p.x, p.y, p.w, p.m);
+    });
+    var note = document.querySelector('.drag-note');
+    if (note) note.textContent = SMALL()
+      ? 'Press and hold to move things.'
+      : 'Everything on this page moves. Drag it.';
+  }
   layout();
   window.addEventListener('load', layout);
+  if (MQ) {
+    if (MQ.addEventListener) MQ.addEventListener('change', layout);
+    else if (MQ.addListener) MQ.addListener(layout);
+  }
   var rt;
   window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(layout, 150); });
 
