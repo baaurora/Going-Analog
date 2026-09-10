@@ -12,7 +12,7 @@
      e.g. { file:'A3-film-canister.png', sel:'.about', x:82, y:18, w:120, rot:-8 }
      -------------------------------------------------------- */
   var OBJECTS = [
-    { file:'A11-binder-clip.png',      sel:'.home',  x:40, y:1,  w:54,  rot:-14 },
+    { file:'A11-binder-clip.png',      sel:'.home',  x:4,  y:90, w:48,  rot:14  },
     { file:'A4-negative-strip.png',    sel:'.home',  x:57, y:87, w:280, rot:-6  },
     { file:'A1-polaroid-camera.png',   sel:'.rsvp',  x:77, y:5,  w:180, rot:5   },
     { file:'A3-film-canister.png',     sel:'.rsvp',  x:88, y:54, w:88,  rot:-9  },
