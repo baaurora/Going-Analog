@@ -66,48 +66,50 @@
     /* cascade part one: drifts right and down, clustered and overlapping */
     what: {
       prints: [
-        { i: 4,  x: 44, y: 4,  w: 150, rot: 6,   m: { x: 50, y: 4,  w: 40 } },
-        { i: 5,  x: 56, y: 10, w: 300, rot: -5,  m: { x: 10, y: 14, w: 48 } },
-        { i: 6,  x: 40, y: 26, w: 210, rot: 9,   m: { x: 46, y: 28, w: 44 } },
-        { i: 7,  x: 62, y: 36, w: 168, rot: -8,  m: { x: 12, y: 44, w: 42 } },
-        { i: 8,  x: 46, y: 52, w: 336, rot: 4,   m: { x: 40, y: 58, w: 52 } },
-        { i: 9,  x: 30, y: 72, w: 190, rot: -11, m: { x: 8,  y: 76, w: 40 } },
-        { i: 10, x: 68, y: 76, w: 244, rot: 7 }
+        { i: 4,  x: 38, y: 2,  w: 130, rot: 5,   m: { x: 50, y: 4,  w: 40 } },
+        { i: 5,  x: 44, y: 7,  w: 170, rot: -7,  m: { x: 10, y: 14, w: 48 } },
+        { i: 6,  x: 30, y: 13, w: 250, rot: 4,   m: { x: 46, y: 28, w: 44 } },
+        { i: 7,  x: 18, y: 23, w: 140, rot: -10, m: { x: 12, y: 44, w: 42 } },
+        { i: 8,  x: 6,  y: 31, w: 230, rot: 6,   m: { x: 40, y: 58, w: 52 } },
+        { i: 9,  x: 16, y: 45, w: 160, rot: -5,  m: { x: 8,  y: 76, w: 40 } },
+        { i: 10, x: 24, y: 55, w: 330, rot: 8 }
       ],
       objs: [
-        { o: 'cam', x: 86, y: 14, w: 180, rot: 6, m: { x: 62, y: 90, w: 32 } }
+        { o: 'cam', x: 72, y: 82, w: 172, rot: 6, m: { x: 62, y: 90, w: 32 } }
       ],
       words: [
-        { t: 'Phones get confiscated at the door,',    x: 58.3, y: 3.4,  c: 'say' },
-        { t: "you'll live.",                            x: 82.0, y: 9.4,  c: 'say' },
-        { t: 'No you cannot check it real quick,',      x: 19.2, y: 40.1, c: 'say' },
-        { t: 'PUT THE FUCKING PHONE IN THE BOX.',       x: 40.5, y: 43.6, c: 'say' },
-        { t: 'Everybody shoots film and disposables,',  x: 22.8, y: 54.7, c: 'say' },
-        { t: 'pictures turn up here a week later,',     x: 73.7, y: 67.6, c: 'say' },
-        { t: "no I'm not putting them on Instagram.",   x: 7.4,  y: 80.4, c: 'say' },
-        { t: '35MM',                                    x: 90.0, y: 52.0, c: 'dim' }
+        { t: 'ROLL 1',    x: 63.5, y: 8.6,  c: 'dim' },
+        { t: 'FLASH',     x: 62.5, y: 17.5, c: 'dim' },
+        { t: 'GROUPS',    x: 52.0, y: 26.3, c: 'dim' },
+        { t: 'ROLL 3',    x: 56.5, y: 35.1, c: 'dim' },
+        { t: '35MM',      x: 61.0, y: 43.9, c: 'dim' },
+        { t: 'PORTRAITS', x: 55.5, y: 52.7, c: 'dim' },
+        { t: 'ROLL 4',    x: 55.0, y: 61.5, c: 'dim' },
+        { t: 'NIGHT',     x: 59.5, y: 70.3, c: 'dim' },
+        { t: 'GO.A807',   x: 51.0, y: 79.2, c: 'dim' },
+        { t: 'ROLL 5',    x: 55.5, y: 88.0, c: 'dim' }
       ]
     },
 
     /* cascade part two: swings back left, then down and out */
     rsvp: {
       prints: [
-        { i: 11, x: 58, y: 3,  w: 258, rot: -6, m: { x: 8,  y: 4,  w: 46 } },
-        { i: 12, x: 80, y: 14, w: 160, rot: 8,  m: { x: 56, y: 12, w: 40 } },
-        { i: 13, x: 54, y: 26, w: 214, rot: 5,  m: { x: 14, y: 38, w: 48 } },
-        { i: 14, x: 74, y: 44, w: 300, rot: -4, m: { x: 44, y: 56, w: 46 } },
-        { i: 15, x: 56, y: 62, w: 176, rot: 10, m: { x: 6,  y: 74, w: 42 } },
-        { i: 16, x: 72, y: 78, w: 262, rot: -7 }
+        { i: 11, x: 48, y: 3,  w: 300, rot: -6, m: { x: 8,  y: 4,  w: 46 } },
+        { i: 12, x: 66, y: 14, w: 120, rot: 9,  m: { x: 56, y: 12, w: 40 } },
+        { i: 13, x: 56, y: 24, w: 210, rot: 4,  m: { x: 14, y: 38, w: 48 } },
+        { i: 14, x: 64, y: 38, w: 280, rot: -5, m: { x: 44, y: 56, w: 46 } },
+        { i: 15, x: 50, y: 56, w: 150, rot: 11, m: { x: 6,  y: 74, w: 42 } },
+        { i: 16, x: 62, y: 68, w: 250, rot: -8 }
       ],
       objs: [
         { o: 'disp', x: 50, y: 50, w: 172, rot: -10, m: { x: 62, y: 90, w: 31 } }
       ],
       words: [
-        { t: 'It rained on Volume One',                 x: 80.8, y: 3.2,  c: 'say' },
-        { t: 'and we did it anyway.',                   x: 80.8, y: 26.8, c: 'say' },
-        { t: '7 rolls, 16 frames I liked enough to post.', x: 72.5, y: 39.4, c: 'say' },
-        { t: 'Volume Two is September 25,',             x: 72.5, y: 66.2, c: 'say' },
-        { t: 'RSVP by the 20th.',                       x: 50.0, y: 76.3, c: 'say' }
+        { t: 'ROLL 6',     x: 88.0, y: 12.9, c: 'dim' },
+        { t: 'DISPOSABLE', x: 87.3, y: 30.6, c: 'dim' },
+        { t: 'ROLL 7',     x: 87.3, y: 48.4, c: 'dim' },
+        { t: 'FLASH',      x: 53.0, y: 66.2, c: 'dim' },
+        { t: 'GO.A0925',   x: 57.5, y: 84.0, c: 'dim' }
       ]
     }
   };
@@ -185,11 +187,23 @@
     }
     phone.addEventListener('pointerup', release);
     phone.addEventListener('pointercancel', release);
+
+    /* tap, click or keyboard all work. dragging is the nice way in, not the
+       only way, so nobody can get stuck staring at a phone that will not move */
+    function flyIn() {
+      if (opened) return;
+      var jb = jail.getBoundingClientRect(), sb = stage.getBoundingClientRect();
+      phone.style.left = (jb.left + jb.width / 2 - sb.left) + 'px';
+      phone.style.top = (jb.top + jb.height * 0.55 - sb.top) + 'px';
+      phone.style.transform = 'translate(-50%,-50%)';
+      setTimeout(open, 300);
+    }
     phone.addEventListener('click', function (e) {
       if (opened) return;
-      if (e.detail === 0) { open(); return; }
-      if (!moved) { hint.textContent = 'DRAG IT, DON’T CLICK IT'; }
+      if (e.detail === 0) { open(); return; }   /* keyboard */
+      if (!moved) flyIn();
     });
+    jail.addEventListener('click', flyIn);
     setTimeout(function () { if (!opened) skip.hidden = false; }, 8000);
     skip.addEventListener('click', open);
   })();
