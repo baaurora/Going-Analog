@@ -88,7 +88,7 @@
         { t: "You get it back when you leave.", x: 48.9, y: 24.21 },
         { t: "There are no phones out for the whole night.", x: 48.7, y: 25.26 },
         { t: "Everybody shoots film and disposable cameras.", x: 62.2, y: 27.69 },
-        { t: "Nobody sees a photo until the roll comes back.", x: <title>2.1, y: 58.70</title> },
+        { t: "Nobody sees a photo until the roll comes back.", x: 2.1, y: 58.70 },
         { t: "That takes about a week.", x: 68.7, y: 52.42 },
         { t: "Most of them come back blurry.", x: 76.8, y: 55.97 },
         { t: "The pictures only go up on this site.", x: 66.9, y: 57.86 },

@@ -163,6 +163,9 @@ main{position:relative}
 
 /* ============================ REGISTER ============================ */
 .reg{position:relative;z-index:var(--z-text);max-width:600px;pointer-events:none}
+.reg__cta{margin:0 0 16px;font-family:var(--display);font-weight:700;
+  text-transform:uppercase;color:var(--red);letter-spacing:.03em;
+  font-size:clamp(28px,3.8vw,52px);line-height:1}
 .reg__head{margin:0 0 18px;font-family:var(--display);font-weight:700;
   font-size:clamp(24px,3.3vw,46px);line-height:1.02;letter-spacing:.004em;max-width:17ch}
 .reg__sub{margin:0 0 34px;font-size:16px;line-height:1.55;max-width:52ch;color:var(--ink)}
