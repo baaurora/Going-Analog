@@ -140,7 +140,7 @@ main{position:relative}
 #what .side{right:auto;left:48%}
 .side{position:absolute;right:var(--pad);top:calc(var(--pad) + var(--band) + 32px);
   width:min(276px,28vw);z-index:var(--z-text);pointer-events:none}
-.side--vol{width:min(300px,30vw);top:calc(var(--pad) + var(--band) - 26px)}
+.side--vol{width:min(300px,30vw);top:-210px}
 .side--vol .vol{grid-template-columns:1fr;gap:1px;margin-bottom:14px}
 .side__head{margin:0 0 14px;font-family:var(--display);font-weight:700;
   font-size:clamp(20px,1.9vw,26px);line-height:1;letter-spacing:.004em}
@@ -203,7 +203,7 @@ main{position:relative}
 .cal a:hover{color:var(--red);border-color:var(--red)}
 #sink{display:none}
 
-.creator{position:absolute;left:74%;top:calc(var(--band) + 430px);
+.creator{position:absolute;left:76.5%;top:520px;
   z-index:var(--z-text);pointer-events:none;max-width:250px}
 .creator__k{margin:0 0 6px;font-family:var(--display);font-weight:700;text-transform:uppercase;
   font-size:15px;letter-spacing:.14em;color:var(--grey)}

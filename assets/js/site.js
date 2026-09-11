@@ -72,12 +72,12 @@
     { p: 18, x: 44.5, y: 64.00, w: 360, rot:  -4, sh: 'tall', front: 1 }
   ];
 
-  var CLIP = { x: -2.0, y: 1.9, w: 96, rot: -13 };
+  var CLIP = { x: 17.0, y: 6.50, w: 96, rot: -13 };
 
   var OBJS = [
-    { o: 'can',  x: 50, y: 11.0, w: 170, rot:  9 },
-    { o: 'cam',  x: 72, y: 75.0, w: 330, rot:  6 },
-    { o: 'disp', x: 70, y: 36.0, w: 300, rot: -8 }
+    { o: 'can',  x: 47, y: 10.5, w: 170, rot:  9 },
+    { o: 'cam',  x: 50, y: 18.0, w: 330, rot:  6 },
+    { o: 'disp', x: 50, y: 60.0, w: 300, rot: -8 }
   ];
 
   /* labels sit in the open space, never within 36px of a frame */
@@ -85,17 +85,7 @@
   /* plain sentences, tracking the walk. y order is reading order. */
   /* one run, stepped evenly, each line indented to the shoulder of the
      frame the walk has at that height, so the block traces the path */
-  var LABELS = [
-        { t: "You get it back when you leave.", x: 64.8, y: 17.58 },
-        { t: "There are no phones out for the whole night.", x: 48.3, y: 22.00 },
-        { t: "Everybody shoots film and disposable cameras.", x: 69.2, y: 27.00 },
-        { t: "Nobody sees a photo until the roll comes back.", x: 69.2, y: 32.00 },
-        { t: "That takes about a week.", x: 41.0, y: 39.62 },
-        { t: "Most of them come back blurry.", x: 13.2, y: 48.40 },
-        { t: "The pictures only go up on this site.", x: 67.6, y: 48.74 },
-        { t: "A good hang with people you have not met.", x: 76.2, y: 52.00 },
-        { t: "Most of them come back blurry.", x: 13.2, y: 48.40 }
-  ];
+  var LABELS = [];
 
   /* ================= GATE (unchanged from v1) ================= */
   (function gate() {
