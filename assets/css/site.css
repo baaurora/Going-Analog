@@ -78,17 +78,18 @@ a{color:inherit;text-decoration:none}
 .menu a.is-on{color:var(--red)}
 
 /* ============================ SCENES ============================ */
-.scene{position:relative;min-height:100svh;padding:calc(var(--pad) + 84px) var(--pad) 90px;
+main{position:relative}
+.scene{position:relative;min-height:860px;padding:calc(var(--pad) + 84px) var(--pad) 90px;
   isolation:isolate}
-.scene--tall{min-height:118svh}
-#what{min-height:1180px}
-#rsvp{min-height:1260px}
+.scene--tall{min-height:1000px}
+#rsvp{min-height:1120px}
 .scene__head{position:relative;z-index:var(--z-text);pointer-events:none;
   margin:0 0 22px;font-family:var(--display);font-weight:700;
   font-size:clamp(30px,4.4vw,58px);line-height:.98;letter-spacing:.004em}
 
 /* the draggable layer, always underneath every word on the page */
 .things{position:absolute;inset:0;z-index:var(--z-things);pointer-events:none}
+#cascade,#labels{height:100%}
 .thing{position:absolute;pointer-events:auto;cursor:grab;touch-action:none;
   user-select:none;-webkit-user-select:none;-webkit-user-drag:none;
   transition:box-shadow .18s ease}
@@ -129,8 +130,10 @@ a{color:inherit;text-decoration:none}
 
 
 /* ============================ COPY ============================ */
-.side{position:absolute;right:var(--pad);top:calc(var(--pad) + 104px);
+.side{position:absolute;right:var(--pad);top:calc(var(--pad) + 100px);
   width:min(276px,28vw);z-index:var(--z-text);pointer-events:none}
+.side--vol{width:min(300px,30vw)}
+.side--vol .vol{grid-template-columns:1fr;gap:1px;margin-bottom:14px}
 .side__head{margin:0 0 14px;font-family:var(--display);font-weight:700;
   font-size:clamp(20px,1.9vw,26px);line-height:1;letter-spacing:.004em}
 .says{position:relative;z-index:var(--z-text);pointer-events:none;
@@ -188,7 +191,7 @@ a{color:inherit;text-decoration:none}
 .cal a:hover{color:var(--red);border-color:var(--red)}
 #sink{display:none}
 
-.foot{position:relative;z-index:var(--z-text);display:flex;flex-wrap:wrap;gap:8px 34px;
+.foot{position:relative;min-height:110px;z-index:var(--z-text);display:flex;flex-wrap:wrap;gap:8px 34px;
   justify-content:space-between;padding:40px var(--pad) 44px;font-size:12px;
   letter-spacing:.06em;color:var(--grey)}
 

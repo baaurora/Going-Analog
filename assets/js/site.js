@@ -13,23 +13,23 @@
 
   /* ---- the 16 kept frames, plus the title card at 0 ---- */
   var P = [
-    { t: 1,           shape: 'sq',   alt: 'Going Analog' },
-    { f: 'R7-000A', shape: 'sq',   alt: 'A man laughing behind a disposable camera raised to his eye' },
-    { f: 'R5-012A', shape: 'sq',   alt: 'A woman tilting her head back to shoot a point-and-shoot camera' },
-    { f: 'R4-009A', shape: 'sq',   alt: 'Close portrait of a man in a white shirt grinning under flash' },
-    { f: 'R2-018A', shape: 'sq',   alt: 'Three friends posing, one sticking their tongue out' },
-    { f: 'R4-016A', shape: 'sq',   alt: 'Very close frame of two people laughing hard' },
-    { f: 'R6-023A', shape: 'wide', alt: 'Three friends leaning together for the camera' },
-    { f: 'R1-000A', shape: 'sq',   alt: 'A woman laughing behind a paper fan, holding a camera' },
-    { f: 'R3-019A', shape: 'wide', alt: 'Three friends in white shirts holding drinks' },
-    { f: 'R5-010A', shape: 'wide', alt: 'Three women pressed together smiling at the camera' },
-    { f: 'R4-012A', shape: 'wide', alt: 'Three people dancing, one holding a folding fan' },
-    { f: 'R2-003A', shape: 'sq',   alt: 'Two friends mugging for the camera' },
-    { f: 'R5-019A', shape: 'wide', alt: 'Three friends under a large leaf, laughing' },
-    { f: 'R2-025A', shape: 'wide', alt: 'A group sitting in a room with floral wallpaper' },
-    { f: 'R2-020A', shape: 'wide', alt: 'Four friends lined up shoulder to shoulder' },
-    { f: 'R7-006A', shape: 'wide', alt: 'Two people holding something glowing between them' },
-    { f: 'R3-018A', shape: 'wide', alt: 'A group leaning in together, mid-conversation' }
+    { t: 1,         sh: 'sq',   alt: 'Going Analog' },
+    { f: 'R1-000A', alt: 'A woman laughing behind a paper fan, holding a camera' },
+    { f: 'R2-003A', alt: 'Two friends mugging for the camera' },
+    { f: 'R2-018A', alt: 'Three friends posing, one sticking their tongue out' },
+    { f: 'R2-020A', alt: 'Four friends lined up shoulder to shoulder' },
+    { f: 'R2-025A', alt: 'A group sitting in a room with floral wallpaper' },
+    { f: 'R3-018A', alt: 'A group leaning in together, mid-conversation' },
+    { f: 'R3-019A', alt: 'Three friends in white shirts holding drinks' },
+    { f: 'R4-009A', alt: 'Close portrait of a man in a white shirt grinning under flash' },
+    { f: 'R4-012A', alt: 'Three people dancing, one holding a folding fan' },
+    { f: 'R4-016A', alt: 'Very close frame of two people laughing hard' },
+    { f: 'R5-010A', alt: 'Three women pressed together smiling at the camera' },
+    { f: 'R5-012A', alt: 'A woman tilting her head back to shoot a point-and-shoot camera' },
+    { f: 'R5-019A', alt: 'Three friends under a large leaf, laughing' },
+    { f: 'R6-023A', alt: 'Three friends leaning together for the camera' },
+    { f: 'R7-000A', alt: 'A man laughing behind a disposable camera raised to his eye' },
+    { f: 'R7-006A', alt: 'Two people holding something glowing between them' }
   ];
 
   var OBJ = {
@@ -45,74 +45,50 @@
   /* Prints cascade down the page in overlapping clusters with real size
      variance, so you meet them as you scroll. Objects appear once each:
      one clip, one blank polaroid, one Polaroid camera, one disposable. */
-  var SCENES = {
-    home: {
-      prints: [
-        { i: 3, x: 17, y: 40, w: 236, rot: -10, m: { x: 18, y: 34, w: 44 } },
-        { i: 2, x: 10, y: 33, w: 252, rot: 7,   m: { x: 6,  y: 25, w: 46 } },
-        { i: 1, x: 18, y: 25, w: 244, rot: -4,  m: { x: 17, y: 15, w: 44 } },
-        { i: 0, x: 12, y: 17, w: 284, rot: 5,   m: { x: 10, y: 4,  w: 49 } }
-      ],
-      clip: { x: 19, y: 13, w: 70, rot: -13, m: { x: 30, y: 0, w: 13 } },
-      objs: [
-        { o: 'pola', x: 46, y: 12, w: 132, rot: 9, m: { x: 68, y: 62, w: 24 } }
-      ],
-      words: [
-        { t: 'PHONES IN THE BOX', x: 44, y: 40, m: { x: 5, y: 90 } },
-        { t: 'GO.A807',           x: 74, y: 62, c: 'dim' }
-      ]
-    },
+  /* One walk down the page. Every frame overlaps the next, so it reads as a
+     line rather than a scatter. x and y are percentages of <main>. Positions
+     were solved against the running copy, not eyeballed. */
+  var PATH = [
+    { p: 0,  x:  8.0, y:  5.89, w: 270, rot:   4, sh: 'sq',   pile: 1 },
+    { p: 1,  x:  9.8, y:  6.76, w: 255, rot:  -6, sh: 'sq',   pile: 1 },
+    { p: 2,  x:  7.8, y:  7.21, w: 262, rot:   9, sh: 'sq',   pile: 1 },
+    { p: 3,  x:  9.6, y:  8.06, w: 248, rot:  -3, sh: 'sq',   pile: 1 },
+    { p: 4,  x: 16.7, y: 16.39, w: 240, rot:  -7, sh: 'wide' },
+    { p: 5,  x: 28.1, y: 21.65, w: 190, rot:   5, sh: 'sq'   },
+    { p: 6,  x: 33.7, y: 26.83, w: 310, rot:   4, sh: 'wide' },
+    { p: 7,  x: 30.2, y: 33.03, w: 170, rot: -10, sh: 'sq'   },
+    { p: 8,  x: 16.7, y: 38.47, w: 260, rot:   6, sh: 'wide' },
+    { p: 9,  x: 10.4, y: 44.60, w: 210, rot:  -4, sh: 'wide' },
+    { p: 10, x:  9.7, y: 49.67, w: 180, rot:   9, sh: 'sq'   },
+    { p: 11, x: 20.0, y: 54.50, w: 270, rot:  -6, sh: 'wide' },
+    { p: 12, x: 38.0, y: 55.10, w: 220, rot:   7, sh: 'sq'   },
+    { p: 13, x: 50.0, y: 61.00, w: 300, rot:  -5, sh: 'wide' },
+    { p: 14, x: 54.2, y: 68.00, w: 250, rot:  10, sh: 'wide' },
+    { p: 15, x: 66.0, y: 75.00, w: 280, rot:  -8, sh: 'wide' },
+    { p: 16, x: 74.0, y: 82.00, w: 220, rot:   5, sh: 'sq'   }
+  ];
 
-    /* cascade part one: drifts right and down, clustered and overlapping */
-    what: {
-      prints: [
-        { i: 4,  x: 38, y: 2,  w: 130, rot: 5,   m: { x: 50, y: 4,  w: 40 } },
-        { i: 5,  x: 44, y: 7,  w: 170, rot: -7,  m: { x: 10, y: 14, w: 48 } },
-        { i: 6,  x: 30, y: 13, w: 250, rot: 4,   m: { x: 46, y: 28, w: 44 } },
-        { i: 7,  x: 18, y: 23, w: 140, rot: -10, m: { x: 12, y: 44, w: 42 } },
-        { i: 8,  x: 6,  y: 31, w: 230, rot: 6,   m: { x: 40, y: 58, w: 52 } },
-        { i: 9,  x: 16, y: 45, w: 160, rot: -5,  m: { x: 8,  y: 76, w: 40 } },
-        { i: 10, x: 24, y: 55, w: 330, rot: 8 }
-      ],
-      objs: [
-        { o: 'cam', x: 72, y: 82, w: 172, rot: 6, m: { x: 62, y: 90, w: 32 } }
-      ],
-      words: [
-        { t: 'ROLL 1',    x: 63.5, y: 8.6,  c: 'dim' },
-        { t: 'FLASH',     x: 62.5, y: 17.5, c: 'dim' },
-        { t: 'GROUPS',    x: 52.0, y: 26.3, c: 'dim' },
-        { t: 'ROLL 3',    x: 56.5, y: 35.1, c: 'dim' },
-        { t: '35MM',      x: 61.0, y: 43.9, c: 'dim' },
-        { t: 'PORTRAITS', x: 55.5, y: 52.7, c: 'dim' },
-        { t: 'ROLL 4',    x: 55.0, y: 61.5, c: 'dim' },
-        { t: 'NIGHT',     x: 59.5, y: 70.3, c: 'dim' },
-        { t: 'GO.A807',   x: 51.0, y: 79.2, c: 'dim' },
-        { t: 'ROLL 5',    x: 55.5, y: 88.0, c: 'dim' }
-      ]
-    },
+  var CLIP = { x: 13.5, y: 4.6, w: 70, rot: -13 };
 
-    /* cascade part two: swings back left, then down and out */
-    rsvp: {
-      prints: [
-        { i: 11, x: 48, y: 3,  w: 300, rot: -6, m: { x: 8,  y: 4,  w: 46 } },
-        { i: 12, x: 66, y: 14, w: 120, rot: 9,  m: { x: 56, y: 12, w: 40 } },
-        { i: 13, x: 56, y: 24, w: 210, rot: 4,  m: { x: 14, y: 38, w: 48 } },
-        { i: 14, x: 64, y: 38, w: 280, rot: -5, m: { x: 44, y: 56, w: 46 } },
-        { i: 15, x: 50, y: 56, w: 150, rot: 11, m: { x: 6,  y: 74, w: 42 } },
-        { i: 16, x: 62, y: 68, w: 250, rot: -8 }
-      ],
-      objs: [
-        { o: 'disp', x: 50, y: 50, w: 172, rot: -10, m: { x: 62, y: 90, w: 31 } }
-      ],
-      words: [
-        { t: 'ROLL 6',     x: 88.0, y: 12.9, c: 'dim' },
-        { t: 'DISPOSABLE', x: 87.3, y: 30.6, c: 'dim' },
-        { t: 'ROLL 7',     x: 87.3, y: 48.4, c: 'dim' },
-        { t: 'FLASH',      x: 53.0, y: 66.2, c: 'dim' },
-        { t: 'GO.A0925',   x: 57.5, y: 84.0, c: 'dim' }
-      ]
-    }
-  };
+  var OBJS = [
+    { o: 'pola', x: 66, y: 17.5, w: 132, rot:  9 },
+    { o: 'cam',  x: 62, y: 52.0, w: 176, rot:  6 },
+    { o: 'disp', x: 80, y: 43.0, w: 168, rot: -8 }
+  ];
+
+  /* labels sit in the open space, never within 36px of a frame */
+  var LABELS = [
+    { t: 'ROLL 1',     x: 41.9, y: 12.67 },
+    { t: 'FLASH',      x: 61.1, y: 23.97 },
+    { t: 'GROUPS',     x: 58.6, y: 37.88 },
+    { t: 'PORTRAITS',  x: 46.1, y: 43.98 },
+    { t: '35MM',       x: 28.6, y: 52.69 },
+    { t: 'NIGHT',      x: 64.0, y: 47.60 },
+    { t: 'GO.A807',    x: 49.0, y: 77.9 },
+    { t: 'DISPOSABLE', x: 50.0, y: 86.28 },
+    { t: 'ROLL 7',     x: 48.6, y: 82.31 },
+    { t: 'GO.A0925',   x: 48.6, y: 91.02 }
+  ];
 
   /* ================= GATE (unchanged from v1) ================= */
   (function gate() {
@@ -258,43 +234,45 @@
     el.addEventListener('lostpointercapture', up);
   }
 
-  /* ================= BUILD THE SCENES ================= */
-  function place(el, host, x, y, w, m) {
-    var small = SMALL();
-    if (small && !m) { el.style.display = 'none'; return; }
-    el.style.display = '';
+  /* ================= BUILD THE WALK ================= */
+  var host = document.getElementById('cascade');
+  var labelHost = document.getElementById('labels');
+  var placements = [];
+
+  function place(p) {
+    var el = p.el, r = host.getBoundingClientRect();
     if (el.dataset.moved) return;
-    var r = host.getBoundingClientRect();
+    var small = SMALL();
+    var px, x, y;
     if (small) {
-      var mp = Math.round(r.width * m.w / 100);
-      el.style.left = Math.round(r.width * m.x / 100) + 'px';
-      el.style.top = Math.round(r.height * m.y / 100) + 'px';
-      el.style.width = mp + 'px';
-      el.style.setProperty('--pw', mp + 'px');
-      return;
+      /* the walk narrows into a zigzag so it still reads as one line on a
+         phone, sitting behind the copy the way it does everywhere else */
+      px = Math.round(r.width * (p.kind === 'obj' ? 0.26 : 0.46));
+      x = (p.i % 2 ? 48 : 4);
+      y = p.y;
+    } else {
+      px = Math.round(p.w * Math.min(1, r.width / 1440));
+      x = p.x; y = p.y;
     }
     el.style.left = Math.round(r.width * x / 100) + 'px';
     el.style.top = Math.round(r.height * y / 100) + 'px';
-    var px = Math.round(w * Math.min(1, r.width / 1440));
     el.style.width = px + 'px';
-    /* border and lip are proportional to the card, which percentage padding
-       cannot express here because it resolves against the containing block */
     el.style.setProperty('--pw', px + 'px');
   }
 
-  var placements = [];
-
   function makePrint(spec) {
-    var p = P[spec.i];
+    var p = P[spec.p];
     var fig = document.createElement('figure');
-    fig.className = 'thing thing--print ' + p.shape + (p.t ? ' thing--title' : '');
+    fig.className = 'thing thing--print ' + spec.sh + (p.t ? ' thing--title' : '');
     fig.style.transform = 'rotate(' + spec.rot + 'deg)';
     var win = document.createElement('div');
     win.className = 'win';
     if (p.t) {
-      var s = document.createElement('span');
-      s.textContent = 'GOING ANALOG';
-      win.appendChild(s);
+      win.className += ' ';
+      var ttl = document.createElement('span');
+      ttl.textContent = 'GOING ANALOG';
+      win.appendChild(ttl);
+      fig.className += ' thing--title';
     } else {
       var img = document.createElement('img');
       img.alt = p.alt; img.loading = 'lazy'; img.decoding = 'async';
@@ -318,59 +296,36 @@
     return d;
   }
 
-  Object.keys(SCENES).forEach(function (key) {
-    var host = document.querySelector('[data-things="' + key + '"]');
-    if (!host) return;
-    var cfg = SCENES[key];
-
-    (cfg.prints || []).forEach(function (spec) {
-      var el = makePrint(spec);
-      host.appendChild(el); draggable(el);
-      placements.push({ el: el, host: host, x: spec.x, y: spec.y, w: spec.w, m: spec.m });
-    });
-
-    (cfg.objs || []).forEach(function (spec) {
-      var el = makeObj(OBJ[spec.o]);
-      el.style.transform = 'rotate(' + spec.rot + 'deg)';
-      host.appendChild(el); draggable(el);
-      placements.push({ el: el, host: host, x: spec.x, y: spec.y, w: spec.w, m: spec.m });
-    });
-
-    if (cfg.clip) {
-      var c = makeObj(OBJ.clip, ' thing--clip');
-      c.style.transform = 'rotate(' + cfg.clip.rot + 'deg)';
-      host.appendChild(c); draggable(c);
-      placements.push({ el: c, host: host, x: cfg.clip.x, y: cfg.clip.y, w: cfg.clip.w, m: cfg.clip.m });
-    }
-
-    var wordHost = document.querySelector('[data-words="' + key + '"]');
-    if (cfg.words) {
-      cfg.words.forEach(function (w) {
-        var el = document.createElement('span');
-        el.className = 'word' + (w.c ? ' ' + w.c : '');
-        el.textContent = w.t;
-        placements.push({ el: el, host: host, wordHost: wordHost, word: w });
-      });
-    }
+  PATH.forEach(function (spec, i) {
+    var el = makePrint(spec);
+    host.appendChild(el); draggable(el);
+    placements.push({ el: el, i: i, x: spec.x, y: spec.y, w: spec.w, kind: 'print' });
   });
 
-  function placeWord(p) {
-    var small = SMALL();
-    if (small && !p.word.m) { if (p.el.parentNode) p.el.remove(); return; }
-    var host = small ? p.host : p.wordHost;
-    if (!host) { if (p.el.parentNode) p.el.remove(); return; }
-    if (p.el.parentNode !== host) host.appendChild(p.el);
-    p.el.classList.toggle('word--m', small);
-    var c = small ? p.word.m : p.word;
-    p.el.style.left = c.x + '%';
-    p.el.style.top = c.y + '%';
-  }
+  var clipEl = makeObj(OBJ.clip, ' thing--clip');
+  clipEl.style.transform = 'rotate(' + CLIP.rot + 'deg)';
+  host.appendChild(clipEl); draggable(clipEl);
+  placements.push({ el: clipEl, i: 0, x: CLIP.x, y: CLIP.y, w: CLIP.w, kind: 'obj' });
+
+  OBJS.forEach(function (spec, i) {
+    var el = makeObj(OBJ[spec.o]);
+    el.style.transform = 'rotate(' + spec.rot + 'deg)';
+    host.appendChild(el); draggable(el);
+    placements.push({ el: el, i: i + 1, x: spec.x, y: spec.y, w: spec.w, kind: 'obj' });
+  });
+
+  LABELS.forEach(function (l) {
+    var el = document.createElement('span');
+    el.className = 'word dim';
+    el.textContent = l.t;
+    el.style.left = l.x + '%';
+    el.style.top = l.y + '%';
+    labelHost.appendChild(el);
+  });
 
   function layout() {
-    placements.forEach(function (p) {
-      if (p.word) { placeWord(p); return; }
-      place(p.el, p.host, p.x, p.y, p.w, p.m);
-    });
+    placements.forEach(place);
+    labelHost.style.display = SMALL() ? 'none' : '';
     var note = document.querySelector('.drag-note');
     if (note) note.textContent = SMALL()
       ? 'Press and hold to move things.'
