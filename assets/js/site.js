@@ -72,11 +72,11 @@
     { p: 18, x: 44.5, y: 64.00, w: 360, rot:  -4, sh: 'tall', front: 1 }
   ];
 
-  var CLIP = { x: 17.0, y: 6.50, w: 96, rot: -13 };
+  var CLIP = { x: 14.8, y: 3.25, w: 92, rot: -38 };
 
   var OBJS = [
     { o: 'can',  x: 76, y: 55.5, w: 260, rot:  9 },
-    { o: 'cam',  x: 40, y: 13.0, w: 330, rot:  6 },
+    { o: 'cam',  x: 70, y: 26.0, w: 330, rot:  6 },
     { o: 'disp', x: 44, y: 3.20, w: 300, rot: -8 }
   ];
 

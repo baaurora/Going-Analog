@@ -122,7 +122,7 @@ main{position:relative}
 .thing--obj.is-held{filter:drop-shadow(0 22px 34px rgba(0,0,0,.28))}
 
 /* the clip that holds the opening pile together */
-.thing--clip{z-index:400}
+.thing--clip{z-index:600}
 .thing--front{z-index:500}
 
 /* scattered words, above the objects and below the real copy */
