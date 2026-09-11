@@ -126,8 +126,8 @@ main{position:relative}
 
 /* scattered words, above the objects and below the real copy */
 .words{position:absolute;inset:0;z-index:var(--z-words);pointer-events:none}
-.word{position:absolute;font-size:13px;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--ink);white-space:nowrap}
+.word{position:absolute;font-size:13px;letter-spacing:.01em;line-height:1.4;
+  color:var(--grey);white-space:nowrap}
 .word.dim{color:var(--grey)}
 .word.hot{color:var(--red)}
 .word--m{z-index:9000}

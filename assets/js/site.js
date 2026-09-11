@@ -81,17 +81,18 @@
   ];
 
   /* labels sit in the open space, never within 36px of a frame */
+  /* straight sentences, placed in the gaps the walk leaves */
   var LABELS = [
-    { t: 'ROLL 1',     x: 41.9, y: 12.67 },
-    { t: 'FLASH',      x: 61.1, y: 21.77 },
-    { t: 'GROUPS',     x: 69.5, y: 28.50 },
-    { t: 'PORTRAITS',  x: 69.0, y: 43.50 },
-    { t: '35MM',       x: 70.0, y: 44.00 },
-    { t: 'NIGHT',      x: 64.0, y: 47.60 },
-    { t: 'GO.A807',    x: 49.0, y: 77.9 },
-    { t: 'DISPOSABLE', x: 50.0, y: 84.08 },
-    { t: 'ROLL 7',     x: 48.6, y: 82.31 },
-    { t: 'GO.A0925',   x: 48.6, y: 91.02 }
+{ t: "Going Analog started in August 2026.", x: 50.1, y: 12.70 },
+        { t: "Everyone puts their phone in a box at the door.", x: 77.6, y: 21.31 },
+        { t: "You get it back when you leave.", x: 15.1, y: 29.93 },
+        { t: "There are no phones out for the whole night.", x: 69.3, y: 39.42 },
+        { t: "Everybody shoots film and disposable cameras.", x: 50.1, y: 47.15 },
+        { t: "Nobody sees a photo until the roll comes back.", x: 77.6, y: 55.77 },
+        { t: "That takes about a week.", x: 77.6, y: 58.83 },
+        { t: "Most of them come back blurry.", x: 46.8, y: 77.66 },
+        { t: "The pictures only go up on this site.", x: 50.1, y: 84.53 },
+        { t: "A good hang with people you have not met.", x: 80.1, y: 91.39 }
   ];
 
   /* ================= GATE (unchanged from v1) ================= */
