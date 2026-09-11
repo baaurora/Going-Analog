@@ -93,7 +93,8 @@
         { t: "That takes about a week.", x: 41.0, y: 39.62 },
         { t: "Most of them come back blurry.", x: 13.2, y: 48.40 },
         { t: "The pictures only go up on this site.", x: 67.6, y: 48.74 },
-        { t: "A good hang with people you have not met.", x: 76.2, y: 52.00 }
+        { t: "A good hang with people you have not met.", x: 76.2, y: 52.00 },
+        { t: "Most of them come back blurry.", x: 13.2, y: 48.40 }
   ];
 
   /* ================= GATE (unchanged from v1) ================= */
