@@ -76,8 +76,8 @@
 
   var OBJS = [
     { o: 'can',  x: 76, y: 55.5, w: 260, rot:  9 },
-    { o: 'cam',  x: 48, y: 72.0, w: 330, rot:  6 },
-    { o: 'disp', x: 50, y: 60.0, w: 300, rot: -8 }
+    { o: 'cam',  x: 40, y: 13.0, w: 330, rot:  6 },
+    { o: 'disp', x: 44, y: 3.20, w: 300, rot: -8 }
   ];
 
   /* labels sit in the open space, never within 36px of a frame */
