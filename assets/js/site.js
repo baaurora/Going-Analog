@@ -51,48 +51,49 @@
      line rather than a scatter. x and y are percentages of <main>. Positions
      were solved against the running copy, not eyeballed. */
   var PATH = [
-    { p:  3, x:  6.0, y:  9.60, w: 246, rot:  -9, pile: 1, sh: 'sq'   },
-    { p:  2, x: 12.4, y:  8.60, w: 254, rot:   7, pile: 1, sh: 'sq'   },
-    { p:  1, x:  9.0, y:  6.90, w: 258, rot:  -4, pile: 1, sh: 'sq'   },
-    { p:  0, x: 14.6, y:  5.40, w: 276, rot:   5, pile: 1, sh: 'sq', front: 1 },
-    { p:  4, x: 18.5, y: 16.39, w: 240, rot:  -7, sh: 'wide' },
-    { p:  5, x: 29.5, y: 21.65, w: 190, rot:   5, sh: 'sq'   },
-    { p:  6, x: 34.5, y: 26.83, w: 310, rot:   4, sh: 'wide' },
-    { p:  7, x: 30.2, y: 33.03, w: 170, rot: -10, sh: 'sq'   },
-    { p:  8, x: 16.7, y: 38.47, w: 260, rot:   6, sh: 'wide' },
-    { p:  9, x: 10.4, y: 44.60, w: 210, rot:  -4, sh: 'wide' },
-    { p: 10, x:  9.7, y: 49.67, w: 180, rot:   9, sh: 'sq'   },
-    { p: 11, x: 28.0, y: 50.50, w: 270, rot:  -6, sh: 'wide' },
-    { p: 12, x: 46.0, y: 54.00, w: 220, rot:   7, sh: 'sq'   },
-    { p: 13, x: 50.0, y: 60.00, w: 300, rot:  -5, sh: 'wide' },
-    { p: 14, x: 50.0, y: 65.50, w: 230, rot:  10, sh: 'wide' },
-    { p: 15, x: 52.0, y: 69.50, w: 200, rot:  -8, sh: 'sq'   },
-    { p: 16, x: 47.0, y: 73.50, w: 240, rot:   5, sh: 'wide' },
-    { p: 17, x: 50.0, y: 78.00, w: 210, rot:  -7, sh: 'wide' },
-    { p: 18, x: 46.0, y: 73.00, w: 360, rot:  -4, sh: 'tall', front: 1 }
+    { p:  3, x:  5.0, y:  6.60, w: 246, rot:  -9, pile: 1, sh: 'sq'   },
+    { p:  2, x: 11.4, y:  5.90, w: 254, rot:   7, pile: 1, sh: 'sq'   },
+    { p:  1, x:  8.0, y:  4.70, w: 258, rot:  -4, pile: 1, sh: 'sq'   },
+    { p:  0, x: 13.6, y:  3.70, w: 276, rot:   5, pile: 1, sh: 'sq', front: 1 },
+    { p:  4, x: 18.0, y: 12.50, w: 240, rot:  -7, sh: 'wide' },
+    { p:  5, x: 29.0, y: 16.50, w: 190, rot:   5, sh: 'sq'   },
+    { p:  6, x: 21.0, y: 21.00, w: 310, rot:   4, sh: 'wide' },
+    { p:  7, x: 31.0, y: 25.50, w: 170, rot: -10, sh: 'sq'   },
+    { p:  8, x: 17.0, y: 29.50, w: 260, rot:   6, sh: 'wide' },
+    { p:  9, x: 10.0, y: 34.00, w: 210, rot:  -4, sh: 'wide' },
+    { p: 10, x: 16.0, y: 38.50, w: 180, rot:   9, sh: 'sq'   },
+    { p: 11, x: 29.0, y: 42.50, w: 270, rot:  -6, sh: 'wide' },
+    { p: 12, x: 46.0, y: 46.50, w: 220, rot:   7, sh: 'sq'   },
+    { p: 13, x: 50.0, y: 51.50, w: 300, rot:  -5, sh: 'wide' },
+    { p: 14, x: 50.0, y: 57.00, w: 230, rot:  10, sh: 'wide' },
+    { p: 15, x: 55.0, y: 61.00, w: 200, rot:  -8, sh: 'sq'   },
+    { p: 16, x: 47.0, y: 65.00, w: 240, rot:   5, sh: 'wide' },
+    { p: 17, x: 52.0, y: 70.00, w: 210, rot:  -7, sh: 'wide' },
+    { p: 18, x: 44.5, y: 64.00, w: 360, rot:  -4, sh: 'tall', front: 1 }
   ];
 
-  var CLIP = { x: 19.0, y: 3.4, w: 96, rot: -13 };
+  var CLIP = { x: -2.0, y: 1.9, w: 96, rot: -13 };
 
   var OBJS = [
-    { o: 'can',  x: 50.0, y: 17.0, w: 170, rot:  9 },
-    { o: 'cam',  x: 52.0, y: 63.0, w: 330, rot:  6 },
-    { o: 'disp', x: 44.0, y: 40.0, w: 300, rot: -8 }
+    { o: 'can',  x: 50, y: 11.0, w: 170, rot:  9 },
+    { o: 'cam',  x: 72, y: 75.0, w: 330, rot:  6 },
+    { o: 'disp', x: 70, y: 36.0, w: 300, rot: -8 }
   ];
 
   /* labels sit in the open space, never within 36px of a frame */
   /* straight sentences, placed in the gaps the walk leaves */
   /* plain sentences, tracking the walk. y order is reading order. */
+  /* one run, stepped evenly, each line indented to the shoulder of the
+     frame the walk has at that height, so the block traces the path */
   var LABELS = [
-        { t: "Everyone puts their phone in a box at the door.", x: 41.4, y: 13.20 },
-        { t: "You get it back when you leave.", x: 48.9, y: 24.21 },
-        { t: "There are no phones out for the whole night.", x: 48.7, y: 25.26 },
-        { t: "Everybody shoots film and disposable cameras.", x: 62.2, y: 27.69 },
-        { t: "Nobody sees a photo until the roll comes back.", x: 2.1, y: 58.70 },
-        { t: "That takes about a week.", x: 68.7, y: 52.42 },
-        { t: "Most of them come back blurry.", x: 76.8, y: 55.97 },
-        { t: "The pictures only go up on this site.", x: 66.9, y: 57.86 },
-        { t: "A good hang with people you have not met.", x: 77.1, y: 60.82 }
+        { t: "You get it back when you leave.", x: 64.8, y: 17.58 },
+        { t: "There are no phones out for the whole night.", x: 48.3, y: 22.00 },
+        { t: "Everybody shoots film and disposable cameras.", x: 69.2, y: 27.00 },
+        { t: "Nobody sees a photo until the roll comes back.", x: 69.2, y: 32.00 },
+        { t: "That takes about a week.", x: 41.0, y: 39.62 },
+        { t: "Most of them come back blurry.", x: 13.2, y: 48.40 },
+        { t: "The pictures only go up on this site.", x: 67.6, y: 48.74 },
+        { t: "A good hang with people you have not met.", x: 76.2, y: 52.00 }
   ];
 
   /* ================= GATE (unchanged from v1) ================= */
