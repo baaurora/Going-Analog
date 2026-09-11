@@ -24,12 +24,14 @@
     { f: 'R4-009A', alt: 'Close portrait of a man in a white shirt grinning under flash' },
     { f: 'R4-012A', alt: 'Three people dancing, one holding a folding fan' },
     { f: 'R4-016A', alt: 'Very close frame of two people laughing hard' },
+    { f: 'R4-023A', alt: 'A guest beside the table of confiscated phones' },
     { f: 'R5-010A', alt: 'Three women pressed together smiling at the camera' },
     { f: 'R5-012A', alt: 'A woman tilting her head back to shoot a point-and-shoot camera' },
     { f: 'R5-019A', alt: 'Three friends under a large leaf, laughing' },
     { f: 'R6-023A', alt: 'Three friends leaning together for the camera' },
     { f: 'R7-000A', alt: 'A man laughing behind a disposable camera raised to his eye' },
-    { f: 'R7-006A', alt: 'Two people holding something glowing between them' }
+    { f: 'R7-006A', alt: 'Two people holding something glowing between them' },
+    { f: 'phone-jail', alt: 'A table of confiscated phones laid out in a numbered organiser' }
   ];
 
   var OBJ = {
@@ -49,29 +51,31 @@
      line rather than a scatter. x and y are percentages of <main>. Positions
      were solved against the running copy, not eyeballed. */
   var PATH = [
-    { p: 0,  x:  8.0, y:  5.89, w: 270, rot:   4, sh: 'sq',   pile: 1 },
-    { p: 1,  x:  9.8, y:  6.76, w: 255, rot:  -6, sh: 'sq',   pile: 1 },
-    { p: 2,  x:  7.8, y:  7.21, w: 262, rot:   9, sh: 'sq',   pile: 1 },
-    { p: 3,  x:  9.6, y:  8.06, w: 248, rot:  -3, sh: 'sq',   pile: 1 },
-    { p: 4,  x: 16.7, y: 16.39, w: 240, rot:  -7, sh: 'wide' },
-    { p: 5,  x: 28.1, y: 21.65, w: 190, rot:   5, sh: 'sq'   },
-    { p: 6,  x: 33.7, y: 26.83, w: 310, rot:   4, sh: 'wide' },
-    { p: 7,  x: 30.2, y: 33.03, w: 170, rot: -10, sh: 'sq'   },
-    { p: 8,  x: 16.7, y: 38.47, w: 260, rot:   6, sh: 'wide' },
-    { p: 9,  x: 10.4, y: 44.60, w: 210, rot:  -4, sh: 'wide' },
+    { p:  0, x:  8.0, y:  5.89, w: 270, rot:   4, sh: 'sq',   pile: 1 },
+    { p:  1, x:  9.8, y:  6.76, w: 255, rot:  -6, sh: 'sq',   pile: 1 },
+    { p:  2, x:  7.8, y:  7.21, w: 262, rot:   9, sh: 'sq',   pile: 1 },
+    { p:  3, x:  9.6, y:  8.06, w: 248, rot:  -3, sh: 'sq',   pile: 1 },
+    { p:  4, x: 16.7, y: 16.39, w: 240, rot:  -7, sh: 'wide' },
+    { p:  5, x: 28.1, y: 21.65, w: 190, rot:   5, sh: 'sq'   },
+    { p: 18, x: 41.0, y: 24.50, w: 320, rot:  -4, sh: 'tall' },
+    { p:  6, x: 33.7, y: 26.83, w: 310, rot:   4, sh: 'wide' },
+    { p:  7, x: 30.2, y: 33.03, w: 170, rot: -10, sh: 'sq'   },
+    { p:  8, x: 16.7, y: 38.47, w: 260, rot:   6, sh: 'wide' },
+    { p:  9, x: 10.4, y: 44.60, w: 210, rot:  -4, sh: 'wide' },
     { p: 10, x:  9.7, y: 49.67, w: 180, rot:   9, sh: 'sq'   },
-    { p: 11, x: 20.0, y: 54.50, w: 270, rot:  -6, sh: 'wide' },
-    { p: 12, x: 38.0, y: 55.10, w: 220, rot:   7, sh: 'sq'   },
+    { p: 11, x: 28.0, y: 50.50, w: 270, rot:  -6, sh: 'wide' },
+    { p: 12, x: 46.0, y: 54.00, w: 220, rot:   7, sh: 'sq'   },
     { p: 13, x: 50.0, y: 61.00, w: 300, rot:  -5, sh: 'wide' },
     { p: 14, x: 54.2, y: 68.00, w: 250, rot:  10, sh: 'wide' },
-    { p: 15, x: 66.0, y: 75.00, w: 280, rot:  -8, sh: 'wide' },
-    { p: 16, x: 74.0, y: 82.00, w: 220, rot:   5, sh: 'sq'   }
+    { p: 15, x: 60.0, y: 74.00, w: 280, rot:  -8, sh: 'wide' },
+    { p: 16, x: 70.0, y: 80.00, w: 220, rot:   5, sh: 'sq'   },
+    { p: 17, x: 56.0, y: 87.00, w: 260, rot:  -6, sh: 'wide' }
   ];
 
   var CLIP = { x: 13.5, y: 4.6, w: 70, rot: -13 };
 
   var OBJS = [
-    { o: 'pola', x: 66, y: 17.5, w: 132, rot:  9 },
+    { o: 'can',  x: 68, y: 17.5, w:  92, rot:  9 },
     { o: 'cam',  x: 62, y: 52.0, w: 176, rot:  6 },
     { o: 'disp', x: 80, y: 43.0, w: 168, rot: -8 }
   ];
@@ -79,13 +83,13 @@
   /* labels sit in the open space, never within 36px of a frame */
   var LABELS = [
     { t: 'ROLL 1',     x: 41.9, y: 12.67 },
-    { t: 'FLASH',      x: 61.1, y: 23.97 },
-    { t: 'GROUPS',     x: 58.6, y: 37.88 },
-    { t: 'PORTRAITS',  x: 46.1, y: 43.98 },
-    { t: '35MM',       x: 28.6, y: 52.69 },
+    { t: 'FLASH',      x: 61.1, y: 21.77 },
+    { t: 'GROUPS',     x: 69.5, y: 28.50 },
+    { t: 'PORTRAITS',  x: 69.0, y: 43.50 },
+    { t: '35MM',       x: 70.0, y: 44.00 },
     { t: 'NIGHT',      x: 64.0, y: 47.60 },
     { t: 'GO.A807',    x: 49.0, y: 77.9 },
-    { t: 'DISPOSABLE', x: 50.0, y: 86.28 },
+    { t: 'DISPOSABLE', x: 50.0, y: 84.08 },
     { t: 'ROLL 7',     x: 48.6, y: 82.31 },
     { t: 'GO.A0925',   x: 48.6, y: 91.02 }
   ];
@@ -276,6 +280,7 @@
     } else {
       var img = document.createElement('img');
       img.alt = p.alt; img.loading = 'lazy'; img.decoding = 'async';
+      img.addEventListener('error', function () { fig.remove(); });
       img.src = 'photos/' + p.f + '.jpg';
       win.appendChild(img);
     }
