@@ -51,48 +51,48 @@
      line rather than a scatter. x and y are percentages of <main>. Positions
      were solved against the running copy, not eyeballed. */
   var PATH = [
-    { p:  0, x:  8.0, y:  5.89, w: 270, rot:   4, sh: 'sq',   pile: 1 },
-    { p:  1, x:  9.8, y:  6.76, w: 255, rot:  -6, sh: 'sq',   pile: 1 },
-    { p:  2, x:  7.8, y:  7.21, w: 262, rot:   9, sh: 'sq',   pile: 1 },
-    { p:  3, x:  9.6, y:  8.06, w: 248, rot:  -3, sh: 'sq',   pile: 1 },
-    { p:  4, x: 16.7, y: 16.39, w: 240, rot:  -7, sh: 'wide' },
-    { p:  5, x: 28.1, y: 21.65, w: 190, rot:   5, sh: 'sq'   },
-    { p: 18, x: 41.0, y: 24.50, w: 320, rot:  -4, sh: 'tall' },
-    { p:  6, x: 33.7, y: 26.83, w: 310, rot:   4, sh: 'wide' },
+    { p:  3, x:  6.0, y:  9.60, w: 246, rot:  -9, pile: 1, sh: 'sq'   },
+    { p:  2, x: 12.4, y:  8.60, w: 254, rot:   7, pile: 1, sh: 'sq'   },
+    { p:  1, x:  9.0, y:  6.90, w: 258, rot:  -4, pile: 1, sh: 'sq'   },
+    { p:  0, x: 14.6, y:  5.40, w: 276, rot:   5, pile: 1, sh: 'sq', front: 1 },
+    { p:  4, x: 18.5, y: 16.39, w: 240, rot:  -7, sh: 'wide' },
+    { p:  5, x: 29.5, y: 21.65, w: 190, rot:   5, sh: 'sq'   },
+    { p:  6, x: 34.5, y: 26.83, w: 310, rot:   4, sh: 'wide' },
     { p:  7, x: 30.2, y: 33.03, w: 170, rot: -10, sh: 'sq'   },
     { p:  8, x: 16.7, y: 38.47, w: 260, rot:   6, sh: 'wide' },
     { p:  9, x: 10.4, y: 44.60, w: 210, rot:  -4, sh: 'wide' },
     { p: 10, x:  9.7, y: 49.67, w: 180, rot:   9, sh: 'sq'   },
     { p: 11, x: 28.0, y: 50.50, w: 270, rot:  -6, sh: 'wide' },
     { p: 12, x: 46.0, y: 54.00, w: 220, rot:   7, sh: 'sq'   },
-    { p: 13, x: 50.0, y: 61.00, w: 300, rot:  -5, sh: 'wide' },
-    { p: 14, x: 54.2, y: 68.00, w: 250, rot:  10, sh: 'wide' },
-    { p: 15, x: 60.0, y: 74.00, w: 280, rot:  -8, sh: 'wide' },
-    { p: 16, x: 70.0, y: 80.00, w: 220, rot:   5, sh: 'sq'   },
-    { p: 17, x: 56.0, y: 87.00, w: 260, rot:  -6, sh: 'wide' }
+    { p: 13, x: 50.0, y: 60.00, w: 300, rot:  -5, sh: 'wide' },
+    { p: 14, x: 50.0, y: 65.50, w: 230, rot:  10, sh: 'wide' },
+    { p: 15, x: 52.0, y: 69.50, w: 200, rot:  -8, sh: 'sq'   },
+    { p: 16, x: 47.0, y: 73.50, w: 240, rot:   5, sh: 'wide' },
+    { p: 17, x: 50.0, y: 78.00, w: 210, rot:  -7, sh: 'wide' },
+    { p: 18, x: 46.0, y: 73.00, w: 360, rot:  -4, sh: 'tall', front: 1 }
   ];
 
-  var CLIP = { x: 13.5, y: 4.6, w: 70, rot: -13 };
+  var CLIP = { x: 19.0, y: 3.4, w: 96, rot: -13 };
 
   var OBJS = [
-    { o: 'can',  x: 68, y: 17.5, w:  92, rot:  9 },
-    { o: 'cam',  x: 62, y: 52.0, w: 176, rot:  6 },
-    { o: 'disp', x: 80, y: 43.0, w: 168, rot: -8 }
+    { o: 'can',  x: 50.0, y: 17.0, w: 170, rot:  9 },
+    { o: 'cam',  x: 52.0, y: 63.0, w: 330, rot:  6 },
+    { o: 'disp', x: 44.0, y: 40.0, w: 300, rot: -8 }
   ];
 
   /* labels sit in the open space, never within 36px of a frame */
   /* straight sentences, placed in the gaps the walk leaves */
+  /* plain sentences, tracking the walk. y order is reading order. */
   var LABELS = [
-{ t: "Going Analog started in August 2026.", x: 50.1, y: 12.70 },
-        { t: "Everyone puts their phone in a box at the door.", x: 77.6, y: 21.31 },
-        { t: "You get it back when you leave.", x: 15.1, y: 29.93 },
-        { t: "There are no phones out for the whole night.", x: 69.3, y: 39.42 },
-        { t: "Everybody shoots film and disposable cameras.", x: 50.1, y: 47.15 },
-        { t: "Nobody sees a photo until the roll comes back.", x: 77.6, y: 55.77 },
-        { t: "That takes about a week.", x: 77.6, y: 58.83 },
-        { t: "Most of them come back blurry.", x: 46.8, y: 77.66 },
-        { t: "The pictures only go up on this site.", x: 50.1, y: 84.53 },
-        { t: "A good hang with people you have not met.", x: 80.1, y: 91.39 }
+        { t: "Everyone puts their phone in a box at the door.", x: 41.4, y: 13.20 },
+        { t: "You get it back when you leave.", x: 48.9, y: 24.21 },
+        { t: "There are no phones out for the whole night.", x: 48.7, y: 25.26 },
+        { t: "Everybody shoots film and disposable cameras.", x: 62.2, y: 27.69 },
+        { t: "Nobody sees a photo until the roll comes back.", x: 36.0, y: 58.50 },
+        { t: "That takes about a week.", x: 68.7, y: 52.42 },
+        { t: "Most of them come back blurry.", x: 76.8, y: 55.97 },
+        { t: "The pictures only go up on this site.", x: 66.9, y: 57.86 },
+        { t: "A good hang with people you have not met.", x: 77.1, y: 60.82 }
   ];
 
   /* ================= GATE (unchanged from v1) ================= */
@@ -288,6 +288,7 @@
     var lip = document.createElement('div');
     lip.className = 'lip';
     fig.appendChild(win); fig.appendChild(lip);
+    if (spec.front) fig.classList.add('thing--front');
     return fig;
   }
 
