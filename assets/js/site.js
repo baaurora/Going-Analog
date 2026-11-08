@@ -74,10 +74,15 @@
 
   var CLIP = { x: 14.8, y: 3.25, w: 92, rot: -38 };
 
+  /* Re-solved for the typewriter setting. Courier runs wider than the old
+     sans, so every copy block grew and these had to step out of the way:
+     the canister drops below the volumes list, the polaroid camera sits to
+     the right of How it works instead of under it, and the disposable moves
+     left of the mission. Objects may sit over photographs, never over text. */
   var OBJS = [
-    { o: 'can',  x: 76, y: 55.5, w: 260, rot:  9 },
-    { o: 'cam',  x: 70, y: 26.0, w: 330, rot:  6 },
-    { o: 'disp', x: 44, y: 3.20, w: 300, rot: -8 }
+    { o: 'can',  x: 76.0, y: 58.0, w: 260, rot:  9 },
+    { o: 'cam',  x: 73.5, y: 26.0, w: 300, rot:  6 },
+    { o: 'disp', x: 36.5, y: 3.20, w: 300, rot: -8 }
   ];
 
   /* labels sit in the open space, never within 36px of a frame */
@@ -322,8 +327,53 @@
     labelHost.appendChild(el);
   });
 
+  /* Objects sit behind the words, so an overlap does not cover the copy, it
+     just makes it unreadable on white. Rather than hand-solve coordinates
+     that break the next time the copy changes, any object landing on text
+     steps aside: left if there is room, right if not, below the block as a
+     last resort. Prints are left alone, the walk is the whole point. */
+  var KEEP = '.sec-h, .mission p, .rules li, .vol, .creator p, .reg__head,' +
+             '.reg__sub, .reg label, .reg legend, .foot__col';
+  function dodgeText() {
+    if (SMALL()) return;            /* the phone layout stacks, nothing to dodge */
+    var gap = 18, edge = 8;
+    var hostR = host.getBoundingClientRect();
+    var texts = [].slice.call(document.querySelectorAll(KEEP))
+      .map(function (e) { return e.getBoundingClientRect(); })
+      .filter(function (r) { return r.width > 4 && r.height > 4; });
+    if (!texts.length) return;
+
+    for (var pass = 0; pass < 3; pass++) {
+      var moved = false;
+      placements.forEach(function (p) {
+        if (p.kind !== 'obj' || p.el.dataset.moved) return;
+        var r = p.el.getBoundingClientRect(), clash = null;
+        texts.forEach(function (t) {
+          if (r.right > t.left - gap && r.left < t.right + gap &&
+              r.bottom > t.top - gap && r.top < t.bottom + gap) {
+            if (!clash || t.left < clash.left) clash = t;
+          }
+        });
+        if (!clash) return;
+        moved = true;
+        var toLeft  = clash.left - gap - r.width - hostR.left;
+        var toRight = clash.right + gap - hostR.left;
+        if (toLeft >= edge) {
+          p.el.style.left = Math.round(toLeft) + 'px';
+        } else if (toRight + r.width <= hostR.width - edge) {
+          p.el.style.left = Math.round(toRight) + 'px';
+        } else {
+          p.el.style.top = Math.round((parseFloat(p.el.style.top) || 0)
+                                      + (clash.bottom - r.top) + gap) + 'px';
+        }
+      });
+      if (!moved) break;
+    }
+  }
+
   function layout() {
     placements.forEach(place);
+    dodgeText();
     labelHost.style.display = SMALL() ? 'none' : '';
     var note = document.querySelector('.drag-note');
     if (note) note.textContent = SMALL()
@@ -339,32 +389,7 @@
   var rt;
   window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(layout, 150); });
 
-  /* ================= THEME ================= */
-  (function theme() {
-    var btn = $('#theme'), root = document.documentElement;
-    if (!btn) return;
-    function isDark() {
-      var set = root.getAttribute('data-theme');
-      if (set) return set === 'dark';
-      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    function label() { btn.textContent = isDark() ? 'Light' : 'Dark'; }
-    label();
-    btn.addEventListener('click', function () {
-      var next = isDark() ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      try { localStorage.setItem('ga_theme', next); } catch (e) {}
-      label();
-    });
-    if (window.matchMedia) {
-      var mq = window.matchMedia('(prefers-color-scheme: dark)');
-      var onChange = function () { if (!root.getAttribute('data-theme')) label(); };
-      if (mq.addEventListener) mq.addEventListener('change', onChange);
-      else if (mq.addListener) mq.addListener(onChange);
-    }
-  })();
-
-  /* ================= NAV ================= */
+/* ================= NAV ================= */
   (function nav() {
     var links = [].slice.call(document.querySelectorAll('[data-nav]'));
     if (!links.length || !('IntersectionObserver' in window)) return;

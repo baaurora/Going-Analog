@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>12.12 / GOING ANALOG</title>
+<meta name="description" content="A very special rendition of Going Analog. Saturday, December 12.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../assets/css/site.css?v=1794177157">
+<style>
+  body{min-height:100vh;display:flex;flex-direction:column}
+
+  /* ------------ the lock ------------ */
+  .lock{position:fixed;inset:0;z-index:50;background:var(--paper);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:26px;padding:26px;text-align:center;
+    transition:opacity .45s ease,visibility .45s}
+  .lock.is-open{opacity:0;visibility:hidden;pointer-events:none}
+  .lock__k{margin:0;font-size:12px;letter-spacing:.3em;text-transform:uppercase;opacity:.45}
+  .lock__say{margin:0;font-size:clamp(14px,1.7vw,18px);letter-spacing:.06em;max-width:28ch;line-height:1.7}
+  .lock__form{display:flex;gap:0;border-bottom:1px solid var(--ink)}
+  .lock__in{border:0;background:none;color:var(--ink);font-family:var(--sans);
+    font-size:16px;letter-spacing:.3em;text-transform:uppercase;text-align:center;
+    padding:10px 4px;width:min(300px,76vw);outline:none}
+  .lock__in::placeholder{opacity:.3;letter-spacing:.2em}
+  .lock__go{border:0;background:none;color:var(--ink);font-family:var(--sans);
+    font-size:16px;cursor:pointer;padding:10px 12px}
+  .lock__no{margin:0;font-size:12px;letter-spacing:.1em;min-height:1.2em;font-weight:700}
+  .lock__back{font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.45}
+  .lock__back:hover{opacity:1;text-decoration:underline}
+
+  /* ------------ the invite ------------ */
+  .inv{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:30px;padding:clamp(70px,12vh,120px) var(--pad) 60px;text-align:center}
+  .inv__mark{margin:0;font-size:clamp(34px,8vw,86px);line-height:1;letter-spacing:.06em;font-weight:700}
+  .inv__rule{width:min(560px,86vw);height:1px;background:var(--ink);margin:0}
+  .inv__body{max-width:56ch;display:flex;flex-direction:column;gap:18px}
+  .inv__body p{margin:0;font-size:15px;line-height:1.75;letter-spacing:.02em}
+  .inv__when{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 34px;
+    font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+  .inv__when b{font-weight:700}
+  .inv__rsvp{display:inline-block;margin-top:6px;border:1px solid var(--ink);
+    padding:14px 26px;font-size:13px;letter-spacing:.16em;text-transform:uppercase}
+  .inv__rsvp:hover{background:var(--ink);color:var(--paper)}
+
+  /* ------------ confetti ------------ */
+  .fetti{position:fixed;inset:0;z-index:40;pointer-events:none;overflow:hidden}
+  .fetti i{position:absolute;top:-14vh;width:7px;height:13px;background:var(--ink);
+    animation:drop linear forwards}
+  @keyframes drop{to{transform:translateY(118vh) rotate(var(--spin))}}
+  @media (prefers-reduced-motion:reduce){.fetti{display:none}}
+</style>
+</head>
+<body>
+
+<div class="fetti" id="fetti" aria-hidden="true"></div>
+
+<main class="inv" id="inv">
+  <h1 class="inv__mark">12.12</h1>
+  <hr class="inv__rule">
+  <div class="inv__body">
+    <p>Ever heard of good things come in threes? Well, we're putting that to the test this Saturday, December 12. You are cordially invited to celebrate all THREE of our birthdays in a classically manner of Going Analog.</p>
+    <p>This is a very special rendition of GOING ANALOG as we are celebrating not one, not two, but three very special birthdays. Please join us on Saturday, December 12 in going analog, dancing, and finding joy in celebrating together.</p>
+  </div>
+  <hr class="inv__rule">
+  <div class="inv__when">
+    <span><b>Saturday, December 12</b></span>
+    <span>8:30pm &ndash; 11pm</span>
+    <span>Location TBA</span>
+  </div>
+  <a class="inv__rsvp" href="../#rsvp">RSVP</a>
+</main>
+
+<footer class="foot">
+  <div class="foot__col">
+    <p class="foot__k">Going Analog</p>
+    <p>Phone-free gatherings. We take your phone at the door and give it back on your way out.</p>
+  </div>
+  <div class="foot__col foot__col--end">
+    <p class="foot__k">Contact</p>
+    <p><a href="mailto:analog@one-600.com">analog@one-600.com</a></p>
+    <p><a href="https://www.instagram.com/go.a807/" target="_blank" rel="noopener">@Go.A807</a></p>
+  </div>
+</footer>
+
+<div class="lock" id="lock">
+  <p class="lock__k">12.12</p>
+  <p class="lock__say">This one is invite only. Enter the password.</p>
+  <form class="lock__form" id="lockForm">
+    <input class="lock__in" id="pw" type="password" placeholder="password"
+           autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Password">
+    <button class="lock__go" type="submit" aria-label="Unlock">&rarr;</button>
+  </form>
+  <p class="lock__no" id="no" role="alert"></p>
+  <a class="lock__back" href="../">&larr; Going Analog</a>
+</div>
+
+<script>
+(function () {
+  var WORD = 'LUCKYTHREE', KEY = 'ga_1212';
+  var lock = document.getElementById('lock'), form = document.getElementById('lockForm'),
+      pw = document.getElementById('pw'), no = document.getElementById('no'),
+      fetti = document.getElementById('fetti');
+
+  /* Confetti falls once, as the invite is revealed. */
+  function throwIt() {
+    var n = window.matchMedia('(max-width: 620px)').matches ? 40 : 80;
+    for (var i = 0; i < n; i++) {
+      var bit = document.createElement('i');
+      bit.style.left = (Math.random() * 100).toFixed(2) + 'vw';
+      bit.style.animationDuration = (2.4 + Math.random() * 2.2).toFixed(2) + 's';
+      bit.style.animationDelay = (Math.random() * 1.1).toFixed(2) + 's';
+      bit.style.setProperty('--spin', Math.round(360 + Math.random() * 900) + 'deg');
+      bit.style.opacity = (0.35 + Math.random() * 0.65).toFixed(2);
+      var w = 4 + Math.round(Math.random() * 5);
+      bit.style.width = w + 'px';
+      bit.style.height = (w + 4 + Math.round(Math.random() * 7)) + 'px';
+      fetti.appendChild(bit);
+    }
+    setTimeout(function () { fetti.innerHTML = ''; }, 6200);
+  }
+
+  function open(withFetti) {
+    lock.classList.add('is-open');
+    document.getElementById('inv').removeAttribute('aria-hidden');
+    if (withFetti) throwIt();
+    setTimeout(function () { lock.hidden = true; }, 500);
+  }
+
+  /* Already let in during this visit, so do not ask twice. */
+  var seen = false;
+  try { seen = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
+  if (seen) { open(false); }
+  else {
+    document.getElementById('inv').setAttribute('aria-hidden', 'true');
+    setTimeout(function () { pw.focus(); }, 120);
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var tried = (pw.value || '').trim().toUpperCase().replace(/\s+/g, '');
+    if (tried === WORD) {
+      try { sessionStorage.setItem(KEY, '1'); } catch (e2) {}
+      no.textContent = '';
+      open(true);
+    } else {
+      no.textContent = 'Not it. Ask whoever sent you.';
+      pw.value = '';
+      pw.focus();
+    }
+  });
+})();
+</script>
+</body>
+</html>
