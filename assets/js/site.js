@@ -249,9 +249,20 @@
     if (small) {
       /* the walk narrows into a zigzag so it still reads as one line on a
          phone, sitting behind the copy the way it does everywhere else */
-      px = Math.round(r.width * (p.kind === 'obj' ? 0.26 : 0.46));
-      x = (p.i % 2 ? 48 : 4);
-      y = p.y;
+      /* capped, or on a wide phone a tall frame grows past the whole band */
+      px = Math.round(Math.min(r.width * (p.kind === 'obj' ? 0.26 : 0.46),
+                               p.kind === 'obj' ? 170 : 260));
+      /* The zigzag only reads as one line if the two columns actually touch,
+         so the offset comes off the frame's real width rather than a fixed
+         percentage, which the cap above would otherwise pull apart. */
+      var lead = r.width * 0.04;
+      x = ((p.i % 2 ? lead + px * 0.55 : lead) / (r.width || 1)) * 100;
+      /* The band is a fixed slice of the viewport here, not the whole page,
+         so a frame parked near the bottom of it hangs out the far side and
+         lands on the copy below. Squeeze the travel by the height of a frame
+         and every one of them stays inside the band. */
+      var frameH = px * (p.kind === 'obj' ? 1.0 : 1.8);
+      y = p.y * Math.max(0, r.height - frameH) / (r.height || 1);
     } else {
       px = Math.round(p.w * Math.min(1, r.width / 1440));
       x = p.x; y = p.y;
