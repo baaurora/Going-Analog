@@ -7,7 +7,7 @@
 <meta name="description" content="A very special rendition of Going Analog. Saturday, December 12.">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="../assets/css/site.css?v=1794180011">
+<link rel="stylesheet" href="../assets/css/site.css?v=1794180701">
 <style>
   body{min-height:100vh;display:flex;flex-direction:column;position:relative}
 
@@ -58,6 +58,11 @@
     transition:background .18s ease,color .18s ease}
   .rsvp__go:hover{background:var(--ink);color:var(--paper)}
   .rsvp__said{margin:0;font-size:12px;line-height:1.7;min-height:1.2em}
+  .rsvp__alt{margin:-10px 0 0;font-size:11px;line-height:1.7;opacity:.5}
+  .rsvp__alt a{text-decoration:1px solid underline;text-underline-offset:4px}
+  .rsvp.is-sent .f,.rsvp.is-sent .rsvp__go,.rsvp.is-sent .rsvp__note,
+  .rsvp.is-sent .rsvp__alt{display:none}
+  .rsvp.is-sent .rsvp__said{font-size:15px;letter-spacing:.02em}
 
   /* ------------ confetti ------------
      The layer is the whole document, not the window, so the pieces fall past
@@ -142,7 +147,7 @@
 
   <form class="rsvp" id="rsvpForm" novalidate>
     <p class="rsvp__k">RSVP</p>
-    <p class="rsvp__note">Fill this in and your mail app opens with it written out, addressed to Judy. You still have to hit send.</p>
+    <p class="rsvp__note">Fill this in and it goes straight to Judy.</p>
 
     <label class="f">
       <span class="f__l">Name</span>
@@ -156,7 +161,7 @@
 
     <fieldset class="f f--set">
       <legend class="f__l">Can you make it</legend>
-      <label class="r"><input type="radio" name="going" value="Yes, I'll be there" checked><span>Yes</span></label>
+      <label class="r"><input type="radio" name="going" value="Yes" checked><span>Yes</span></label>
       <label class="r"><input type="radio" name="going" value="Can't make it"><span>Can't make it</span></label>
     </fieldset>
 
@@ -172,6 +177,7 @@
 
     <button class="rsvp__go" type="submit">Send RSVP</button>
     <p class="rsvp__said" id="rSaid" role="status"></p>
+    <p class="rsvp__alt"><a id="rAlt" href="https://docs.google.com/forms/d/e/1FAIpQLSdz3JedwkVE_DTaTLioPtP0gH5CmvHpzQLFOLFPYoyZrEssIg/viewform" target="_blank" rel="noopener">Or open the form on its own</a></p>
   </form>
 </main>
 
@@ -198,7 +204,7 @@
   <p class="lock__no" id="no" role="alert"></p>
 </div>
 
-<script src="../assets/js/menu.js?v=1794180011"></script>
+<script src="../assets/js/menu.js?v=1794180701"></script>
 <script>
 (function () {
   var WORD = 'LUCKYTHREE', KEY = 'ga_1212';
@@ -276,13 +282,25 @@
 })();
 
 /* ---------- RSVP ----------
-   There is no server behind this page, so the form writes the mail and hands
-   it to whatever the guest sends mail with. Nothing is recorded here. */
+   Posts into the "12.12 RSVP" Google Form in Bianca's Drive, which drops each
+   answer into the linked "12.12 RSVP (Responses)" sheet. The entry ids below
+   come from that form and break if its questions are rebuilt. */
 (function () {
-  var TO = 'analog@one-600.com';
+  var FORM = '1FAIpQLSdz3JedwkVE_DTaTLioPtP0gH5CmvHpzQLFOLFPYoyZrEssIg';
+  var ACTION = 'https://docs.google.com/forms/d/e/' + FORM + '/formResponse';
+  var FIELD = {
+    name:  'entry.1932766344',
+    email: 'entry.1221645762',
+    going: 'entry.1636266939',
+    plus:  'entry.1073643154',
+    note:  'entry.1441426393'
+  };
+
   var form = document.getElementById('rsvpForm');
   if (!form) return;
-  var said = document.getElementById('rSaid');
+  var said = document.getElementById('rSaid'),
+      go = form.querySelector('.rsvp__go'),
+      alt = document.getElementById('rAlt');
   function v(id) { return (document.getElementById(id).value || '').trim(); }
 
   form.addEventListener('submit', function (e) {
@@ -294,20 +312,28 @@
       return;
     }
     var going = form.querySelector('input[name="going"]:checked');
-    var lines = [
-      'Name: ' + name,
-      'Email: ' + (v('rEmail') || 'not given'),
-      'Coming: ' + (going ? going.value : 'Yes, I\'ll be there'),
-      'Bringing: ' + (v('rPlus') || 'just me')
-    ];
-    var note = v('rNote');
-    if (note) { lines.push('', note); }
+    var body = new URLSearchParams();
+    body.append(FIELD.name,  name);
+    body.append(FIELD.email, v('rEmail'));
+    body.append(FIELD.going, going ? going.value : 'Yes');
+    body.append(FIELD.plus,  v('rPlus'));
+    body.append(FIELD.note,  v('rNote'));
 
-    window.location.href = 'mailto:' + TO +
-      '?subject=' + encodeURIComponent('12.12 RSVP - ' + name) +
-      '&body=' + encodeURIComponent(lines.join('\r\n'));
+    go.disabled = true;
+    said.textContent = 'Sending';
 
-    said.textContent = 'Your mail app is opening. Press send and you are on the list.';
+    /* Google will not let the page read its own answer back, so a request
+       that completed without throwing is the only confirmation there is. */
+    fetch(ACTION, { method: 'POST', mode: 'no-cors', body: body })
+      .then(function () {
+        form.classList.add('is-sent');
+        said.textContent = "You are on the list. See you on the 12th.";
+      })
+      .catch(function () {
+        go.disabled = false;
+        said.textContent = 'That did not go through. Try the form on its own.';
+        if (alt) alt.focus();
+      });
   });
 })();
 </script>
