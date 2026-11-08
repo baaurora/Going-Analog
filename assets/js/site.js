@@ -267,6 +267,10 @@
       px = Math.round(p.w * Math.min(1, r.width / 1440));
       x = p.x; y = p.y;
     }
+    /* The copy now runs down the left, so the whole walk mirrors to the right.
+       A box at [x, x+w] maps to [100-x-w, 100-x], which keeps the shape and
+       the overlaps of the solved path and simply reverses its hand. */
+    if (!small) x = 100 - x - (px / (r.width || 1)) * 100;
     el.style.left = Math.round(r.width * x / 100) + 'px';
     el.style.top = Math.round(r.height * y / 100) + 'px';
     el.style.width = px + 'px';
@@ -400,7 +404,48 @@
   var rt;
   window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(layout, 150); });
 
-/* ================= NAV ================= */
+/* ================= MENU PANEL ================= */
+  (function menu() {
+    var btn = $('#menuBtn'), panel = $('#menuPanel'), x = $('#menuX');
+    if (!btn || !panel) return;
+    var open = false;
+
+    /* The markup ships hidden so that without script the panel can never cover
+       the page. From here visibility carries it, which means no frame timing
+       to get wrong and no window where it is present but invisible. */
+    panel.hidden = false;
+
+    function show() {
+      open = true;
+      panel.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      if (x) x.focus();
+    }
+    function hide(back) {
+      if (!open) return;
+      open = false;
+      panel.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      if (back !== false) btn.focus();
+    }
+
+    btn.addEventListener('click', function () { open ? hide() : show(); });
+    if (x) x.addEventListener('click', function () { hide(); });
+
+    /* any destination closes it, including the in page jumps */
+    panel.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a') : null;
+      if (a) hide(false);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && open) hide();
+    });
+  })();
+
+  /* ================= NAV ================= */
   (function nav() {
     var links = [].slice.call(document.querySelectorAll('[data-nav]'));
     if (!links.length || !('IntersectionObserver' in window)) return;
@@ -412,49 +457,8 @@
         });
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
-    ['home', 'what', 'rsvp'].forEach(function (id) {
+    ['home', 'what'].forEach(function (id) {
       var s = document.getElementById(id); if (s) io.observe(s);
-    });
-  })();
-
-  /* ================= RSVP ================= */
-  (function rsvp() {
-    var form = $('#form'), sink = $('#sink'), done = $('#done'), err = $('#err');
-    if (!form) return;
-    var btn = form.querySelector('.submit');
-    var hp = form.querySelector('[name="_hp"]');
-
-    form.addEventListener('submit', function (e) {
-      err.hidden = true;
-      if (hp && hp.value) { e.preventDefault(); return; }
-      if (!form.checkValidity()) {
-        e.preventDefault();
-        var bad = form.querySelector(':invalid');
-        err.textContent = 'Every field is required. Yes, including fuck marry kill.';
-        err.hidden = false;
-        if (bad) bad.focus();
-        return;
-      }
-      if (hp) hp.disabled = true;
-      btn.disabled = true;
-      btn.classList.add('is-sending');
-      btn.textContent = 'SENDING…';
-
-      sink.addEventListener('load', function () {
-        form.hidden = true; done.hidden = false;
-        done.scrollIntoView({ block: 'center', behavior: 'smooth' });
-      }, { once: true });
-
-      setTimeout(function () {
-        if (!form.hidden) {
-          btn.disabled = false;
-          btn.classList.remove('is-sending');
-          btn.textContent = 'SUBMIT';
-          if (hp) hp.disabled = false;
-          err.textContent = 'That did not go through. Try again, or text Judy.';
-          err.hidden = false;
-        }
-      }, 12000);
     });
   })();
 

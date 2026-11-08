@@ -7,7 +7,7 @@
 <meta name="description" content="A very special rendition of Going Analog. Saturday, December 12.">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="../assets/css/site.css?v=1794177964">
+<link rel="stylesheet" href="../assets/css/site.css?v=1794178602">
 <style>
   body{min-height:100vh;display:flex;flex-direction:column}
 
@@ -32,17 +32,15 @@
 
   /* ------------ the invite ------------ */
   .inv{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:30px;padding:clamp(70px,12vh,120px) var(--pad) 60px;text-align:center}
-  .inv__mark{margin:0;font-size:clamp(34px,8vw,86px);line-height:1;letter-spacing:.06em;font-weight:700}
-  .inv__rule{width:min(560px,86vw);height:1px;background:var(--ink);margin:0}
+    gap:clamp(30px,5vh,52px);padding:clamp(70px,12vh,120px) var(--pad) 60px;text-align:center}
+  .inv__mark{margin:0;font-size:clamp(17px,2.1vw,24px);line-height:1;letter-spacing:.3em;font-weight:700}
   .inv__body{max-width:56ch;display:flex;flex-direction:column;gap:18px}
   .inv__body p{margin:0;font-size:15px;line-height:1.75;letter-spacing:.02em}
   .inv__when{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 34px;
     font-size:13px;letter-spacing:.12em;text-transform:uppercase}
   .inv__when b{font-weight:700}
-  .inv__rsvp{display:inline-block;margin-top:6px;border:1px solid var(--ink);
-    padding:14px 26px;font-size:13px;letter-spacing:.16em;text-transform:uppercase}
-  .inv__rsvp:hover{background:var(--ink);color:var(--paper)}
+  .inv__rsvp{display:inline-block;margin-top:2px;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;text-decoration:1px solid underline;text-underline-offset:6px}
 
   /* ------------ confetti ------------ */
   .fetti{position:fixed;inset:0;z-index:40;pointer-events:none;overflow:hidden}
@@ -58,18 +56,16 @@
 
 <main class="inv" id="inv">
   <h1 class="inv__mark">12.12</h1>
-  <hr class="inv__rule">
   <div class="inv__body">
     <p>Ever heard of good things come in threes? Well, we're putting that to the test this Saturday, December 12. You are cordially invited to celebrate all THREE of our birthdays in a classically manner of Going Analog.</p>
     <p>This is a very special rendition of GOING ANALOG as we are celebrating not one, not two, but three very special birthdays. Please join us on Saturday, December 12 in going analog, dancing, and finding joy in celebrating together.</p>
   </div>
-  <hr class="inv__rule">
   <div class="inv__when">
     <span><b>Saturday, December 12</b></span>
     <span>8:30pm &ndash; 11pm</span>
     <span>Location TBA</span>
   </div>
-  <a class="inv__rsvp" href="../#rsvp">RSVP</a>
+  <a class="inv__rsvp" href="mailto:analog@one-600.com?subject=12.12">RSVP by email</a>
 </main>
 
 <footer class="foot">
