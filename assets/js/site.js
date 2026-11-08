@@ -1,5 +1,5 @@
 /* ============================================================
-   GOING ANALOG / GO.A0925  —  v2
+   GOING ANALOG  —  v2
    ============================================================ */
 (function () {
   'use strict';
@@ -111,7 +111,13 @@
         gate.classList.add('is-open');
         site.removeAttribute('inert');
         site.classList.add('is-live');
-        setTimeout(function () { gate.setAttribute('hidden', ''); }, 600);
+        setTimeout(function () {
+          gate.setAttribute('hidden', '');
+          /* The walk is only ever laid out while the gate is still covering
+             the page. Once the gate is gone the page is finally in the state
+             the dodge has to solve against, so solve it again here. */
+          window.dispatchEvent(new Event('ga:in'));
+        }, 600);
       }, 620);
     }
 
@@ -241,6 +247,17 @@
   var labelHost = document.getElementById('labels');
   var placements = [];
 
+  /* Where the walk is allowed to begin: clear of the mission, measured each
+     layout so a copy change moves it rather than needing a new number here. */
+  var TOP = 0;
+  function measureTop() {
+    if (SMALL()) return 0;
+    var says = document.querySelector('.says');
+    if (!says) return 0;
+    var b = says.getBoundingClientRect().bottom - host.getBoundingClientRect().top;
+    return Math.max(0, Math.round(b + 46));
+  }
+
   function place(p) {
     var el = p.el, r = host.getBoundingClientRect();
     if (el.dataset.moved) return;
@@ -267,12 +284,11 @@
       px = Math.round(p.w * Math.min(1, r.width / 1440));
       x = p.x; y = p.y;
     }
-    /* The copy now runs down the left, so the whole walk mirrors to the right.
-       A box at [x, x+w] maps to [100-x-w, 100-x], which keeps the shape and
-       the overlaps of the solved path and simply reverses its hand. */
-    if (!small) x = 100 - x - (px / (r.width || 1)) * 100;
     el.style.left = Math.round(r.width * x / 100) + 'px';
-    el.style.top = Math.round(r.height * y / 100) + 'px';
+    /* The mission now spans the top of the page, so the walk is squeezed into
+       what is left underneath it. A uniform squeeze keeps every overlap the
+       solve produced, so the path still reads as one line. */
+    el.style.top = Math.round(TOP + (r.height - TOP) * y / 100) + 'px';
     el.style.width = px + 'px';
     el.style.setProperty('--pw', px + 'px');
   }
@@ -387,6 +403,7 @@
   }
 
   function layout() {
+    TOP = measureTop();
     placements.forEach(place);
     dodgeText();
     labelHost.style.display = SMALL() ? 'none' : '';
@@ -397,6 +414,13 @@
   }
   layout();
   window.addEventListener('load', layout);
+  /* Courier arrives after the first layout and sets wider than the fallback,
+     so the dodge above would otherwise be solved against the wrong text boxes
+     and leave an object sitting on the copy until the first resize. */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(layout).catch(function () {});
+  }
+  window.addEventListener('ga:in', layout);
   if (MQ) {
     if (MQ.addEventListener) MQ.addEventListener('change', layout);
     else if (MQ.addListener) MQ.addListener(layout);
@@ -404,48 +428,7 @@
   var rt;
   window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(layout, 150); });
 
-/* ================= MENU PANEL ================= */
-  (function menu() {
-    var btn = $('#menuBtn'), panel = $('#menuPanel'), x = $('#menuX');
-    if (!btn || !panel) return;
-    var open = false;
-
-    /* The markup ships hidden so that without script the panel can never cover
-       the page. From here visibility carries it, which means no frame timing
-       to get wrong and no window where it is present but invisible. */
-    panel.hidden = false;
-
-    function show() {
-      open = true;
-      panel.classList.add('is-open');
-      btn.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
-      if (x) x.focus();
-    }
-    function hide(back) {
-      if (!open) return;
-      open = false;
-      panel.classList.remove('is-open');
-      btn.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-      if (back !== false) btn.focus();
-    }
-
-    btn.addEventListener('click', function () { open ? hide() : show(); });
-    if (x) x.addEventListener('click', function () { hide(); });
-
-    /* any destination closes it, including the in page jumps */
-    panel.addEventListener('click', function (e) {
-      var a = e.target.closest ? e.target.closest('a') : null;
-      if (a) hide(false);
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && open) hide();
-    });
-  })();
-
-  /* ================= NAV ================= */
+/* ================= NAV ================= */
   (function nav() {
     var links = [].slice.call(document.querySelectorAll('[data-nav]'));
     if (!links.length || !('IntersectionObserver' in window)) return;

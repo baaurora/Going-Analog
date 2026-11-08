@@ -7,9 +7,9 @@
 <meta name="description" content="A very special rendition of Going Analog. Saturday, December 12.">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="../assets/css/site.css?v=1794178602">
+<link rel="stylesheet" href="../assets/css/site.css?v=1794180011">
 <style>
-  body{min-height:100vh;display:flex;flex-direction:column}
+  body{min-height:100vh;display:flex;flex-direction:column;position:relative}
 
   /* ------------ the lock ------------ */
   .lock{position:fixed;inset:0;z-index:50;background:var(--paper);
@@ -27,8 +27,6 @@
   .lock__go{border:0;background:none;color:var(--ink);font-family:var(--sans);
     font-size:16px;cursor:pointer;padding:10px 12px}
   .lock__no{margin:0;font-size:12px;letter-spacing:.1em;min-height:1.2em;font-weight:700}
-  .lock__back{font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.45}
-  .lock__back:hover{opacity:1;text-decoration:underline}
 
   /* ------------ the invite ------------ */
   .inv{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -39,18 +37,94 @@
   .inv__when{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 34px;
     font-size:13px;letter-spacing:.12em;text-transform:uppercase}
   .inv__when b{font-weight:700}
-  .inv__rsvp{display:inline-block;margin-top:2px;font-size:12px;letter-spacing:.16em;
-    text-transform:uppercase;text-decoration:1px solid underline;text-underline-offset:6px}
 
-  /* ------------ confetti ------------ */
-  .fetti{position:fixed;inset:0;z-index:40;pointer-events:none;overflow:hidden}
-  .fetti i{position:absolute;top:-14vh;width:7px;height:13px;background:var(--ink);
-    animation:drop linear forwards}
-  @keyframes drop{to{transform:translateY(118vh) rotate(var(--spin))}}
-  @media (prefers-reduced-motion:reduce){.fetti{display:none}}
+  /* ------------ the RSVP ------------ */
+  .rsvp{width:min(420px,100%);text-align:left;display:flex;flex-direction:column;gap:20px}
+  .rsvp__k{margin:0;font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+  .rsvp__note{margin:-12px 0 0;font-size:11.5px;line-height:1.7;opacity:.6}
+  .f{display:flex;flex-direction:column;gap:5px;border:0;padding:0;margin:0}
+  .f__l{font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.6}
+  .f__i{border:0;border-bottom:1px solid var(--ink);background:none;color:var(--ink);
+    font-family:var(--sans);font-size:14px;line-height:1.6;padding:6px 2px;width:100%;
+    outline:none;border-radius:0;-webkit-appearance:none}
+  .f__i:focus{border-bottom-width:2px;padding-bottom:5px}
+  .f__t{resize:vertical;min-height:2.6em}
+  .f--set{gap:9px}
+  .r{display:flex;align-items:center;gap:9px;font-size:13.5px;cursor:pointer}
+  .r input{accent-color:var(--ink);width:14px;height:14px;margin:0}
+  .rsvp__go{align-self:flex-start;margin-top:2px;background:none;border:1px solid var(--ink);
+    color:var(--ink);font-family:var(--sans);font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;padding:11px 22px;cursor:pointer;
+    transition:background .18s ease,color .18s ease}
+  .rsvp__go:hover{background:var(--ink);color:var(--paper)}
+  .rsvp__said{margin:0;font-size:12px;line-height:1.7;min-height:1.2em}
+
+  /* ------------ confetti ------------
+     The layer is the whole document, not the window, so the pieces fall past
+     the fold and come to rest on the floor of the page by the footer. They
+     sit behind the footer text, which keeps the words readable. */
+  .fetti{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+  .fetti i{position:absolute;bottom:0;display:block;border-radius:50%;
+    animation:drop var(--dur) cubic-bezier(.25,.1,.45,1) var(--lag) both}
+  @keyframes drop{
+    0%  {transform:translate3d(0,var(--rise),0) rotateX(0) rotateY(0)}
+    25% {transform:translate3d(var(--sway),calc(var(--rise) * .74),0)
+         rotateX(calc(var(--rx) * .25)) rotateY(calc(var(--ry) * .25))}
+    50% {transform:translate3d(calc(var(--sway) * -1),calc(var(--rise) * .49),0)
+         rotateX(calc(var(--rx) * .5))  rotateY(calc(var(--ry) * .5))}
+    75% {transform:translate3d(var(--sway),calc(var(--rise) * .23),0)
+         rotateX(calc(var(--rx) * .75)) rotateY(calc(var(--ry) * .75))}
+    100%{transform:translate3d(0,0,0) rotateX(var(--rx)) rotateY(var(--ry))}
+  }
+  /* Reduced motion still gets the confetti, it is just already on the floor. */
+  @media (prefers-reduced-motion:reduce){.fetti i{animation:none}}
 </style>
 </head>
 <body>
+
+<header class="top">
+  <a class="mark" href="../">GO.A</a>
+  <button class="menu-btn" id="menuBtn" type="button"
+          aria-expanded="false" aria-controls="menuPanel"><span>Menu</span></button>
+</header>
+
+<div class="panel" id="menuPanel" hidden>
+  <div class="panel__in">
+    <button class="panel__x" id="menuX" type="button">Close</button>
+
+    <nav class="panel__nav" aria-label="Sections">
+      <a href="../">Home</a>
+      <a href="../#what">How it works</a>
+      <a href="./" aria-current="page">12.12</a>
+    </nav>
+
+    <div class="panel__cols">
+      <div class="panel__col">
+        <p class="panel__k">Calendar</p>
+        <div class="ev">
+          <span class="ev__m">GO.A1212</span>
+          <span class="ev__d">12.12.2026</span>
+          <span class="ev__t">Saturday, 8:30pm to 11pm. Location TBA.</span>
+        </div>
+      </div>
+
+      <div class="panel__col">
+        <p class="panel__k">Past</p>
+        <div class="ev">
+          <span class="ev__m">GO.A807</span>
+          <span class="ev__d">08.08.2026</span>
+          <span class="ev__t">The first one. Rain tried to stop us, it didn't work. 7 rolls shot, 16 frames kept.</span>
+        </div>
+      </div>
+
+      <div class="panel__col panel__col--end">
+        <p class="panel__k">Contact</p>
+        <p><a href="mailto:analog@one-600.com">analog@one-600.com</a></p>
+        <p><a href="https://www.instagram.com/go.a807/" target="_blank" rel="noopener">@Go.A807</a></p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="fetti" id="fetti" aria-hidden="true"></div>
 
@@ -65,7 +139,40 @@
     <span>8:30pm &ndash; 11pm</span>
     <span>Location TBA</span>
   </div>
-  <a class="inv__rsvp" href="mailto:analog@one-600.com?subject=12.12">RSVP by email</a>
+
+  <form class="rsvp" id="rsvpForm" novalidate>
+    <p class="rsvp__k">RSVP</p>
+    <p class="rsvp__note">Fill this in and your mail app opens with it written out, addressed to Judy. You still have to hit send.</p>
+
+    <label class="f">
+      <span class="f__l">Name</span>
+      <input class="f__i" id="rName" type="text" autocomplete="name" required>
+    </label>
+
+    <label class="f">
+      <span class="f__l">Email</span>
+      <input class="f__i" id="rEmail" type="email" autocomplete="email" inputmode="email">
+    </label>
+
+    <fieldset class="f f--set">
+      <legend class="f__l">Can you make it</legend>
+      <label class="r"><input type="radio" name="going" value="Yes, I'll be there" checked><span>Yes</span></label>
+      <label class="r"><input type="radio" name="going" value="Can't make it"><span>Can't make it</span></label>
+    </fieldset>
+
+    <label class="f">
+      <span class="f__l">Bringing anyone</span>
+      <input class="f__i" id="rPlus" type="text" placeholder="Names, or leave blank">
+    </label>
+
+    <label class="f">
+      <span class="f__l">Anything else</span>
+      <textarea class="f__i f__t" id="rNote" rows="2"></textarea>
+    </label>
+
+    <button class="rsvp__go" type="submit">Send RSVP</button>
+    <p class="rsvp__said" id="rSaid" role="status"></p>
+  </form>
 </main>
 
 <footer class="foot">
@@ -89,9 +196,9 @@
     <button class="lock__go" type="submit" aria-label="Unlock">&rarr;</button>
   </form>
   <p class="lock__no" id="no" role="alert"></p>
-  <a class="lock__back" href="../">&larr; Going Analog</a>
 </div>
 
+<script src="../assets/js/menu.js?v=1794180011"></script>
 <script>
 (function () {
   var WORD = 'LUCKYTHREE', KEY = 'ga_1212';
@@ -99,22 +206,42 @@
       pw = document.getElementById('pw'), no = document.getElementById('no'),
       fetti = document.getElementById('fetti');
 
-  /* Confetti falls once, as the invite is revealed. */
+  /* Tissue paper dots. */
+  var DOTS = ['#2B5FCC', '#A96C44', '#B01E52', '#7DC242', '#E0B32A',
+              '#F7A8C4', '#E03A44', '#2EA886', '#EDEDED', '#F5D400'];
+
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+
+  /* Confetti falls once, as the invite is revealed, and then stays put on the
+     floor of the page. The drop is measured off the layer rather than the
+     window so a piece lands by the footer, not wherever the fold happens to be. */
   function throwIt() {
-    var n = window.matchMedia('(max-width: 620px)').matches ? 40 : 80;
+    var small = window.matchMedia('(max-width: 620px)').matches;
+    var n = small ? 54 : 94;
+    var H = fetti.offsetHeight || window.innerHeight;
+    var frag = document.createDocumentFragment();
+
     for (var i = 0; i < n; i++) {
       var bit = document.createElement('i');
-      bit.style.left = (Math.random() * 100).toFixed(2) + 'vw';
-      bit.style.animationDuration = (2.4 + Math.random() * 2.2).toFixed(2) + 's';
-      bit.style.animationDelay = (Math.random() * 1.1).toFixed(2) + 's';
-      bit.style.setProperty('--spin', Math.round(360 + Math.random() * 900) + 'deg');
-      bit.style.opacity = (0.35 + Math.random() * 0.65).toFixed(2);
-      var w = 4 + Math.round(Math.random() * 5);
-      bit.style.width = w + 'px';
-      bit.style.height = (w + 4 + Math.round(Math.random() * 7)) + 'px';
-      fetti.appendChild(bit);
+      var d = Math.round(rnd(4, 8));
+      bit.style.width = d + 'px';
+      bit.style.height = d + 'px';
+      bit.style.background = DOTS[(Math.random() * DOTS.length) | 0];
+      bit.style.left = rnd(0, 99).toFixed(2) + '%';
+      /* Where it comes to rest: a shallow drift of a pile, not one flat line. */
+      bit.style.bottom = Math.round(rnd(1, 34)) + 'px';
+      /* Starting well above the page, by varying amounts, so they do not all
+         cross the top edge together. */
+      bit.style.setProperty('--rise', '-' + Math.round(H + rnd(40, 260)) + 'px');
+      bit.style.setProperty('--sway', Math.round(rnd(-34, 34)) + 'px');
+      bit.style.setProperty('--rx', (Math.round(rnd(2, 8)) * 180) + 'deg');
+      bit.style.setProperty('--ry', (Math.round(rnd(1, 6)) * 180) + 'deg');
+      bit.style.setProperty('--dur', rnd(3.1, 5.4).toFixed(2) + 's');
+      bit.style.setProperty('--lag', rnd(0, 1.5).toFixed(2) + 's');
+      bit.style.opacity = rnd(0.72, 1).toFixed(2);
+      frag.appendChild(bit);
     }
-    setTimeout(function () { fetti.innerHTML = ''; }, 6200);
+    fetti.appendChild(frag);
   }
 
   function open(withFetti) {
@@ -145,6 +272,42 @@
       pw.value = '';
       pw.focus();
     }
+  });
+})();
+
+/* ---------- RSVP ----------
+   There is no server behind this page, so the form writes the mail and hands
+   it to whatever the guest sends mail with. Nothing is recorded here. */
+(function () {
+  var TO = 'analog@one-600.com';
+  var form = document.getElementById('rsvpForm');
+  if (!form) return;
+  var said = document.getElementById('rSaid');
+  function v(id) { return (document.getElementById(id).value || '').trim(); }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = v('rName');
+    if (!name) {
+      said.textContent = 'Need a name first.';
+      document.getElementById('rName').focus();
+      return;
+    }
+    var going = form.querySelector('input[name="going"]:checked');
+    var lines = [
+      'Name: ' + name,
+      'Email: ' + (v('rEmail') || 'not given'),
+      'Coming: ' + (going ? going.value : 'Yes, I\'ll be there'),
+      'Bringing: ' + (v('rPlus') || 'just me')
+    ];
+    var note = v('rNote');
+    if (note) { lines.push('', note); }
+
+    window.location.href = 'mailto:' + TO +
+      '?subject=' + encodeURIComponent('12.12 RSVP - ' + name) +
+      '&body=' + encodeURIComponent(lines.join('\r\n'));
+
+    said.textContent = 'Your mail app is opening. Press send and you are on the list.';
   });
 })();
 </script>
