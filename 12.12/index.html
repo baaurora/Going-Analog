@@ -327,7 +327,11 @@
     --pic:url(../assets/img/1212/dot-wine.png)}
   .found--2{left:13%;top:39%;width:18.2%;
     --pic:url(../assets/img/1212/dot-blue.png)}
-  .found--3{left:75%;top:33%;width:18.2%;
+  /* The green disc comes down six points to make room for the payment card
+     above it. Not for the card itself, which cleared it by a hair, but for
+     the near white ring around it: the ring stands 13px proud of the box and
+     would have laid a pale band across the top of the circle. */
+  .found--3{left:75%;top:39%;width:18.2%;
     --pic:url(../assets/img/1212/dot-green.png)}
   .found__k{font-size:clamp(10px,1.4vw,15px);line-height:1.5;font-weight:700;padding:0 12%}
 
@@ -350,7 +354,7 @@
      would have run down into the green one.
      The handles sit on their own lines and are tracked out a little, because
      they are going to be copied by hand off a phone screen. */
-  .give__pay{left:69%;top:2.5%;width:25%;aspect-ratio:565/340;
+  .give__pay{left:69%;top:2%;width:25%;aspect-ratio:565/340;
     display:flex;align-items:center;justify-content:center;
     padding:clamp(10px,1.8vw,22px);
     background:
@@ -522,6 +526,14 @@
   .q__row--stack{display:block}
   .q__row--stack .q__i{width:100%;margin-top:7px;flex:none}
   .q__hint{font-size:10.5px;letter-spacing:.04em;opacity:.45;font-weight:400;text-transform:none}
+  /* The plus one. Nobody is asked for a name and a number until they have
+     said there is someone to name, and the two fields are not sitting there
+     greyed out in the meantime: they are not there. */
+  .q__yn{display:flex;gap:4px;margin-top:5px}
+  .pick--sm{padding:9px 15px}
+  .pick--sm span{font-size:clamp(11px,1.45vw,13px);letter-spacing:.08em}
+  .q__more{display:flex;flex-direction:column;gap:clamp(13px,1.9vh,19px)}
+  .q__more[hidden]{display:none}
 
   /* ---- will you be there ----
      The answer is circled, the way it is on paper. The ring is a drawn ellipse
@@ -890,8 +902,32 @@
           <input class="q__i" id="gThing" type="text"></div>
         <div class="q__row q__row--stack"><label class="q__l" for="gCake">If you were a cake flavor, what would you be and why?</label>
           <input class="q__i" id="gCake" type="text"></div>
-        <div class="q__row"><label class="q__l" for="gPlus">Plus one: <span class="q__hint">one per person, add their name</span></label>
-          <input class="q__i" id="gPlus" type="text"></div>
+        <div class="q__row q__row--stack">
+          <span class="q__l">Bringing a plus one? <span class="q__hint">one per person</span></span>
+          <div class="q__yn">
+            <label class="pick pick--sm">
+              <input type="radio" name="plusone" value="no" checked>
+              <span>No</span>
+              <svg class="pick__ring" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+                <path pathLength="1" d="M101 4 C152 2 196 13 197 30 C198 48 148 57 99 57 C47 57 3 47 3 29 C3 12 50 3 101 4 C118 4 134 6 148 10"/>
+              </svg>
+            </label>
+            <label class="pick pick--sm">
+              <input type="radio" name="plusone" value="yes">
+              <span>Yes</span>
+              <svg class="pick__ring" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+                <path pathLength="1" d="M101 4 C152 2 196 13 197 30 C198 48 148 57 99 57 C47 57 3 47 3 29 C3 12 50 3 101 4 C118 4 134 6 148 10"/>
+              </svg>
+            </label>
+          </div>
+        </div>
+
+        <div class="q__more" id="plusMore" hidden>
+          <div class="q__row"><label class="q__l" for="gPlus">Their name:</label>
+            <input class="q__i" id="gPlus" type="text"></div>
+          <div class="q__row"><label class="q__l" for="gPlusPhone">Their phone #:</label>
+            <input class="q__i" id="gPlusPhone" type="tel" autocomplete="off" inputmode="tel"></div>
+        </div>
       </div>
 
       <div class="will">
@@ -1121,7 +1157,8 @@
     gSong:  'entry.1211517671',
     gThing: 'entry.1957822600',
     gCake:  'entry.93989351',
-    gPlus:  'entry.1073643154'
+    gPlus:  'entry.1073643154',
+    gPlusPhone: 'entry.592579053'
   };
   var WILL = 'entry.1636266939';
 
@@ -1130,6 +1167,21 @@
   var said = document.getElementById('gSaid'),
       go = form.querySelector('.guest__go'),
       alt = document.getElementById('gAlt');
+
+  /* The two plus one fields follow the answer above them. Switching back to
+     No empties them as well as hiding them, or a name typed and thought
+     better of would still be posted from a field nobody can see. */
+  var plusMore = document.getElementById('plusMore');
+  [].forEach.call(form.querySelectorAll('input[name="plusone"]'), function (r) {
+    r.addEventListener('change', function () {
+      var yes = form.querySelector('input[name="plusone"]:checked').value === 'yes';
+      plusMore.hidden = !yes;
+      if (!yes) {
+        document.getElementById('gPlus').value = '';
+        document.getElementById('gPlusPhone').value = '';
+      }
+    });
+  });
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
