@@ -7,9 +7,14 @@
 <meta name="description" content="A very special rendition of Going Analog. Saturday, December 12.">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="../assets/css/site.css?v=1794181185">
+<link rel="stylesheet" href="../assets/css/site.css?v=1794188800">
 <style>
   body{min-height:100vh;display:flex;flex-direction:column;position:relative}
+
+  /* Sections sit above the confetti layer so a photo or a card is never
+     speckled. Text has no background of its own, so dots still show through
+     everywhere the words are not. */
+  .s{position:relative;z-index:2;padding:0 var(--pad)}
 
   /* ------------ the lock ------------ */
   .lock{position:fixed;inset:0;z-index:50;background:var(--paper);
@@ -28,42 +33,228 @@
     font-size:16px;cursor:pointer;padding:10px 12px}
   .lock__no{margin:0;font-size:12px;letter-spacing:.1em;min-height:1.2em;font-weight:700}
 
-  /* ------------ the invite ------------ */
-  .inv{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:clamp(30px,5vh,52px);padding:clamp(70px,12vh,120px) var(--pad) 60px;text-align:center}
-  .inv__mark{margin:0;font-size:clamp(17px,2.1vw,24px);line-height:1;letter-spacing:.3em;font-weight:700}
-  .inv__body{max-width:56ch;display:flex;flex-direction:column;gap:18px}
-  .inv__body p{margin:0;font-size:15px;line-height:1.75;letter-spacing:.02em}
-  .inv__when{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 34px;
-    font-size:13px;letter-spacing:.12em;text-transform:uppercase}
-  .inv__when b{font-weight:700}
+  /* ============================================================
+     THE HERO: an envelope that opens and lets a card out
 
-  /* ------------ the RSVP ------------ */
-  .rsvp{width:min(420px,100%);text-align:left;display:flex;flex-direction:column;gap:20px}
-  .rsvp__k{margin:0;font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase}
-  .rsvp__note{margin:-12px 0 0;font-size:11.5px;line-height:1.7;opacity:.6}
-  .f{display:flex;flex-direction:column;gap:5px;border:0;padding:0;margin:0}
-  .f__l{font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.6}
-  .f__h{font-size:11px;line-height:1.55;opacity:.45;margin-top:-2px}
-  .f__i{border:0;border-bottom:1px solid var(--ink);background:none;color:var(--ink);
-    font-family:var(--sans);font-size:14px;line-height:1.6;padding:6px 2px;width:100%;
-    outline:none;border-radius:0;-webkit-appearance:none}
-  .f__i:focus{border-bottom-width:2px;padding-bottom:5px}
-  .f__t{resize:vertical;min-height:2.6em}
-  .f--set{gap:9px}
-  .r{display:flex;align-items:center;gap:9px;font-size:13.5px;cursor:pointer}
-  .r input{accent-color:var(--ink);width:14px;height:14px;margin:0}
-  .rsvp__go{align-self:flex-start;margin-top:2px;background:none;border:1px solid var(--ink);
-    color:var(--ink);font-family:var(--sans);font-size:12px;letter-spacing:.18em;
-    text-transform:uppercase;padding:11px 22px;cursor:pointer;
+     Four photographs of one envelope carry the opening. They share a canvas
+     and, measured off their alpha, they share a body: the mouth is at 45.01%
+     of the image in every frame. That single number is what makes the trick
+     work, because a second copy of the body clipped to below the mouth can be
+     stacked IN FRONT of the card. The card then really does sit inside the
+     envelope and really does come out of it, out of one flat photograph.
+
+     Layers, back to front:
+       1  the frame being shown        flap, and the back of the envelope
+       2  the card                     rises up through the mouth
+       3  the body, clipped at 45.01%  the front panel the card slides behind
+       4  the card once it is clear    so it can flip over the whole thing
+     ============================================================ */
+  .hero{display:flex;justify-content:center;padding-top:clamp(74px,11vh,112px)}
+  .hero__in{position:relative;width:min(900px,100%)}
+  .hero__photo{width:100%;aspect-ratio:3637/2444;object-fit:cover;
+    box-shadow:var(--cast)}
+
+  /* The stage is the envelope's own aspect ratio, centred on the photo, so
+     "the middle of the envelope" and "the middle of the picture" are one
+     place and the card has a single destination. */
+  .stage{position:absolute;left:50%;top:50%;width:42%;
+    aspect-ratio:1113/1413;transform:translate(-50%,-50%)}
+
+  .env,.env__front{position:absolute;inset:0}
+  .env img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+    opacity:0;filter:var(--obj-cast)}
+  .env img.is-on{opacity:1}
+  /* The front panel is the same photograph with everything above the mouth
+     cut away. Nothing of the flap survives the clip, so it can be shown from
+     the moment the envelope is open and the seam is invisible: the pixels it
+     covers are the pixels that were already there. */
+  .env__front{z-index:3;opacity:0}
+  .env__front img{width:100%;height:100%;object-fit:contain;
+    clip-path:inset(45.01% 0 0 0)}
+  .stage.is-open .env__front{opacity:1}
+
+  /* ---- the card ----
+     The paper is a photograph of a real card lying at an angle. Its rectangle
+     measures 1051 x 718 inside a 1400 square and is tilted 34.41 degrees
+     about the centre of that square, so rotating the image back by exactly
+     that much stands the card upright and the centre never moves. The face is
+     sized to the rectangle and the photograph is blown up to 1400/1051 of it,
+     which lands the paper's edges precisely on the face's edges.
+
+     Each face carries its own sheet of paper rather than the two sharing one.
+     Inside preserve-3d there is no z-index to fall back on, so a single shared
+     sheet would sit at the same depth as both faces and, being last in the
+     markup, would paint straight over whichever side was turned towards you.
+     Per face, backface-visibility hides the paper along with the words on it. */
+  .card{position:absolute;left:10%;width:80%;aspect-ratio:1051/718;
+    top:60%;z-index:2;transform-style:preserve-3d;
+    transform:translate3d(0,0,0) rotate(4deg);
+    transition:transform 1.15s cubic-bezier(.22,.61,.36,1)}
+  /* The face is the container the writing is measured against. Sizing the
+     type off the viewport instead let the card and its words drift apart,
+     because the card is a fraction of the stage and the stage is a fraction
+     of the picture, so on a phone the copy ran clean off the paper. In cqw
+     the ratio of words to card is fixed and the overflow cannot come back. */
+  .card__face{position:absolute;inset:0;backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;container-type:inline-size;
+    display:flex;align-items:center;justify-content:center;text-align:center}
+  .card__face--back{transform:rotateY(180deg)}
+  .card__paper{position:absolute;left:50%;top:50%;width:133.14%;height:auto;
+    transform:translate(-50%,-50%) rotate(-34.41deg);
+    filter:var(--obj-cast);pointer-events:none}
+  .card__ink{position:relative;z-index:1;width:86%}
+
+  /* Front: the rhinestone lettering. Until that file is in the folder the
+     type below stands in, and the swap is an image dropping in, not an edit. */
+  .card__art{width:min(70%,300px);margin:0 auto}
+  .card__art--miss{display:none}
+  .card__sub{margin:4.6cqw 0 0;font-size:2.8cqw;letter-spacing:.34em;text-transform:uppercase;opacity:.5}
+  .card__say{margin:0;font-size:3.9cqw;line-height:1.72;letter-spacing:.01em}
+  .card__say b{font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+  .card__say+.card__say{margin-top:.7em}
+
+  /* Drawn out of the envelope and held there, face up, still a little askew,
+     with its bottom edge still tucked behind the front panel. The invitation
+     has to be readable before anything turns it over. */
+  .stage.is-out .card{z-index:4;transform:translate3d(0,-100%,0) rotate(2deg)}
+  /* Then turned over, straightened, and set down in the middle of the picture.
+     Minus 73.2 percent of its own height is where the card's centre meets the
+     stage's centre, and the stage is centred on the photograph, so this lands
+     it dead centre of the whole hero. */
+  .stage.is-turned .card{z-index:4;
+    transform:translate3d(0,-73.2%,0) rotate(0deg) rotateY(180deg) scale(1.15)}
+
+  @media (prefers-reduced-motion:reduce){.card{transition:none}}
+
+  /* ------------ the scattered sheet ------------
+     The doily is decoration and nothing more. It sits behind as one object
+     while the words go where they like: hard left, drifting centre, pushed
+     right, a line of its own. */
+  .sheet{margin:clamp(66px,11vh,118px) auto 0;width:min(820px,100%);position:relative}
+  .sheet__doily{position:absolute;left:50%;top:48%;width:min(560px,86%);
+    transform:translate(-50%,-50%);opacity:.9;pointer-events:none;z-index:-1}
+  .sheet__lines{display:flex;flex-direction:column;gap:clamp(17px,2.5vh,27px);
+    padding:clamp(30px,5vh,56px) 0}
+  .sheet p{margin:0;max-width:34ch}
+  .l--where{align-self:center;text-align:center;max-width:none;
+    font-size:clamp(12px,1.55vw,15px);font-weight:700;letter-spacing:.17em;
+    text-transform:uppercase;line-height:1.95}
+  .l--left{align-self:flex-start;text-align:left;font-size:clamp(17px,2.5vw,25px);
+    letter-spacing:.2em;text-transform:lowercase}
+  .l--mid{align-self:center;text-align:center;font-size:clamp(14px,1.9vw,19px);letter-spacing:.1em}
+  .l--right{align-self:flex-end;text-align:right;font-size:clamp(13px,1.7vw,17px);letter-spacing:.06em}
+  .l--in{align-self:flex-start;margin-left:clamp(26px,13%,124px);font-size:clamp(13px,1.7vw,17px);letter-spacing:.14em}
+  .l--out{align-self:flex-end;margin-right:clamp(16px,7%,70px);font-size:clamp(12px,1.5vw,15px);letter-spacing:.03em;line-height:1.8}
+  .l--shout{align-self:center;text-align:center;max-width:30ch;font-weight:700;
+    font-size:clamp(11.5px,1.45vw,14px);letter-spacing:.11em;text-transform:uppercase;line-height:1.85}
+  .l--give{align-self:flex-start;margin-left:clamp(10px,5%,52px);font-size:clamp(11.5px,1.4vw,13.5px);
+    letter-spacing:.03em;line-height:1.85;max-width:38ch}
+  .tbd{opacity:.45}
+
+  /* ------------ the birthday girls ------------ */
+  .girls{margin:clamp(70px,12vh,126px) auto 0;width:min(980px,100%)}
+  .girls__k{margin:0 0 clamp(26px,4vh,44px);font-size:13px;letter-spacing:.22em;
+    text-transform:lowercase;font-weight:700}
+  .girls__row{display:flex;flex-wrap:wrap;justify-content:center;
+    gap:clamp(24px,4vw,52px)}
+  .girl{width:min(248px,76vw);display:flex;flex-direction:column;align-items:center;gap:14px}
+  .girl__shot{position:relative;width:100%}
+  /* A polaroid stands in until the signed one arrives. The real photographs
+     carry their own white border and signature, so when they land they are
+     shown whole and this frame gets out of the way. */
+  .pola{width:100%;aspect-ratio:4/4.8;background:#FFF;box-shadow:var(--cast);
+    padding:7% 7% 20%;display:flex}
+  .pola__well{flex:1;background:#EDEDED}
+  .girl__real{width:100%;box-shadow:var(--cast);display:none}
+  .girl.has-real .pola{display:none}
+  .girl.has-real .girl__real{display:block}
+  .hat{position:absolute;width:52%;left:50%;top:-30%;z-index:2;
+    filter:var(--obj-cast);display:none}
+  .hat.is-on{display:block}
+  .girl__name{margin:0;font-size:13px;font-weight:700;letter-spacing:.06em;text-align:center}
+  .girl__meta{margin:0;font-size:11.5px;line-height:1.75;letter-spacing:.03em;text-align:center;opacity:.72}
+
+  /* ------------ guest of the year ------------ */
+  .guest{margin:clamp(74px,13vh,134px) auto clamp(60px,9vh,96px);
+    width:min(760px,100%);position:relative}
+  .guest__doily{position:absolute;right:-6%;top:-7%;width:min(240px,34%);
+    opacity:.75;pointer-events:none;z-index:-1}
+  .guest__by{margin:0;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
+  .guest__hd{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
+  .guest__t{margin:4px 0 0;font-size:clamp(26px,4.6vw,46px);line-height:1.08;
+    letter-spacing:.07em;font-weight:700;text-transform:uppercase}
+  .guest__pola{width:min(136px,30%);flex:none}
+  .guest__pola .pola{aspect-ratio:4/4.9}
+
+  .q{display:flex;flex-direction:column;gap:clamp(13px,1.9vh,19px);
+    margin:clamp(26px,4vh,40px) 0 0}
+  .q__row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .q__l{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+    white-space:nowrap;flex:none}
+  .q__i{flex:1 1 150px;min-width:120px;border:0;border-bottom:1px solid var(--ink);
+    background:none;color:var(--ink);font-family:var(--sans);font-size:14px;
+    line-height:1.7;padding:3px 2px;outline:none;border-radius:0;-webkit-appearance:none}
+  .q__i:focus{border-bottom-width:2px;padding-bottom:2px}
+  .q__row--stack{display:block}
+  .q__row--stack .q__i{width:100%;margin-top:7px;flex:none}
+  .q__hint{font-size:10.5px;letter-spacing:.04em;opacity:.45;font-weight:400;text-transform:none}
+
+  /* ---- will you be there ----
+     The answer is circled, the way it is on paper. The ring is a drawn ellipse
+     with a deliberately uneven radius, and it is stroked on when the choice is
+     made rather than appearing all at once. */
+  .will{display:flex;align-items:center;flex-wrap:wrap;gap:clamp(14px,3.5vw,44px);
+    margin:clamp(30px,4.5vh,46px) 0 0}
+  .will__q{font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
+  .pick{position:relative;cursor:pointer;padding:13px 20px;display:inline-flex}
+  .pick input{position:absolute;opacity:0;width:0;height:0}
+  .pick span{font-size:clamp(12px,1.7vw,16px);font-weight:700;letter-spacing:.09em;
+    text-transform:uppercase;white-space:nowrap}
+  .pick__ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;
+    pointer-events:none}
+  /* pathLength normalises the ring to 1 unit long whatever its real geometry,
+     so one dash of 1 covers it exactly. Hiding it with a guessed dash length
+     left a tail of the stroke showing on the answer that was not chosen. */
+  .pick__ring path{fill:none;stroke:var(--ink);stroke-width:2.1;stroke-linecap:round;
+    stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .62s ease}
+  .pick input:checked~.pick__ring path{stroke-dashoffset:0}
+  .pick input:focus-visible~.pick__ring path{stroke-dashoffset:0;opacity:.45}
+
+  .guest__go{align-self:flex-start;margin-top:clamp(22px,3.4vh,34px);background:none;
+    border:1px solid var(--ink);color:var(--ink);font-family:var(--sans);font-size:12px;
+    letter-spacing:.18em;text-transform:uppercase;padding:12px 24px;cursor:pointer;
     transition:background .18s ease,color .18s ease}
-  .rsvp__go:hover{background:var(--ink);color:var(--paper)}
-  .rsvp__said{margin:0;font-size:12px;line-height:1.7;min-height:1.2em}
-  .rsvp__alt{margin:-10px 0 0;font-size:11px;line-height:1.7;opacity:.5}
-  .rsvp__alt a{text-decoration:1px solid underline;text-underline-offset:4px}
-  .rsvp.is-sent .f,.rsvp.is-sent .rsvp__go,.rsvp.is-sent .rsvp__note,
-  .rsvp.is-sent .rsvp__alt{display:none}
-  .rsvp.is-sent .rsvp__said{font-size:15px;letter-spacing:.02em}
+  .guest__go:hover{background:var(--ink);color:var(--paper)}
+  .guest__said{margin:14px 0 0;font-size:12px;line-height:1.7;min-height:1.2em}
+  .guest__alt{margin:8px 0 0;font-size:11px;line-height:1.7;opacity:.5}
+  .guest__alt a{text-decoration:underline 1px;text-underline-offset:4px}
+  .guest.is-sent .q,.guest.is-sent .will,.guest.is-sent .guest__go,
+  .guest.is-sent .guest__alt{display:none}
+  .guest.is-sent .guest__said{font-size:15px;letter-spacing:.02em}
+
+  .bash{margin:0;padding:clamp(26px,4vh,40px) 0 0;text-align:center;
+    font-size:clamp(10.5px,1.35vw,13px);font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;line-height:1.9}
+
+  /* Between a phone and a wide screen the envelope takes a middle share of
+     the picture. Without this step the stage fell straight from 88 to 42
+     percent at the breakpoint and the card went abruptly tiny just above it. */
+  @media (max-width:899px) and (min-width:621px){ .stage{width:58%} }
+
+  @media (max-width:620px){
+    /* On a phone the envelope takes most of the picture, so the card is
+       physically big before it is ever scaled. Leaning on a large scale
+       instead would leave the type laid out at around 7px and only looking
+       right because it was blown up, which a phone's own minimum font size
+       would undo. */
+    .stage{width:88%}
+    .stage.is-turned .card{transform:translate3d(0,-73.2%,0) rotate(0deg) rotateY(180deg) scale(1.35)}
+    .guest__hd{flex-direction:column}
+    .guest__pola{width:120px;align-self:flex-end;margin-top:-54px}
+    .sheet p{max-width:26ch}
+    .l--in{margin-left:14px}
+    .l--out{margin-right:8px}
+  }
 
   /* ------------ confetti ------------
      The layer is the whole document, not the window, so the pieces fall past
@@ -110,7 +301,7 @@
         <div class="ev">
           <span class="ev__m">GO.A1212</span>
           <span class="ev__d">12.12.2026</span>
-          <span class="ev__t">Saturday, 8:30pm to 11pm. Location TBA.</span>
+          <span class="ev__t">Saturday, 8:30pm to 11:30pm. Index Greenpoint.</span>
         </div>
       </div>
 
@@ -134,53 +325,165 @@
 
 <div class="fetti" id="fetti" aria-hidden="true"></div>
 
-<main class="inv" id="inv">
-  <h1 class="inv__mark">12.12</h1>
-  <div class="inv__body">
-    <p>Ever heard of good things come in threes? Well, we're putting that to the test this Saturday, December 12. You are cordially invited to celebrate all THREE of our birthdays in a classically manner of Going Analog.</p>
-    <p>This is a very special rendition of GOING ANALOG as we are celebrating not one, not two, but three very special birthdays. Please join us on Saturday, December 12 in going analog, dancing, and finding joy in celebrating together.</p>
-  </div>
-  <div class="inv__when">
-    <span><b>Saturday, December 12</b></span>
-    <span>8:30pm &ndash; 11pm</span>
-    <span>Location TBA</span>
-  </div>
+<main id="inv">
 
-  <form class="rsvp" id="rsvpForm" novalidate>
-    <p class="rsvp__k">RSVP</p>
-    <p class="rsvp__note">Fill this in and it goes straight to Judy.</p>
+  <!-- ---------- the envelope ---------- -->
+  <section class="s hero">
+    <div class="hero__in">
+      <img class="hero__photo" src="../assets/img/1212/photo-backyard.jpg" alt="" decoding="async">
 
-    <label class="f">
-      <span class="f__l">Name</span>
-      <input class="f__i" id="rName" type="text" autocomplete="name" required>
-    </label>
+      <div class="stage" id="stage">
+        <div class="env" id="env">
+          <img data-f="0" src="../assets/img/1212/envelope-closed-2.webp" alt="" class="is-on">
+          <img data-f="1" src="../assets/img/1212/envelope-closed-1.webp" alt="">
+          <img data-f="2" src="../assets/img/1212/envelope-open-2.webp" alt="">
+          <img data-f="3" src="../assets/img/1212/envelope-open-1.webp" alt="" >
+        </div>
 
-    <label class="f">
-      <span class="f__l">Email</span>
-      <input class="f__i" id="rEmail" type="email" autocomplete="email" inputmode="email">
-    </label>
+        <div class="card" id="card">
+          <div class="card__face">
+            <img class="card__paper" src="../assets/img/1212/card-blank.webp" alt="" aria-hidden="true">
+            <div class="card__ink">
+              <img class="card__art" id="cardArt" src="../assets/img/1212/youre-invited.png" alt="You're Invited">
+              <p class="card__say card__art--miss" id="cardArtAlt">You're Invited</p>
+              <p class="card__sub">12.12</p>
+            </div>
+          </div>
+          <div class="card__face card__face--back">
+            <img class="card__paper" src="../assets/img/1212/card-blank.webp" alt="" aria-hidden="true">
+            <div class="card__ink">
+              <p class="card__say">They say all good things come in threes. Let's put it to the test.</p>
+              <p class="card__say">You are hereby cordially invited to <b>Going Analog, Birthday Edition</b>.</p>
+              <p class="card__say">Prepare to put your phones away, leave everything on the dance floor, and celebrate not one, not two, but THREE birthdays.</p>
+            </div>
+          </div>
+        </div>
 
-    <fieldset class="f f--set">
-      <legend class="f__l">Can you make it</legend>
-      <label class="r"><input type="radio" name="going" value="Yes" checked><span>Yes</span></label>
-      <label class="r"><input type="radio" name="going" value="Can't make it"><span>Can't make it</span></label>
-    </fieldset>
+        <div class="env__front" aria-hidden="true">
+          <img src="../assets/img/1212/envelope-open-1.webp" alt="">
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <label class="f">
-      <span class="f__l">Plus one</span>
-      <span class="f__h">One per person. Add their name.</span>
-      <input class="f__i" id="rPlus" type="text" placeholder="Their name, or leave blank">
-    </label>
+  <!-- ---------- the scattered sheet ---------- -->
+  <section class="s">
+    <div class="sheet">
+      <img class="sheet__doily" src="../assets/img/1212/doily-square.png" alt="" aria-hidden="true">
+      <div class="sheet__lines">
+        <p class="l--where">Saturday, December 12<br>8:30pm to 11:30pm<br>Index Greenpoint</p>
+        <p class="l--left">no phones</p>
+        <p class="l--mid">beats by Ben Jacobs</p>
+        <p class="l--right">drinks, food, and cake</p>
+        <p class="l--in">all of our favorite people</p>
+        <p class="l--out">A night of celebration, joy, and birthday wishes :)</p>
+        <p class="l--shout">Show out as your most authentic, maximalist self. No holding back. No dark colors.</p>
+        <p class="l--give">Sliding-scale donations, $10 to $20 and up, split between three causes <span class="tbd">(coming soon)</span>. Stepping into this year committed to giving back. Impact is sexy.</p>
+      </div>
+    </div>
+  </section>
 
-    <label class="f">
-      <span class="f__l">Anything else</span>
-      <textarea class="f__i f__t" id="rNote" rows="2"></textarea>
-    </label>
+  <!-- ---------- the birthday girls ---------- -->
+  <section class="s">
+    <div class="girls">
+      <h2 class="girls__k">meet the birthday girls</h2>
+      <div class="girls__row">
 
-    <button class="rsvp__go" type="submit">Send RSVP</button>
-    <p class="rsvp__said" id="rSaid" role="status"></p>
-    <p class="rsvp__alt"><a id="rAlt" href="https://docs.google.com/forms/d/e/1FAIpQLSdz3JedwkVE_DTaTLioPtP0gH5CmvHpzQLFOLFPYoyZrEssIg/viewform" target="_blank" rel="noopener">Or open the form on its own</a></p>
-  </form>
+        <div class="girl" data-girl="judy">
+          <div class="girl__shot">
+            <div class="pola"><div class="pola__well"></div></div>
+            <img class="girl__real" src="../assets/img/1212/polaroid-judy.jpg" alt="Judy Li">
+            <img class="hat" src="../assets/img/1212/hat-dots.png" alt="" style="transform:rotate(-13deg) translateX(-50%);transform-origin:left bottom">
+          </div>
+          <p class="girl__name">Judy Li, '03</p>
+          <p class="girl__meta">Sagittarius<br>Ask me about Polaroid</p>
+        </div>
+
+        <div class="girl" data-girl="bianca">
+          <div class="girl__shot">
+            <div class="pola"><div class="pola__well"></div></div>
+            <img class="girl__real" src="../assets/img/1212/polaroid-bianca.jpg" alt="Bianca Pagano">
+            <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="transform:rotate(6deg) translateX(-50%);transform-origin:left bottom">
+          </div>
+          <p class="girl__name">Bianca Pagano, '02</p>
+          <p class="girl__meta">23 (going on 24)<br>Sagittarius<br>Ask me about child modeling</p>
+        </div>
+
+        <div class="girl" data-girl="victoria">
+          <div class="girl__shot">
+            <div class="pola"><div class="pola__well"></div></div>
+            <img class="girl__real" src="../assets/img/1212/polaroid-victoria.jpg" alt="Victoria Briggiler">
+            <img class="hat" src="../assets/img/1212/hat-red.png" alt="" style="transform:rotate(-7deg) translateX(-50%);transform-origin:left bottom">
+          </div>
+          <p class="girl__name">Victoria Briggiler, '02</p>
+          <p class="girl__meta">23 (going on 24)<br>Capricorn<br>Ask me about Bomba</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- guest of the year ---------- -->
+  <section class="s">
+    <form class="guest" id="guestForm" novalidate>
+      <img class="guest__doily" src="../assets/img/1212/doily-oval.png" alt="" aria-hidden="true">
+
+      <div class="guest__hd">
+        <div>
+          <p class="guest__by">RSVP by 12/1</p>
+          <h2 class="guest__t">Guest of<br>the year</h2>
+        </div>
+        <div class="guest__pola"><div class="pola"><div class="pola__well"></div></div></div>
+      </div>
+
+      <div class="q">
+        <div class="q__row"><label class="q__l" for="gName">Name:</label>
+          <input class="q__i" id="gName" type="text" autocomplete="name" required></div>
+        <div class="q__row"><label class="q__l" for="gPhone">Phone #:</label>
+          <input class="q__i" id="gPhone" type="tel" autocomplete="tel" inputmode="tel"></div>
+        <div class="q__row"><label class="q__l" for="gEmail">Email:</label>
+          <input class="q__i" id="gEmail" type="email" autocomplete="email" inputmode="email"></div>
+
+        <div class="q__row"><label class="q__l" for="gWish">Make a wish:</label>
+          <input class="q__i" id="gWish" type="text"></div>
+        <div class="q__row"><label class="q__l" for="gSong">Favorite song:</label>
+          <input class="q__i" id="gSong" type="text"></div>
+        <div class="q__row q__row--stack"><label class="q__l" for="gThing">Favorite thing about our birthday girls:</label>
+          <input class="q__i" id="gThing" type="text"></div>
+        <div class="q__row q__row--stack"><label class="q__l" for="gCake">If you were a cake flavor, what would you be and why?</label>
+          <input class="q__i" id="gCake" type="text"></div>
+        <div class="q__row"><label class="q__l" for="gPlus">Plus one: <span class="q__hint">one per person, add their name</span></label>
+          <input class="q__i" id="gPlus" type="text"></div>
+      </div>
+
+      <div class="will">
+        <span class="will__q">Will you be there?</span>
+
+        <label class="pick">
+          <input type="radio" name="will" value="Yes, I'm hype." checked>
+          <span>Yes, I'm hype.</span>
+          <svg class="pick__ring" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+            <path pathLength="1" d="M101 4 C152 2 196 13 197 30 C198 48 148 57 99 57 C47 57 3 47 3 29 C3 12 50 3 101 4 C118 4 134 6 148 10"/>
+          </svg>
+        </label>
+
+        <label class="pick">
+          <input type="radio" name="will" value="I'm lame.">
+          <span>I'm lame.</span>
+          <svg class="pick__ring" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+            <path pathLength="1" d="M101 4 C152 2 196 13 197 30 C198 48 148 57 99 57 C47 57 3 47 3 29 C3 12 50 3 101 4 C118 4 134 6 148 10"/>
+          </svg>
+        </label>
+      </div>
+
+      <button class="guest__go" type="submit">Send it</button>
+      <p class="guest__said" id="gSaid" role="status"></p>
+      <p class="guest__alt"><a id="gAlt" href="https://docs.google.com/forms/d/e/1FAIpQLSdz3JedwkVE_DTaTLioPtP0gH5CmvHpzQLFOLFPYoyZrEssIg/viewform" target="_blank" rel="noopener">Or open the form on its own</a></p>
+
+      <p class="bash">Birthday bash. Saturday, December 12. 8:30pm to 11:30pm. Index Greenpoint.</p>
+    </form>
+  </section>
+
 </main>
 
 <footer class="foot">
@@ -206,13 +509,43 @@
   <p class="lock__no" id="no" role="alert"></p>
 </div>
 
-<script src="../assets/js/menu.js?v=1794181185"></script>
+<script src="../assets/js/menu.js?v=1794188800"></script>
 <script>
+/* ---------- assets that may not be in the folder yet ----------
+   The party hats, the signed polaroids and the rhinestone lettering are still
+   to come. Each one is asked for in the markup and quietly stood down if it
+   is not there, so dropping the real file into assets/img/1212/ is the whole
+   of the change. Nothing here needs editing when they arrive. */
+(function () {
+  function onLoad(img, yes, no) {
+    if (!img) return;
+    if (img.complete) { (img.naturalWidth > 0 ? yes : no)(); return; }
+    img.addEventListener('load', yes);
+    img.addEventListener('error', no);
+  }
+
+  var art = document.getElementById('cardArt'), artAlt = document.getElementById('cardArtAlt');
+  onLoad(art, function () { artAlt.classList.add('card__art--miss'); },
+              function () { art.style.display = 'none';
+                            artAlt.classList.remove('card__art--miss'); });
+
+  [].forEach.call(document.querySelectorAll('.girl'), function (g) {
+    var real = g.querySelector('.girl__real'), hat = g.querySelector('.hat');
+    onLoad(real, function () { g.classList.add('has-real'); }, function () {});
+    onLoad(hat,  function () { hat.classList.add('is-on'); }, function () {});
+  });
+})();
+
+/* ---------- the lock, the confetti, and the envelope ---------- */
 (function () {
   var WORD = 'LUCKYTHREE', KEY = 'ga_1212';
   var lock = document.getElementById('lock'), form = document.getElementById('lockForm'),
       pw = document.getElementById('pw'), no = document.getElementById('no'),
-      fetti = document.getElementById('fetti');
+      fetti = document.getElementById('fetti'),
+      stage = document.getElementById('stage'),
+      env = document.getElementById('env');
+
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Tissue paper dots. */
   var DOTS = ['#2B5FCC', '#A96C44', '#B01E52', '#7DC242', '#E0B32A',
@@ -222,11 +555,13 @@
 
   /* Confetti falls once, as the invite is revealed, and then stays put on the
      floor of the page. The drop is measured off the layer rather than the
-     window so a piece lands by the footer, not wherever the fold happens to be. */
+     window so a piece lands by the footer, not wherever the fold happens to be.
+     The count follows the height of the page, because this one is long now and
+     a fixed handful of dots would read as a sprinkle rather than a fall. */
   function throwIt() {
     var small = window.matchMedia('(max-width: 620px)').matches;
-    var n = small ? 54 : 94;
     var H = fetti.offsetHeight || window.innerHeight;
+    var n = Math.max(small ? 54 : 94, Math.min(small ? 130 : 230, Math.round(H / 20)));
     var frag = document.createDocumentFragment();
 
     for (var i = 0; i < n; i++) {
@@ -252,10 +587,38 @@
     fetti.appendChild(frag);
   }
 
+  /* The opening, frame by frame. Four photographs in order of how far the flap
+     has lifted, held long enough each to read as a separate picture rather
+     than a blur, which is what makes it look handled rather than tweened. */
+  var frames = env ? env.querySelectorAll('img') : [];
+  var timers = [];
+  function show(i) {
+    for (var k = 0; k < frames.length; k++) {
+      frames[k].classList.toggle('is-on', k === i);
+    }
+  }
+  function openEnvelope() {
+    if (!stage) return;
+    if (still) { show(3); stage.classList.add('is-open', 'is-out', 'is-turned'); return; }
+    var beats = [[320, 1], [700, 2], [1010, 3]];
+    beats.forEach(function (b) {
+      timers.push(setTimeout(function () { show(b[1]); }, b[0]));
+    });
+    /* The front panel only goes up once the flap is out of the way. Below the
+       mouth the open frame and the closed frames are the same pixels, so the
+       moment it appears there is nothing to see. */
+    timers.push(setTimeout(function () { stage.classList.add('is-open'); }, 1010));
+    /* The card is drawn out and held long enough to be read, */
+    timers.push(setTimeout(function () { stage.classList.add('is-out'); }, 1420));
+    /* and only then turned over onto its other side. */
+    timers.push(setTimeout(function () { stage.classList.add('is-turned'); }, 3050));
+  }
+
   function open(withFetti) {
     lock.classList.add('is-open');
     document.getElementById('inv').removeAttribute('aria-hidden');
     if (withFetti) throwIt();
+    openEnvelope();
     setTimeout(function () { lock.hidden = true; }, 500);
   }
 
@@ -283,43 +646,48 @@
   });
 })();
 
-/* ---------- RSVP ----------
+/* ---------- guest of the year ----------
    Posts into the "12.12 RSVP" Google Form in Bianca's Drive, which drops each
-   answer into the linked "12.12 RSVP (Responses)" sheet. The entry ids below
-   come from that form and break if its questions are rebuilt. */
+   answer into the linked "12.12 RSVP (Responses)" sheet. Every id below was
+   read back off the published form, and they break if the questions are ever
+   deleted and rebuilt rather than renamed. */
 (function () {
   var FORM = '1FAIpQLSdz3JedwkVE_DTaTLioPtP0gH5CmvHpzQLFOLFPYoyZrEssIg';
   var ACTION = 'https://docs.google.com/forms/d/e/' + FORM + '/formResponse';
   var FIELD = {
-    name:  'entry.1932766344',
-    email: 'entry.1221645762',
-    going: 'entry.1636266939',
-    plus:  'entry.1073643154',
-    note:  'entry.1441426393'
+    gName:  'entry.1932766344',
+    gPhone: 'entry.1757840567',
+    gEmail: 'entry.1221645762',
+    gWish:  'entry.16315914',
+    gSong:  'entry.1211517671',
+    gThing: 'entry.1957822600',
+    gCake:  'entry.93989351',
+    gPlus:  'entry.1073643154'
   };
+  var WILL = 'entry.1636266939';
 
-  var form = document.getElementById('rsvpForm');
+  var form = document.getElementById('guestForm');
   if (!form) return;
-  var said = document.getElementById('rSaid'),
-      go = form.querySelector('.rsvp__go'),
-      alt = document.getElementById('rAlt');
-  function v(id) { return (document.getElementById(id).value || '').trim(); }
+  var said = document.getElementById('gSaid'),
+      go = form.querySelector('.guest__go'),
+      alt = document.getElementById('gAlt');
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var name = v('rName');
-    if (!name) {
+    var nameEl = document.getElementById('gName');
+    if (!(nameEl.value || '').trim()) {
       said.textContent = 'Need a name first.';
-      document.getElementById('rName').focus();
+      nameEl.focus();
       return;
     }
-    var going = form.querySelector('input[name="going"]:checked');
+
     var body = new URLSearchParams();
-    body.append(FIELD.name,  name);
-    body.append(FIELD.email, v('rEmail'));
-    body.append(FIELD.going, going ? going.value : 'Yes');
-    body.append(FIELD.plus,  v('rPlus'));
-    body.append(FIELD.note,  v('rNote'));
+    for (var id in FIELD) {
+      if (!Object.prototype.hasOwnProperty.call(FIELD, id)) continue;
+      body.append(FIELD[id], (document.getElementById(id).value || '').trim());
+    }
+    var will = form.querySelector('input[name="will"]:checked');
+    body.append(WILL, will ? will.value : "Yes, I'm hype.");
 
     go.disabled = true;
     said.textContent = 'Sending';
@@ -329,7 +697,9 @@
     fetch(ACTION, { method: 'POST', mode: 'no-cors', body: body })
       .then(function () {
         form.classList.add('is-sent');
-        said.textContent = "You are on the list. See you on the 12th.";
+        said.textContent = will && will.value === "I'm lame."
+          ? "Noted. We will miss you on the 12th."
+          : "You are on the list. See you on the 12th.";
       })
       .catch(function () {
         go.disabled = false;
