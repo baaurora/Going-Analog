@@ -185,8 +185,17 @@
      them low on the left, and the closing card bottom right. The frame carries
      the mockup's own proportions, so each piece is placed as a percentage of
      it and the whole thing scales as one picture. */
-  .give{position:relative;margin:clamp(40px,6vh,72px) auto 0;
-    width:min(900px,100%);aspect-ratio:1630/1130}
+  /* The collage was boxed in at 820px, because .sheet caps it and min(900px,
+     100%) resolves to the parent. It breaks out instead: margin-left 50%
+     walks to the centre of the sheet, which is also the centre of the page,
+     and translateX pulls back half its own width from there.
+     Widening alone would have scaled every piece up with it, so the element
+     widths came down by the same factor and the canvas got much wider than
+     tall. The pieces are the size they were. There is just more room between
+     them now. */
+  .give{position:relative;margin:clamp(40px,6vh,72px) 0 0;
+    width:min(1380px,94vw);margin-left:50%;transform:translateX(-50%);
+    aspect-ratio:1630/820}
   .give > *{position:absolute}
 
   /* Fibrous grain, drawn rather than photographed: fractal noise desaturated
@@ -194,7 +203,7 @@
      from a rectangle of flat colour, and it costs no asset. */
   .sheet{--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
 
-  .give__note{left:7%;top:2.5%;width:42%;aspect-ratio:690/455;
+  .give__note{left:0.5%;top:2.5%;width:31%;aspect-ratio:690/455;
     transform:rotate(-5deg);padding:clamp(12px,2.2vw,26px);
     display:flex;align-items:center;justify-content:center;
     background-color:#F4A9CA;
@@ -227,19 +236,19 @@
   /* Ten dots are filed, one per colour. Picking a foundation means pointing
      --pic at whichever one suits it: jade, red, pink, green, wine, yellow,
      gold, brown, white, blue. */
-  .found--1{left:49.4%;top:3%;width:24%;
+  .found--1{left:43%;top:2%;width:18%;
     --pic:url(../assets/img/1212/dot-wine.png)}
-  .found--2{left:22.4%;top:41.2%;width:24.5%;
+  .found--2{left:13%;top:39%;width:18.2%;
     --pic:url(../assets/img/1212/dot-blue.png)}
-  .found--3{left:73.6%;top:31.4%;width:24.5%;
+  .found--3{left:75%;top:33%;width:18.2%;
     --pic:url(../assets/img/1212/dot-green.png)}
   .found__k{font-size:clamp(10px,1.4vw,15px);line-height:1.5;font-weight:700;padding:0 12%}
 
-  .give__cta{left:6%;top:77%;width:27%;text-align:center;
+  .give__cta{left:1.5%;top:79%;width:20%;text-align:center;
     font-size:clamp(12px,1.95vw,22px);line-height:1.45}
 
   /* Cream mount with a pink bloom in the middle of it. */
-  .give__card{left:51.2%;top:57.5%;width:34.7%;aspect-ratio:565/405;
+  .give__card{left:50%;top:57%;width:25.7%;aspect-ratio:565/405;
     display:flex;align-items:center;justify-content:center;
     padding:clamp(10px,1.8vw,22px);
     background:
@@ -292,8 +301,8 @@
      next, measured at phone width. Row-gap carries that head room now and
      column-gap stays what it was. */
   .girls__row{display:flex;flex-wrap:wrap;justify-content:center;
-    gap:calc(min(320px,76vw) * .40) clamp(24px,4vw,56px);
-    padding-top:calc(min(320px,76vw) * .40)}
+    gap:calc(min(320px,76vw) * .21) clamp(24px,4vw,56px);
+    padding-top:calc(min(320px,76vw) * .21)}
   .girl{width:min(320px,76vw);display:flex;flex-direction:column;align-items:center;gap:14px}
   .girl__shot{position:relative;width:100%}
   /* A polaroid stands in until the signed one arrives. The real photographs
@@ -310,12 +319,20 @@
      pixels, and --ht puts the brim just into the hair from there. Rotating
      about the bottom centre means the tilt swings the point of the cone and
      leaves the brim sitting where it was put.
-     The hats were cut from 52 to 37.5 percent of a card, which is 27.9
-     percent off. A shorter hat with the same top edge would float, so each
-     --ht moved down by the height that was removed: 0.145 of a card wide
-     times the hat's own aspect ratio, over the 1.2278 the polaroid is tall.
-     That keeps every brim on the head it was measured onto. */
-  .hat{position:absolute;left:50%;width:var(--hw,37.5%);top:var(--ht,-30%);
+     The hats were cut from 52 to 37.5 and then to 30 percent of a card. A
+     shorter hat with the same top edge would float, so each --ht moved down
+     by the height that was removed: the width taken off, times the hat's own
+     aspect ratio, over the 1.2278 the polaroid is tall.
+     30 percent is the number because the heads were measured too. Judy's is
+     32.6 percent of a card across, Victoria's 29.3, and Bianca's 41, though
+     hers is curls rather than skull. At 37.5 the hats were wider than two of
+     the three heads they sat on, which is what made them perch.
+     They then came down a further 7 points of polaroid height, about 27px at
+     full size. Not the half inch asked for: a full 48px puts every brim
+     below the widest part of the head, which is across the forehead and into
+     the eyes. 7 points puts each brim just above its own widest row, 23.9,
+     26.7 and 23.7 percent down against widest rows of 26.8, 29 and 26.4. */
+  .hat{position:absolute;left:50%;width:var(--hw,30%);top:var(--ht,-30%);
     z-index:2;filter:var(--obj-cast);display:none;
     transform:translateX(-50%) rotate(var(--hr,0deg));
     transform-origin:center bottom}
@@ -417,7 +434,8 @@
     /* The collage cannot hold its places this narrow, so it stacks, with the
        three foundation discs kept together on one row. */
     .give{aspect-ratio:auto;display:flex;flex-wrap:wrap;
-      justify-content:center;align-items:center;gap:16px 5%}
+      justify-content:center;align-items:center;gap:16px 5%;
+      width:100%;margin-left:0;transform:none}
     .give > *{position:static}
     .give__note{width:96%;transform:rotate(-3deg)}
     .give__note p,.give__card p{font-size:13px}
@@ -607,7 +625,7 @@
           <div class="girl__shot">
             <div class="pola"><div class="pola__well"></div></div>
             <img class="girl__real" src="../assets/img/1212/polaroid-judy.jpg" alt="Judy Li">
-            <img class="hat" src="../assets/img/1212/hat-dots.png" alt="" style="--hr:-13deg;--ht:-25.9%">
+            <img class="hat" src="../assets/img/1212/hat-dots.png" alt="" style="--hr:-13deg;--ht:-10.3%">
           </div>
           <p class="girl__name">Judy Li, '03</p>
           <p class="girl__meta">22 (going on 23)<br>Sagittarius<br>Ask me about Polaroid</p>
@@ -617,7 +635,7 @@
           <div class="girl__shot">
             <div class="pola"><div class="pola__well"></div></div>
             <img class="girl__real" src="../assets/img/1212/polaroid-bianca.jpg" alt="Bianca Pagano">
-            <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="--hr:6deg;--ht:-16.7%">
+            <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="--hr:6deg;--ht:-2.4%">
           </div>
           <p class="girl__name">Bianca Pagano, '02</p>
           <p class="girl__meta">23 (going on 24)<br>Sagittarius<br>Ask me about child modeling</p>
@@ -627,7 +645,7 @@
           <div class="girl__shot">
             <div class="pola"><div class="pola__well"></div></div>
             <img class="girl__real" src="../assets/img/1212/polaroid-victoria.jpg" alt="Victoria Briggiler">
-            <img class="hat" src="../assets/img/1212/hat-red.png" alt="" style="--hr:-7deg;--ht:-26.1%">
+            <img class="hat" src="../assets/img/1212/hat-red.png" alt="" style="--hr:-7deg;--ht:-10.5%">
           </div>
           <p class="girl__name">Victoria Briggiler, '02</p>
           <p class="girl__meta">23 (going on 24)<br>Capricorn<br>Ask me about Bomba</p>
