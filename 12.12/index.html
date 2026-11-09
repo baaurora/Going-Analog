@@ -64,14 +64,29 @@
      The frame is wider in proportion than it was. Its height is pinned by the
      window either way, so a wider ratio buys horizontal room for nothing, and
      that room is what lets the photograph grow. */
-  .hero__in{position:relative;aspect-ratio:1100/780;
-    width:min(1100px,100%,calc((100vh - 120px) * 1.4103))}
+  /* Everything here is one budget. The frame's height is pinned by the
+     window, the envelope's height is pinned by the frame, and the frame's
+     width follows from its ratio, so the photograph, the envelope and the
+     card cannot be made bigger independently of each other. The only two
+     ways to buy size are to spend less height on empty space, and to spend
+     less height on the tilt.
+     Both were spent. The reserve went from 120px to 70px, which was slack
+     that nothing was using, and the tilt went from 12 to 10 degrees, which
+     drops what the tilt costs in height from 1.4496 times the envelope's
+     width to 1.4238. That pays for a ratio of 1.4493 instead of 1.4103.
+     At 1180 by 820 the frame goes from 987px to 1087px wide and everything
+     in it grows by the same tenth, and it is now the container width that
+     binds rather than the window height. Checked: 59px of padding plus 750px
+     of frame is 809 of the 820 there is, and the tilted envelope needs 743
+     of that 750. Nothing is cut off. */
+  .hero__in{position:relative;aspect-ratio:1100/759;
+    width:min(1400px,100%,calc((100vh - 70px) * 1.4493))}
   /* The photograph is a smaller object held to the left, the way it is in the
      collage. It is not a backdrop the envelope sits on: the envelope keeps its
      own white ground to the right of it. Shown whole, at its own proportions,
      rather than cropped to a shape chosen for it. */
-  .hero__photo{position:absolute;left:0;top:50%;transform:translateY(-50%);
-    width:50%;height:auto;box-shadow:var(--cast)}
+  .hero__photo{position:absolute;left:-3%;top:50%;transform:translateY(-50%);
+    width:56%;height:auto;box-shadow:var(--cast)}
 
   /* The stage is the envelope's own aspect ratio. The card's destination is
      the middle of the stage, so wherever the envelope is put on the page the
@@ -82,8 +97,8 @@
   /* 48 is as wide as it can go. Tilted 12 degrees the canvas needs 1.449
      times its own width in height, and 1.449 x 48% of the frame is 687 of the
      700 the window leaves. Anything larger and the envelope is cut again. */
-  .stage{position:absolute;left:45%;top:50%;width:48%;
-    aspect-ratio:1113/1413;transform:translateY(-50%) rotate(12deg)}
+  .stage{position:absolute;left:46%;top:50%;width:48%;
+    aspect-ratio:1113/1413;transform:translateY(-50%) rotate(10deg)}
 
   .env,.env__front{position:absolute;inset:0}
   .env img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
@@ -282,6 +297,10 @@
   .l--e{align-self:flex-start;margin-left:12%;max-width:31ch;
     margin-top:clamp(22px,3.4vh,38px)}
   /* The dress code is the one thing centred: a label, then the instruction. */
+  /* The doily is centred at 53 percent of the section, not 50, so centring
+     the dress code on the section left it sitting off the lace. 3 percent of
+     the container puts it on the middle of the doily instead. */
+  .l--f,.l--g{position:relative;left:3%}
   .l--f{align-self:center;text-align:center;text-transform:uppercase;
     color:#8E8E8E;margin-top:clamp(28px,4.4vh,48px)}
   .l--g{align-self:center;text-align:center;text-transform:uppercase;
@@ -479,6 +498,7 @@
     .l--e{margin-left:2%}
     .l--g{max-width:30ch}
     .doily__img{left:52%;width:94%}
+    .l--f,.l--g{left:2%}
   }
 
   /* ------------ confetti ------------
@@ -486,6 +506,18 @@
      the fold and come to rest on the floor of the page by the footer. They
      sit behind the footer text, which keeps the words readable. */
   .fetti{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+  /* The confetti sits at z-index 1 and the header band at 60, with an opaque
+     white fill, so every piece that began inside the band was hidden until it
+     dropped clear of it. That is what made the fall look like it started
+     below the header rather than on it.
+     Raising the whole layer over the header was the wrong fix: it is a
+     document tall layer, so that would have put dots over the card, the
+     faces and the footer text too. Instead the band itself is clear while
+     the page is at the top, which is the only moment the confetti is up
+     there, and fills back in as soon as anything scrolls under it. No
+     transition on purpose: it is a hard swap, not a fade. */
+  .top{background:transparent}
+  body.is-scrolled .top{background:var(--band-bg)}
   /* One size for every piece, and big enough to read as confetti rather than
      as dust. No tumble and no drift: they fall, which is all they do. */
   /* Linear, because a piece of paper reaches its falling speed almost at once
@@ -621,7 +653,7 @@
 
         <div class="give__card">
           <p>Stepping into next year committed to giving back.
-             <b>Impact is sexy.</b></p>
+             <b>That's hot.</b></p>
         </div>
       </div>
 
@@ -825,10 +857,13 @@
     var H = fetti.offsetHeight || window.innerHeight;
     var n = Math.max(small ? 46 : 80, Math.min(small ? 110 : 190, Math.round(H / 24)));
     var frag = document.createDocumentFragment();
-    /* The fall starts at the header band, not somewhere off the top of the
-       page. A piece is placed where it will come to rest and then lifted by
-       everything between that and the header, so its first frame is up there. */
-    var TOP = 54;
+    /* The fall starts inside the header band, not below it. A piece is placed
+       where it will come to rest and then lifted by everything between that
+       and the top, so its first frame is up there. The jitter below spreads
+       the starts over rnd(4, 54), and the band is 58px, so every piece's
+       first frame lands on the header and none of them begins above the
+       layer, where overflow:hidden would clip it into view. */
+    var TOP = 20;
 
     for (var i = 0; i < n; i++) {
       var bit = document.createElement('i');
@@ -986,6 +1021,19 @@
         if (alt) alt.focus();
       });
   });
+})();
+
+/* Whether the header band is filled in or clear. See .top above. */
+(function () {
+  var b = document.body, on = false;
+  function sync() {
+    var y = window.scrollY || document.documentElement.scrollTop || b.scrollTop || 0;
+    var want = y > 12;
+    if (want !== on) { on = want; b.classList.toggle('is-scrolled', want); }
+  }
+  addEventListener('scroll', sync, { passive: true });
+  addEventListener('resize', sync, { passive: true });
+  sync();
 })();
 </script>
 </body>
