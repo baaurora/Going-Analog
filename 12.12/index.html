@@ -50,15 +50,22 @@
        4  the card once it is clear    so it can flip over the whole thing
      ============================================================ */
   .hero{display:flex;justify-content:center;padding-top:clamp(74px,11vh,112px)}
-  .hero__in{position:relative;width:min(900px,100%)}
-  .hero__photo{width:100%;aspect-ratio:3637/2444;object-fit:cover;
-    box-shadow:var(--cast)}
+  /* The ratio has to leave room for the stage, which is portrait: at 64% of
+     the width the envelope canvas stands 0.813 of that width tall. */
+  .hero__in{position:relative;width:min(1000px,100%);aspect-ratio:1000/835}
+  /* The photograph is a smaller object held to the left, the way it is in the
+     collage. It is not a backdrop the envelope sits on: the envelope keeps its
+     own white ground to the right of it. */
+  .hero__photo{position:absolute;left:0;top:50%;transform:translateY(-50%);
+    width:36%;aspect-ratio:3637/2444;object-fit:cover;box-shadow:var(--cast)}
 
-  /* The stage is the envelope's own aspect ratio, centred on the photo, so
-     "the middle of the envelope" and "the middle of the picture" are one
-     place and the card has a single destination. */
-  .stage{position:absolute;left:50%;top:50%;width:42%;
-    aspect-ratio:1113/1413;transform:translate(-50%,-50%)}
+  /* The stage is the envelope's own aspect ratio. The card's destination is
+     the middle of the stage, so wherever the envelope is put on the page the
+     card still settles onto the envelope it came out of. */
+  /* Set from the left so it crosses the photograph's edge by a couple of
+     percent. It leans on the picture without sitting on top of it. */
+  .stage{position:absolute;left:34%;top:50%;width:64%;
+    aspect-ratio:1113/1413;transform:translateY(-50%)}
 
   .env,.env__front{position:absolute;inset:0}
   .env img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
@@ -106,10 +113,17 @@
 
   /* Front: the rhinestone lettering. Until that file is in the folder the
      type below stands in, and the swap is an image dropping in, not an edit. */
-  .card__art{width:min(70%,300px);margin:0 auto}
+  /* multiply drops a white background against the cream paper without needing
+     the file to be cut out, so the rhinestone lettering works whether it
+     arrives as a transparent PNG or flat on white. */
+  .card__art{width:min(86%,420px);margin:0 auto;mix-blend-mode:multiply}
   .card__art--miss{display:none}
-  .card__sub{margin:4.6cqw 0 0;font-size:2.8cqw;letter-spacing:.34em;text-transform:uppercase;opacity:.5}
-  .card__say{margin:0;font-size:3.9cqw;line-height:1.72;letter-spacing:.01em}
+  /* Measured against the face, so the words can never outgrow the paper, but
+     clamped so that making the card bigger buys room rather than just
+     magnifying everything at the same ratio. */
+  .card__sub{margin:3.4cqw 0 0;font-size:clamp(8px,2cqw,11px);letter-spacing:.34em;
+    text-transform:uppercase;opacity:.5}
+  .card__say{margin:0;font-size:clamp(12px,3.2cqw,17px);line-height:1.74;letter-spacing:.01em}
   .card__say b{font-weight:700;text-transform:uppercase;letter-spacing:.06em}
   .card__say+.card__say{margin-top:.7em}
 
@@ -126,30 +140,49 @@
 
   @media (prefers-reduced-motion:reduce){.card{transition:none}}
 
-  /* ------------ the scattered sheet ------------
-     The doily is decoration and nothing more. It sits behind as one object
-     while the words go where they like: hard left, drifting centre, pushed
-     right, a line of its own. */
+  /* ------------ the sheet ------------
+     Two registers only. The date, time and place lead at the larger one, the
+     donations follow straight under them, and everything on the doily is set
+     at one single smaller size. Nothing down there changes size: the scatter
+     is made of where a line starts, how it is tracked and how far it sits
+     from the line above it. The doily is decoration, pushed low and off to
+     one side so the words are never centred on it. */
   .sheet{margin:clamp(66px,11vh,118px) auto 0;width:min(820px,100%);position:relative}
-  .sheet__doily{position:absolute;left:50%;top:48%;width:min(560px,86%);
-    transform:translate(-50%,-50%);opacity:.9;pointer-events:none;z-index:-1}
-  .sheet__lines{display:flex;flex-direction:column;gap:clamp(17px,2.5vh,27px);
-    padding:clamp(30px,5vh,56px) 0}
-  .sheet p{margin:0;max-width:34ch}
-  .l--where{align-self:center;text-align:center;max-width:none;
-    font-size:clamp(12px,1.55vw,15px);font-weight:700;letter-spacing:.17em;
-    text-transform:uppercase;line-height:1.95}
-  .l--left{align-self:flex-start;text-align:left;font-size:clamp(17px,2.5vw,25px);
-    letter-spacing:.2em;text-transform:lowercase}
-  .l--mid{align-self:center;text-align:center;font-size:clamp(14px,1.9vw,19px);letter-spacing:.1em}
-  .l--right{align-self:flex-end;text-align:right;font-size:clamp(13px,1.7vw,17px);letter-spacing:.06em}
-  .l--in{align-self:flex-start;margin-left:clamp(26px,13%,124px);font-size:clamp(13px,1.7vw,17px);letter-spacing:.14em}
-  .l--out{align-self:flex-end;margin-right:clamp(16px,7%,70px);font-size:clamp(12px,1.5vw,15px);letter-spacing:.03em;line-height:1.8}
-  .l--shout{align-self:center;text-align:center;max-width:30ch;font-weight:700;
-    font-size:clamp(11.5px,1.45vw,14px);letter-spacing:.11em;text-transform:uppercase;line-height:1.85}
-  .l--give{align-self:flex-start;margin-left:clamp(10px,5%,52px);font-size:clamp(11.5px,1.4vw,13.5px);
-    letter-spacing:.03em;line-height:1.85;max-width:38ch}
+  .sheet p{margin:0}
+
+  .when{text-align:center;font-weight:700;text-transform:uppercase;
+    font-size:clamp(16px,2.45vw,27px);letter-spacing:.17em;line-height:1.75}
+
+  .topic{font-weight:700;text-transform:uppercase;
+    font-size:clamp(10px,1.2vw,12px);letter-spacing:.26em;opacity:.5}
+
+  .give{margin:clamp(24px,3.6vh,38px) auto 0;max-width:46ch;text-align:center;
+    display:flex;flex-direction:column;gap:9px}
+  .give .l{max-width:none}
   .tbd{opacity:.45}
+
+  /* One size for every line on the doily. */
+  .l{font-size:clamp(12.5px,1.6vw,15.5px);line-height:1.8;max-width:34ch}
+
+  /* Kept near its own 296px so it stays crisp, pushed low and right of centre
+     so the words sit across it off balance rather than framed by it. The
+     bottom padding is what stops it reaching into the birthday girls. */
+  .doily{position:relative;margin:clamp(34px,5.5vh,58px) 0 0;
+    padding:clamp(34px,6vh,74px) 0 clamp(70px,11vh,130px)}
+  .doily__img{position:absolute;left:58%;top:58%;width:min(360px,62%);
+    transform:translate(-50%,-50%);opacity:.92;pointer-events:none;z-index:-1}
+  .doily__lines{display:flex;flex-direction:column}
+
+  .l--a{align-self:flex-start;letter-spacing:.24em}
+  .l--b{align-self:flex-end;text-align:right;margin-top:clamp(26px,4vh,44px);letter-spacing:.04em}
+  .l--c{align-self:center;text-align:center;margin-top:clamp(14px,2vh,22px);
+    margin-left:7%;letter-spacing:.15em}
+  .l--d{align-self:flex-start;margin-top:clamp(30px,4.6vh,50px);margin-left:14%;letter-spacing:.02em}
+  .l--e{align-self:flex-end;text-align:right;margin-top:clamp(12px,1.8vh,20px);
+    margin-right:11%;letter-spacing:.2em}
+  .l--f{align-self:flex-start;margin-top:clamp(34px,5.4vh,58px);margin-left:4%}
+  .l--g{align-self:flex-start;margin-top:clamp(11px,1.6vh,16px);margin-left:4%;
+    max-width:30ch;letter-spacing:.06em}
 
   /* ------------ the birthday girls ------------ */
   .girls{margin:clamp(70px,12vh,126px) auto 0;width:min(980px,100%)}
@@ -239,7 +272,7 @@
   /* Between a phone and a wide screen the envelope takes a middle share of
      the picture. Without this step the stage fell straight from 88 to 42
      percent at the breakpoint and the card went abruptly tiny just above it. */
-  @media (max-width:899px) and (min-width:621px){ .stage{width:58%} }
+
 
   @media (max-width:620px){
     /* On a phone the envelope takes most of the picture, so the card is
@@ -247,13 +280,25 @@
        instead would leave the type laid out at around 7px and only looking
        right because it was blown up, which a phone's own minimum font size
        would undo. */
-    .stage{width:88%}
+    /* Too narrow to stand them side by side, so the photograph sits above and
+       the envelope takes the width beneath it. */
+    /* The clamp floor that keeps the type readable on a wide screen is too
+       big for a card this narrow, so on a phone the ratio takes over again.
+       The card is scaled 1.35 when it settles, which carries it back up to
+       around 14px on screen. */
+    .card__say{font-size:3.7cqw}
+    .card__sub{font-size:2.9cqw}
+    .hero__in{aspect-ratio:375/600}
+    .hero__photo{width:58%;left:0;top:0;transform:none}
+    .stage{width:96%;right:0;left:auto;top:auto;bottom:0;transform:none}
     .stage.is-turned .card{transform:translate3d(0,-73.2%,0) rotate(0deg) rotateY(180deg) scale(1.35)}
     .guest__hd{flex-direction:column}
     .guest__pola{width:120px;align-self:flex-end;margin-top:-54px}
-    .sheet p{max-width:26ch}
-    .l--in{margin-left:14px}
-    .l--out{margin-right:8px}
+    .l{max-width:27ch}
+    .l--c{margin-left:0}
+    .l--d{margin-left:6%}
+    .l--e{margin-right:4%}
+    .doily__img{left:52%;width:82%}
   }
 
   /* ------------ confetti ------------
@@ -261,7 +306,8 @@
      the fold and come to rest on the floor of the page by the footer. They
      sit behind the footer text, which keeps the words readable. */
   .fetti{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
-  .fetti i{position:absolute;bottom:0;display:block;border-radius:50%;
+  /* One size for every piece. */
+  .fetti i{position:absolute;bottom:0;display:block;width:6px;height:6px;border-radius:50%;
     animation:drop var(--dur) cubic-bezier(.25,.1,.45,1) var(--lag) both}
   @keyframes drop{
     0%  {transform:translate3d(0,var(--rise),0) rotateX(0) rotateY(0)}
@@ -366,19 +412,27 @@
     </div>
   </section>
 
-  <!-- ---------- the scattered sheet ---------- -->
+  <!-- ---------- the sheet ---------- -->
   <section class="s">
     <div class="sheet">
-      <img class="sheet__doily" src="../assets/img/1212/doily-square.png" alt="" aria-hidden="true">
-      <div class="sheet__lines">
-        <p class="l--where">Saturday, December 12<br>8:30pm to 11:30pm<br>Index Greenpoint</p>
-        <p class="l--left">no phones</p>
-        <p class="l--mid">beats by Ben Jacobs</p>
-        <p class="l--right">drinks, food, and cake</p>
-        <p class="l--in">all of our favorite people</p>
-        <p class="l--out">A night of celebration, joy, and birthday wishes :)</p>
-        <p class="l--shout">Show out as your most authentic, maximalist self. No holding back. No dark colors.</p>
-        <p class="l--give">Sliding-scale donations, $10 to $20 and up, split between three causes <span class="tbd">(coming soon)</span>. Stepping into this year committed to giving back. Impact is sexy.</p>
+      <p class="when">Saturday, December 12<br>8:30pm to 11:30pm<br>Index Greenpoint</p>
+
+      <div class="give">
+        <p class="topic">Sliding scale donations</p>
+        <p class="l">$10 to $20 and up, split between three causes <span class="tbd">(coming soon)</span>. Stepping into this year committed to giving back. Impact is sexy.</p>
+      </div>
+
+      <div class="doily">
+        <img class="doily__img" src="../assets/img/1212/doily-square.png" alt="" aria-hidden="true">
+        <div class="doily__lines">
+          <p class="l l--a">no phones.</p>
+          <p class="l l--b">drinks, food, and cake</p>
+          <p class="l l--c">beats by Ben Jacobs</p>
+          <p class="l l--d">A night of celebration, joy, and birthday wishes</p>
+          <p class="l l--e">all of our favorite people</p>
+          <p class="topic l--f">Dress code</p>
+          <p class="l l--g">Show out as your most authentic, maximalist self. No holding back. No dark colors.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -566,9 +620,6 @@
 
     for (var i = 0; i < n; i++) {
       var bit = document.createElement('i');
-      var d = Math.round(rnd(4, 8));
-      bit.style.width = d + 'px';
-      bit.style.height = d + 'px';
       bit.style.background = DOTS[(Math.random() * DOTS.length) | 0];
       bit.style.left = rnd(0, 99).toFixed(2) + '%';
       /* Where it comes to rest: a shallow drift of a pile, not one flat line. */
@@ -614,10 +665,14 @@
     timers.push(setTimeout(function () { stage.classList.add('is-turned'); }, 3050));
   }
 
-  function open(withFetti) {
+  /* The confetti falls every time the page is opened, not only on the visit
+     where the password was typed. Tying it to the gate meant a second look in
+     the same session showed none at all, which reads as broken rather than as
+     restraint. */
+  function open() {
     lock.classList.add('is-open');
     document.getElementById('inv').removeAttribute('aria-hidden');
-    if (withFetti) throwIt();
+    throwIt();
     openEnvelope();
     setTimeout(function () { lock.hidden = true; }, 500);
   }
@@ -625,7 +680,7 @@
   /* Already let in during this visit, so do not ask twice. */
   var seen = false;
   try { seen = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
-  if (seen) { open(false); }
+  if (seen) { open(); }
   else {
     document.getElementById('inv').setAttribute('aria-hidden', 'true');
     setTimeout(function () { pw.focus(); }, 120);
@@ -637,7 +692,7 @@
     if (tried === WORD) {
       try { sessionStorage.setItem(KEY, '1'); } catch (e2) {}
       no.textContent = '';
-      open(true);
+      open();
     } else {
       no.textContent = 'Not it. Ask whoever sent you.';
       pw.value = '';
