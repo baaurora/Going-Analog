@@ -214,35 +214,25 @@
   /* Placeholders for the three foundations, a different confetti colour each,
      mixed back towards white so they read as tissue discs rather than as the
      dots themselves. Each becomes a link once the foundations are chosen. */
-  /* These are the tissue paper dots. They are flat, saturated, matte, and cut
-     by hand, so none of them is a true circle and none of them is glossy.
-     The colour is full strength, the paper grain is the same noise the note
-     uses, and the radius is pulled a percent or so out of round in a
-     different direction on each one so the three do not look stamped.
-     background-blend-mode is what keeps this honest: the layers are listed
-     top first, so --pic sits above the grain rather than under it, and the
-     grain only soft-lights the colour below it. */
+  /* These are the real tissue paper dots, photographed and cut out. There is
+     no border-radius and no background colour here on purpose. Each circle
+     is inscribed in its 300px frame and touches all four edges, so clipping
+     at 50 percent would land exactly on the circle and shave off the hand
+     cut wobble, which is the whole reason they do not look like vectors.
+     The alpha channel already carries the edge. Let it. */
   .found{aspect-ratio:1;color:inherit;text-decoration:none;
     display:flex;align-items:center;justify-content:center;text-align:center;
-    background-color:var(--dot);
-    background-image:var(--pic,none),var(--grain),
-      radial-gradient(70% 70% at 47% 43%,rgba(255,255,255,.05),rgba(255,255,255,0) 70%);
-    background-size:cover,140px 140px,cover;
-    background-position:center;
-    background-repeat:no-repeat,repeat,no-repeat;
-    background-blend-mode:normal,soft-light,normal}
-  /* The colour is the stand-in. Drop confetti-1/2/3.png into this folder and
-     each disc becomes that photograph instead, with no edit here: a url that
-     404s simply does not paint, and the dot underneath shows through. */
+    background-image:var(--pic);background-size:cover;
+    background-position:center;background-repeat:no-repeat}
+  /* Ten dots are filed, one per colour. Picking a foundation means pointing
+     --pic at whichever one suits it: jade, red, pink, green, wine, yellow,
+     gold, brown, white, blue. */
   .found--1{left:49.4%;top:3%;width:24%;
-    border-radius:49.5% 50.5% 49% 51% / 50.5% 49.5% 50.5% 49.5%;
-    --pic:url(../assets/img/1212/confetti-1.png)}
+    --pic:url(../assets/img/1212/dot-pink.png)}
   .found--2{left:22.4%;top:41.2%;width:24.5%;
-    border-radius:51% 49% 50.5% 49.5% / 49% 51% 49.5% 50.5%;
-    --pic:url(../assets/img/1212/confetti-2.png)}
+    --pic:url(../assets/img/1212/dot-blue.png)}
   .found--3{left:73.6%;top:31.4%;width:24.5%;
-    border-radius:50% 50% 51% 49% / 51% 49.5% 49% 50.5%;
-    --pic:url(../assets/img/1212/confetti-3.png)}
+    --pic:url(../assets/img/1212/dot-green.png)}
   .found__k{font-size:clamp(10px,1.4vw,15px);line-height:1.5;font-weight:700;padding:0 12%}
 
   .give__cta{left:6%;top:77%;width:27%;text-align:center;
@@ -772,8 +762,11 @@
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Tissue paper dots. */
-  var DOTS = ['#2B5FCC', '#A96C44', '#B01E52', '#7DC242', '#E0B32A',
-              '#F7A8C4', '#E03A44', '#2EA886', '#EDEDED', '#F5D400'];
+  // Sampled from the centre pixel of each tissue dot rather than guessed off
+  // a thumbnail. Four were noticeably wrong before, the off white worst of
+  // all: it was #EDEDED, which is very nearly invisible on a white page.
+  var DOTS = ['#215BCA', '#92593B', '#8A1D3F', '#8CBF59', '#D4A822',
+              '#F2AECA', '#DD393D', '#2FAD95', '#D5D4D5', '#F0D210'];
 
   function rnd(a, b) { return a + Math.random() * (b - a); }
 
