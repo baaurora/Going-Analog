@@ -182,7 +182,7 @@
      entirely below the mouth. Which is to say: in the envelope. */
   .card{position:absolute;left:10%;width:80%;aspect-ratio:1051/718;
     top:46%;z-index:2;transform-style:preserve-3d;
-    transform:translate3d(0,0,0) rotate(4deg);
+    transform:translate3d(0,0,0) rotate(0deg);
     transition:transform 1.15s cubic-bezier(.22,.61,.36,1)}
   /* The face is the container the writing is measured against. Sizing the
      type off the viewport instead let the card and its words drift apart,
@@ -235,17 +235,26 @@
   .card__say b{font-weight:700;text-transform:uppercase;letter-spacing:.06em}
   .card__say+.card__say{margin-top:1.5em}
 
-  /* Drawn out of the envelope and held there, face up, still a little askew,
-     with its bottom edge still tucked behind the front panel. The invitation
-     has to be readable before anything turns it over. */
-  .stage.is-out .card{z-index:5;transform:translate3d(0,-100%,0) rotate(2deg)}
+  /* Drawn out of the envelope and held there, face up, with its bottom edge
+     still tucked behind the front panel. The invitation has to be readable
+     before anything turns it over.
+     Square to the envelope the whole way through. The card used to be set 4
+     degrees inside a stage already tilted 4, so it sat at 8 on screen against
+     the envelope's 4 and read as crooked rather than as placed. It carries no
+     rotation of its own now: it takes the stage's tilt and nothing else, so
+     the two are parallel from the moment it is seated to the moment it is
+     turned over. */
+  .stage.is-out .card{z-index:5;transform:translate3d(0,-100%,0) rotate(0deg)}
   /* Then turned over, straightened, and set down in the middle of the picture.
      Its centre sits at 68.75 percent of the canvas when it is seated, and
      41.2 percent of its own height is the distance from there to the middle.
      The stage is centred on the picture, so this lands the card dead centre
      of the whole hero. */
+  /* 1.14 and not 1.15: the card is 80 percent of the canvas wide and the
+     envelope is 91.2, and 91.2/80 is 1.14, so at rest on top of it the two
+     are exactly the same width. */
   .stage.is-turned .card{z-index:5;
-    transform:translate3d(0,-41.2%,0) rotate(0deg) rotateY(180deg) scale(1.15)}
+    transform:translate3d(0,-41.2%,0) rotate(0deg) rotateY(180deg) scale(1.14)}
 
   @media (prefers-reduced-motion:reduce){.card{transition:none}}
 
@@ -431,7 +440,7 @@
   .girl{width:min(320px,76vw);display:flex;flex-direction:column;align-items:center}
   .girl__say{width:100%;overflow:hidden}
   .girl__say-in{padding-top:14px;transform:translateY(-101%);
-    transition:transform .74s cubic-bezier(.22,.61,.36,1);
+    transition:transform 1.25s cubic-bezier(.26,.72,.3,1);
     transition-delay:var(--d,0s)}
   .girl.is-in .girl__say-in{transform:translateY(0)}
   /* 101 rather than 100 because a fractional layout height can leave the top
@@ -608,6 +617,9 @@
     .hero__photo{width:62%;left:0;top:0;transform:none}
     .stage{width:86%;right:0;left:auto;top:auto;bottom:0;transform:rotate(9deg)}
     .stage{width:86%}
+    /* Wider than the envelope here on purpose. Matching it would set the
+       body copy at under 10px on a phone, and the card has to be readable
+       before it is neat. */
     .stage.is-turned .card{transform:translate3d(0,-41.2%,0) rotate(0deg) rotateY(180deg) scale(1.35)}
     .guest__hd{flex-direction:column}
     .guest__pola{width:120px;align-self:flex-end;margin-top:-54px}
@@ -798,7 +810,7 @@
             <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="--hr:1deg;--ht:-5.4%;--hx:7.1%;--hw:28%">
           </div>
           <div class="girl__say">
-            <div class="girl__say-in" style="--d:.11s">
+            <div class="girl__say-in" style="--d:.2s">
               <p class="girl__name">Bianca Pagano, '02</p>
               <p class="girl__meta">23 (going on 24)<br>Sagittarius<br>Ask me about child modeling</p>
             </div>
@@ -812,7 +824,7 @@
             <img class="hat" src="../assets/img/1212/hat-red.png" alt="" style="--hr:-17deg;--ht:-9.8%;--hx:-2.8%">
           </div>
           <div class="girl__say">
-            <div class="girl__say-in" style="--d:.22s">
+            <div class="girl__say-in" style="--d:.4s">
               <p class="girl__name">Victoria Briggiler, '02</p>
               <p class="girl__meta">23 (going on 24)<br>Capricorn<br>Ask me about Bomba</p>
             </div>
@@ -1225,7 +1237,12 @@
    when the row is scrolled to, one after the next. It happens once: this is
    an entrance, and a thing that slid away and came back every time it left
    the window would be a fidget. Without an observer, or with motion turned
-   down, they are simply there. */
+   down, they are simply there.
+   It waits until a polaroid is properly on screen rather than just peeking
+   in at the bottom: nearly half of it showing, and the bottom of the window
+   discounted by 14 percent on top of that. Starting at the first sliver
+   meant the words had finished coming down before anyone had scrolled far
+   enough to be looking at them. */
 (function () {
   var girls = [].slice.call(document.querySelectorAll('.girl'));
   if (!girls.length) return;
@@ -1238,7 +1255,7 @@
       e.target.classList.add('is-in');
       io.unobserve(e.target);
     });
-  }, { threshold: 0.3 });
+  }, { threshold: 0.45, rootMargin: '0px 0px -14% 0px' });
   girls.forEach(function (g) { io.observe(g); });
 })();
 
