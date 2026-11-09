@@ -452,7 +452,7 @@
     max-width:50ch;margin-top:clamp(10px,1.6vh,18px)}
 
   /* ------------ the birthday girls ------------ */
-  .girls{margin:clamp(44px,7vh,82px) auto 0;width:min(1120px,100%)}
+  .girls{margin:clamp(44px,7vh,82px) auto 0;width:min(1120px,100%);position:relative}
   .girls__k{margin:0 0 clamp(10px,1.6vh,18px);font-size:21px;letter-spacing:.22em;
     text-transform:lowercase;font-weight:700}
   /* A hat stands 0.32 of a card's width above its photograph, which is its
@@ -702,6 +702,122 @@
     .doily__img{left:50%;width:94%}
   }
 
+
+  /* ------------ the charms ------------
+     Stickers, not confetti. The confetti falls and ends in a drift along the
+     floor of the page down by the footer, so throwing these in with it would
+     have piled all ten in one heap rather than scattered them. These are
+     placed instead, the way the hats are: a position, a size and a tilt each.
+     Every position was picked against the measured boxes of the real words
+     and photographs on the page rather than by eye, at both widths, and then
+     checked again afterwards, because a charm is big enough that landing one
+     on a line of type would be obvious.
+     They sit at z-index -1 inside their section, which is a stacking context
+     of its own, so a charm is behind everything in that section and in front
+     of the confetti and the white of the page. That ordering is doing real
+     work: nothing on this page has a background of its own, so a charm that
+     did stray under a line would read straight through the letters. Depth is
+     not what keeps them off the words. Placement is. */
+  .charms{position:absolute;inset:0;z-index:-1;pointer-events:none}
+  .ch{position:absolute;display:block;width:var(--cw,34px);
+    aspect-ratio:var(--ca,1);background:var(--pic) center/contain no-repeat;
+    transform:rotate(var(--cr,0deg));filter:var(--obj-cast)}
+
+  /* The hero: one over the top left corner, two down in the dead ground
+     below the photograph and to the left of the envelope. */
+  .ch--1{--pic:url(../assets/img/1212/charm-butterfly-blue.webp);--ca:1.3656;
+    --cw:54px;--cr:-14deg;left:1.5%;top:2%}
+  .ch--2{--pic:url(../assets/img/1212/charm-star-gold.webp);--ca:.9947;
+    --cw:40px;--cr:12deg;left:4%;top:82%}
+  .ch--3{--pic:url(../assets/img/1212/charm-smiley-pink.webp);--ca:1.036;
+    --cw:32px;--cr:0deg;left:26%;top:89%}
+  /* The date, either side of it. The words are centred and run nowhere near
+     the ends of the sheet they sit on. */
+  .ch--4{--pic:url(../assets/img/1212/charm-star-chenille.webp);--ca:.9667;
+    --cw:30px;--cr:-8deg;left:2%;top:10%}
+  .ch--5{--pic:url(../assets/img/1212/charm-star-foil.webp);--ca:1;
+    --cw:34px;--cr:16deg;left:92%;top:52%}
+  /* The birthday girls: one out to the right of the heading, and one in each
+     of the two gaps between the polaroids. Those gaps are 47 pixels wide at
+     this width and the charms in them are 30, which is the clearance the
+     phone rules below give up when the three cards stack. */
+  .ch--6{--pic:url(../assets/img/1212/charm-butterfly-gold.webp);--ca:1.0587;
+    --cw:46px;--cr:-10deg;left:44%;top:-1%}
+  .ch--7{--pic:url(../assets/img/1212/charm-smiley-teal.webp);--ca:1.0374;
+    --cw:26px;--cr:0deg;left:32.2%;top:55%}
+  .ch--8{--pic:url(../assets/img/1212/charm-star-button.webp);--ca:1.0376;
+    --cw:26px;--cr:20deg;left:65.4%;top:30%}
+  /* The doily. The lace is 480 wide inside a sheet of 820 and the longest
+     line on it stops short of both ends, which leaves a column of clear
+     paper down each side. */
+  .ch--9{--pic:url(../assets/img/1212/charm-star-stitch.webp);--ca:1.0345;
+    --cw:36px;--cr:-18deg;left:0%;top:8%}
+  .ch--10{--pic:url(../assets/img/1212/charm-butterfly-blue.webp);--ca:1.3656;
+    --cw:48px;--cr:12deg;left:85%;top:68%}
+  .ch--11{--pic:url(../assets/img/1212/charm-smiley-pink.webp);--ca:1.036;
+    --cw:30px;--cr:0deg;left:1%;top:74%}
+  /* The giving collage leans right. Everything in it, the three discs, the
+     pink card and the payment card, sits from 145 across, so the left edge
+     is free top to bottom. */
+  .ch--12{--pic:url(../assets/img/1212/charm-star-gold.webp);--ca:.9947;
+    --cw:38px;--cr:-12deg;left:37%;top:5%}
+  .ch--13{--pic:url(../assets/img/1212/charm-star-foil.webp);--ca:1;
+    --cw:34px;--cr:14deg;left:25%;top:83%}
+  /* The form fills its own box, so these two go in the gaps above and below
+     it, which is why their tops are outside nought to a hundred. */
+  .ch--14{--pic:url(../assets/img/1212/charm-smiley-teal.webp);--ca:1.0374;
+    --cw:32px;--cr:0deg;left:5%;top:-6%}
+  .ch--15{--pic:url(../assets/img/1212/charm-star-chenille.webp);--ca:.9667;
+    --cw:32px;--cr:-10deg;left:86%;top:101.5%}
+  /* And one in the footer. */
+  .ch--16{--pic:url(../assets/img/1212/charm-butterfly-gold.webp);--ca:1.0587;
+    --cw:44px;--cr:10deg;left:44%;top:20%}
+
+  /* These two blocks have to come after the sixteen above and not before
+     them. A rule inside a media query carries no extra weight of its own, so
+     at equal specificity the one written later wins. Put up by the other
+     phone rules, which sit higher in this file, every one of these was being
+     overruled by the base position it was meant to replace, and the phone
+     got the desktop scatter at desktop sizes. The media query was matching
+     the whole time. It was simply losing.
+
+     The three polaroids need 1054 pixels to stand side by side, which is a
+     viewport of about 1130. Below that they stack, and the two 47 pixel gaps
+     that charms 7 and 8 live in stop existing. The heading wraps nearer the
+     type at those widths too, and the giving collage keeps its layout while
+     shrinking, so a charm of a fixed 38 pixels that cleared the first disc
+     by 29 at full width clears it by 16 at 660 and then not at all.
+     Four of them are put away for that band rather than given positions
+     that would have to be right across 500 pixels of reflowing stack. The
+     other twelve hold at every width in it, checked at 660, 727, 860 and
+     1000. */
+  @media (max-width:1129px){
+    .ch--6,.ch--7,.ch--8,.ch--12{display:none}
+  }
+
+  /* The phone, where the page is one column and 5254 pixels long. Charms 6,
+     7 and 12 are wanted back, so they are switched on again by hand: the
+     band above has already turned them off and a position alone would not
+     undo that. */
+  @media (max-width:620px){
+    .ch--8,.ch--11,.ch--13,.ch--14,.ch--15{display:none}
+    .ch--6,.ch--7,.ch--12{display:block}
+    .ch--1{--cw:44px;left:66%;top:3%}
+    .ch--2{--cw:30px;left:8%;top:27%}
+    .ch--3{--cw:26px;left:90%;top:14%}
+    .ch--4{--cw:26px;left:5%;top:104%}
+    .ch--5{--cw:28px;left:80%;top:110%}
+    /* Left, not right: the gap this one sits in is the gap above the second
+       polaroid, and that is where her party hat stands up out of the frame.
+       The hat runs from 167 to 247 across. This now stops at 105. */
+    .ch--6{--cw:36px;left:15%;top:36%}
+    .ch--7{--cw:26px;left:12%;top:68.2%}
+    .ch--9{--cw:28px;left:6%;top:.4%}
+    .ch--10{--cw:34px;left:70%;top:93%}
+    .ch--12{--cw:34px;left:8%;top:104.2%}
+    .ch--16{--cw:40px;left:62%;top:12%}
+  }
+
   /* ------------ confetti ------------
      The layer is the whole document, not the window, so the pieces fall past
      the fold and come to rest on the floor of the page by the footer. They
@@ -794,6 +910,7 @@
   <!-- ---------- the envelope ---------- -->
   <section class="s hero">
     <div class="hero__in">
+      <div class="charms" aria-hidden="true"><i class="ch ch--1"></i><i class="ch ch--2"></i><i class="ch ch--3"></i></div>
       <img class="hero__photo" src="../assets/img/1212/photo-backyard.jpg" alt="" decoding="async">
 
       <div class="stage" id="stage">
@@ -832,6 +949,7 @@
   <!-- ---------- when and where ---------- -->
   <section class="s">
     <div class="sheet sheet--when">
+      <div class="charms" aria-hidden="true"><i class="ch ch--4"></i><i class="ch ch--5"></i></div>
       <p class="when">Saturday, December 12<br>8:30pm to 11:30pm<br>Index Greenpoint</p>
     </div>
   </section>
@@ -839,6 +957,7 @@
   <!-- ---------- the birthday girls ---------- -->
   <section class="s">
     <div class="girls">
+      <div class="charms" aria-hidden="true"><i class="ch ch--6"></i><i class="ch ch--7"></i><i class="ch ch--8"></i></div>
       <h2 class="girls__k">meet the birthday girls</h2>
       <div class="girls__row">
 
@@ -894,6 +1013,7 @@
       <h2 class="expect">You can expect...</h2>
 
       <div class="doily">
+        <div class="charms" aria-hidden="true"><i class="ch ch--9"></i><i class="ch ch--10"></i><i class="ch ch--11"></i></div>
         <img class="doily__img" src="../assets/img/1212/doily-square.png" alt="" aria-hidden="true">
         <div class="doily__lines">
           <p class="l l--a">no phones</p>
@@ -907,6 +1027,7 @@
       </div>
 
       <div class="give">
+        <div class="charms" aria-hidden="true"><i class="ch ch--12"></i><i class="ch ch--13"></i></div>
         <div class="give__note">
           <p><b>INSTEAD</b> of gifts this year, we're asking friends to donate
              $10-20+. All proceeds will go towards our selected foundations.</p>
@@ -941,6 +1062,7 @@
   <!-- ---------- guest of the year ---------- -->
   <section class="s">
     <form class="guest" id="guestForm" novalidate>
+      <div class="charms" aria-hidden="true"><i class="ch ch--14"></i><i class="ch ch--15"></i></div>
       <img class="guest__doily" src="../assets/img/1212/doily-oval.png" alt="" aria-hidden="true">
 
       <div class="guest__hd">
@@ -1027,6 +1149,7 @@
 <p class="bash">Birthday bash. Saturday, December 12. 8:30pm to 11:30pm. Index Greenpoint.</p>
 
 <footer class="foot">
+  <div class="charms" aria-hidden="true"><i class="ch ch--16"></i></div>
   <div class="foot__col">
     <p class="foot__k">Going Analog</p>
     <p>Phone-free gatherings. We take your phone at the door and give it back on your way out.</p>
