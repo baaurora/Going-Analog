@@ -250,11 +250,19 @@
      41.2 percent of its own height is the distance from there to the middle.
      The stage is centred on the picture, so this lands the card dead centre
      of the whole hero. */
-  /* 1.14 and not 1.15: the card is 80 percent of the canvas wide and the
-     envelope is 91.2, and 91.2/80 is 1.14, so at rest on top of it the two
-     are exactly the same width. */
+  /* And comes to rest inside the envelope rather than above it, tilted five
+     degrees left of it, the way a card sits in a pocket it was not posted
+     into carefully.
+     The pocket runs 45 to 94 percent of the canvas and the card's centre is
+     already at 68.75 when it is seated, so 1.65 percent of its own height is
+     the whole of the move: it settles almost exactly where it started.
+     The scale is what the tilt costs. Tilted five degrees the card needs
+     0.80*sin5 + 0.5465*cos5 of the canvas width in height, 0.614 of its
+     scale, and the pocket is 0.588 of the canvas width tall, so anything
+     over 0.957 hangs out of it. 0.93 leaves about 4.5px clear top and
+     bottom at a 552px stage. */
   .stage.is-turned .card{z-index:5;
-    transform:translate3d(0,-41.2%,0) rotate(0deg) rotateY(180deg) scale(1.14)}
+    transform:translate3d(0,1.65%,0) rotate(-5deg) rotateY(180deg) scale(.93)}
 
   @media (prefers-reduced-motion:reduce){.card{transition:none}}
 
@@ -617,10 +625,11 @@
     .hero__photo{width:62%;left:0;top:0;transform:none}
     .stage{width:86%;right:0;left:auto;top:auto;bottom:0;transform:rotate(9deg)}
     .stage{width:86%}
-    /* Wider than the envelope here on purpose. Matching it would set the
-       body copy at under 10px on a phone, and the card has to be readable
-       before it is neat. */
-    .stage.is-turned .card{transform:translate3d(0,-41.2%,0) rotate(0deg) rotateY(180deg) scale(1.35)}
+    /* Bigger than the envelope here on purpose, and so still sitting over
+       it rather than in it. Fitting it in the pocket would set the body copy
+       at around 8px on a phone, and the card has to be readable before it is
+       neat. */
+    .stage.is-turned .card{transform:translate3d(0,-41.2%,0) rotate(-5deg) rotateY(180deg) scale(1.35)}
     .guest__hd{flex-direction:column}
     .guest__pola{width:120px;align-self:flex-end;margin-top:-54px}
 
@@ -1173,6 +1182,7 @@
     gPlusPhone: 'entry.592579053'
   };
   var WILL = 'entry.1636266939';
+  var PLUSONE = 'entry.125562589';
 
   var form = document.getElementById('guestForm');
   if (!form) return;
@@ -1204,13 +1214,30 @@
       return;
     }
 
+    var yes = form.querySelector('input[name="plusone"]:checked').value === 'yes';
+
     var body = new URLSearchParams();
     for (var id in FIELD) {
       if (!Object.prototype.hasOwnProperty.call(FIELD, id)) continue;
+      /* The plus one's name and number live on the form's second section,
+         which is only reached by answering yes. Sending them with a no is
+         sending answers to questions that were never asked. */
+      if (!yes && (id === 'gPlus' || id === 'gPlusPhone')) continue;
       body.append(FIELD[id], (document.getElementById(id).value || '').trim());
     }
     var will = form.querySelector('input[name="will"]:checked');
     body.append(WILL, will ? will.value : "Yes, I'm hype.");
+    body.append(PLUSONE, yes ? 'Yes' : 'No');
+
+    /* The form is in two sections now, so it wants to know which pages were
+       filled in. Without this it still answers 200 and still writes a row,
+       and the second page's answers are simply missing from it. Tested
+       against the live form on 2026-11-08: a post with no pageHistory landed
+       with the plus one's name and number blank, and nothing in the reply
+       said so. Since the post is no-cors the page could never have found
+       that out for itself. */
+    body.append('fvv', '1');
+    body.append('pageHistory', yes ? '0,1' : '0');
 
     go.disabled = true;
     said.textContent = 'Sending';
