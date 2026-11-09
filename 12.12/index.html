@@ -301,8 +301,8 @@
      next, measured at phone width. Row-gap carries that head room now and
      column-gap stays what it was. */
   .girls__row{display:flex;flex-wrap:wrap;justify-content:center;
-    gap:calc(min(320px,76vw) * .13) clamp(24px,4vw,56px);
-    padding-top:calc(min(320px,76vw) * .13)}
+    gap:calc(min(320px,76vw) * .20) clamp(24px,4vw,56px);
+    padding-top:calc(min(320px,76vw) * .20)}
   .girl{width:min(320px,76vw);display:flex;flex-direction:column;align-items:center;gap:14px}
   .girl__shot{position:relative;width:100%}
   /* A polaroid stands in until the signed one arrives. The real photographs
@@ -340,11 +340,15 @@
      polaroid's width because `left` resolves one against the containing
      block, where a percentage inside translateX would have resolved against
      the hat's own width and come out far too small.
-     Bianca's --hx then took a further 22.5 points on top of her measured
-     1.1, which is the 0.75 inch asked for: 72px at the 320px a card is
-     capped at. That is a long way past her own head, whose right edge is at
-     71.6 percent of the card, and the hat now centres at 73.6. Her ask, and
-     it is written down here rather than quietly halved. */
+     Bianca's --hx went to 23.6 for the 0.75 inch asked for, which put the
+     hat off the side of her hair, then back 0.5 inch to 8.6. A card is
+     capped at 320px, so an inch is 96 points of --hx divided by 3.2, and
+     8.6 is as far right as a 25 percent wide hat can sit while staying
+     fully on curls that end at 71.6 percent of the card.
+     All three then came up 5 points of polaroid height, undoing most of the
+     7 they had come down. Every brim now sits almost exactly 6 points into
+     the hair: 18.9, 21.7 and 18.7 against head tops of 12.9, 15.8 and
+     12.7. */
   .hat{position:absolute;left:calc(50% + var(--hx,0%));width:var(--hw,25%);top:var(--ht,-30%);
     z-index:2;filter:var(--obj-cast);display:none;
     transform:translateX(-50%) rotate(var(--hr,0deg));
@@ -638,7 +642,7 @@
           <div class="girl__shot">
             <div class="pola"><div class="pola__well"></div></div>
             <img class="girl__real" src="../assets/img/1212/polaroid-judy.jpg" alt="Judy Li">
-            <img class="hat" src="../assets/img/1212/hat-dots.png" alt="" style="--hr:-13deg;--ht:-4.6%;--hx:-3.8%">
+            <img class="hat" src="../assets/img/1212/hat-dots.png" alt="" style="--hr:-13deg;--ht:-9.6%;--hx:-3.8%">
           </div>
           <p class="girl__name">Judy Li, '03</p>
           <p class="girl__meta">22 (going on 23)<br>Sagittarius<br>Ask me about Polaroid</p>
@@ -648,7 +652,7 @@
           <div class="girl__shot">
             <div class="pola"><div class="pola__well"></div></div>
             <img class="girl__real" src="../assets/img/1212/polaroid-bianca.jpg" alt="Bianca Pagano">
-            <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="--hr:6deg;--ht:2.5%;--hx:23.6%">
+            <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="--hr:6deg;--ht:-2.5%;--hx:8.6%">
           </div>
           <p class="girl__name">Bianca Pagano, '02</p>
           <p class="girl__meta">23 (going on 24)<br>Sagittarius<br>Ask me about child modeling</p>
@@ -658,7 +662,7 @@
           <div class="girl__shot">
             <div class="pola"><div class="pola__well"></div></div>
             <img class="girl__real" src="../assets/img/1212/polaroid-victoria.jpg" alt="Victoria Briggiler">
-            <img class="hat" src="../assets/img/1212/hat-red.png" alt="" style="--hr:-7deg;--ht:-4.8%;--hx:-2.8%">
+            <img class="hat" src="../assets/img/1212/hat-red.png" alt="" style="--hr:-7deg;--ht:-9.8%;--hx:-2.8%">
           </div>
           <p class="girl__name">Victoria Briggiler, '02</p>
           <p class="girl__meta">23 (going on 24)<br>Capricorn<br>Ask me about Bomba</p>
