@@ -331,8 +331,16 @@
      full size. Not the half inch asked for: a full 48px puts every brim
      below the widest part of the head, which is across the forehead and into
      the eyes. 7 points puts each brim just above its own widest row, 23.9,
-     26.7 and 23.7 percent down against widest rows of 26.8, 29 and 26.4. */
-  .hat{position:absolute;left:50%;width:var(--hw,30%);top:var(--ht,-30%);
+     26.7 and 23.7 percent down against widest rows of 26.8, 29 and 26.4.
+     --hx is the sideways nudge, and it is measured too. None of the three
+     sits centred in her own polaroid: averaged across the band from crown
+     to brim, Judy's head is 34px left of the frame centre, Victoria's 25px
+     left and Bianca's 10px right, on a 900px wide photograph. The hats
+     follow their heads rather than the frame. It is a percentage of the
+     polaroid's width because `left` resolves one against the containing
+     block, where a percentage inside translateX would have resolved against
+     the hat's own width and come out far too small. */
+  .hat{position:absolute;left:calc(50% + var(--hx,0%));width:var(--hw,30%);top:var(--ht,-30%);
     z-index:2;filter:var(--obj-cast);display:none;
     transform:translateX(-50%) rotate(var(--hr,0deg));
     transform-origin:center bottom}
@@ -625,7 +633,7 @@
           <div class="girl__shot">
             <div class="pola"><div class="pola__well"></div></div>
             <img class="girl__real" src="../assets/img/1212/polaroid-judy.jpg" alt="Judy Li">
-            <img class="hat" src="../assets/img/1212/hat-dots.png" alt="" style="--hr:-13deg;--ht:-10.3%">
+            <img class="hat" src="../assets/img/1212/hat-dots.png" alt="" style="--hr:-13deg;--ht:-10.3%;--hx:-3.8%">
           </div>
           <p class="girl__name">Judy Li, '03</p>
           <p class="girl__meta">22 (going on 23)<br>Sagittarius<br>Ask me about Polaroid</p>
@@ -635,7 +643,7 @@
           <div class="girl__shot">
             <div class="pola"><div class="pola__well"></div></div>
             <img class="girl__real" src="../assets/img/1212/polaroid-bianca.jpg" alt="Bianca Pagano">
-            <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="--hr:6deg;--ht:-2.4%">
+            <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="--hr:6deg;--ht:-2.4%;--hx:1.1%">
           </div>
           <p class="girl__name">Bianca Pagano, '02</p>
           <p class="girl__meta">23 (going on 24)<br>Sagittarius<br>Ask me about child modeling</p>
@@ -645,7 +653,7 @@
           <div class="girl__shot">
             <div class="pola"><div class="pola__well"></div></div>
             <img class="girl__real" src="../assets/img/1212/polaroid-victoria.jpg" alt="Victoria Briggiler">
-            <img class="hat" src="../assets/img/1212/hat-red.png" alt="" style="--hr:-7deg;--ht:-10.5%">
+            <img class="hat" src="../assets/img/1212/hat-red.png" alt="" style="--hr:-7deg;--ht:-10.5%;--hx:-2.8%">
           </div>
           <p class="girl__name">Victoria Briggiler, '02</p>
           <p class="girl__meta">23 (going on 24)<br>Capricorn<br>Ask me about Bomba</p>
