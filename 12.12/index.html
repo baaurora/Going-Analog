@@ -50,27 +50,25 @@
        4  the card once it is clear    so it can flip over the whole thing
      ============================================================ */
   .hero{display:flex;justify-content:center;padding-top:clamp(74px,11vh,112px)}
-  /* The ratio has to leave room for the stage, which is portrait: at 64% of
-     the width the envelope canvas stands 0.813 of that width tall. */
-  /* The envelope runs off the frame top and bottom the way it does in the
-     collage, so the hero clips rather than growing to contain it. */
-  .hero__in{position:relative;width:min(1100px,100%);aspect-ratio:1100/700;
-    overflow:hidden}
+  /* The whole envelope has to fit, tilt included. The canvas is portrait at
+     1413/1113, and tilting it 12 degrees swells the box it needs to
+     1.449 times its own width. At 50% of the hero that is 797 of the 830
+     available, so nothing is cut off at the top or the bottom. */
+  .hero__in{position:relative;width:min(1100px,100%);aspect-ratio:1100/830}
   /* The photograph is a smaller object held to the left, the way it is in the
      collage. It is not a backdrop the envelope sits on: the envelope keeps its
-     own white ground to the right of it. */
-  .hero__photo{position:absolute;left:2%;top:50%;transform:translateY(-50%);
-    width:33%;aspect-ratio:5/6.1;object-fit:cover;object-position:60% center;
-    box-shadow:var(--cast)}
+     own white ground to the right of it. Shown whole, at its own proportions,
+     rather than cropped to a shape chosen for it. */
+  .hero__photo{position:absolute;left:1%;top:50%;transform:translateY(-50%);
+    width:34%;height:auto;box-shadow:var(--cast)}
 
   /* The stage is the envelope's own aspect ratio. The card's destination is
      the middle of the stage, so wherever the envelope is put on the page the
      card still settles onto the envelope it came out of. */
-  /* Set from the left so it crosses the photograph's edge by a couple of
-     percent. It leans on the picture without sitting on top of it. */
   /* Tilted as one object, so the card inherits the angle and comes out along
-     the envelope's own axis rather than straight up the page. */
-  .stage{position:absolute;left:26%;top:48%;width:74%;
+     the envelope's own axis rather than straight up the page. Set from the
+     left so the tilted box crosses the photograph's edge without covering it. */
+  .stage{position:absolute;left:29%;top:50%;width:50%;
     aspect-ratio:1113/1413;transform:translateY(-50%) rotate(12deg)}
 
   .env,.env__front{position:absolute;inset:0}
@@ -112,8 +110,12 @@
     -webkit-backface-visibility:hidden;container-type:inline-size;
     display:flex;align-items:center;justify-content:center;text-align:center}
   .card__face--back{transform:rotateY(180deg)}
-  .card__paper{position:absolute;left:50%;top:50%;width:133.14%;height:auto;
-    transform:translate(-50%,-50%) rotate(-34.41deg);
+  /* max-width:none matters. The site sheet caps every image at 100% of its
+     container, which was silently clamping this one from 133.14% back to
+     100%, so the card rectangle inside the photograph came out at 75% of the
+     face and the writing sat off the paper and onto the envelope. */
+  .card__paper{position:absolute;left:50%;top:50%;width:133.14%;max-width:none;
+    height:auto;transform:translate(-50%,-50%) rotate(-34.41deg);
     filter:var(--obj-cast);pointer-events:none}
   .card__ink{position:relative;z-index:1;width:86%}
 
@@ -158,41 +160,90 @@
      scatter rules below and before them, so a .l--x offset still wins. A
      `.sheet p` reset outranked all of them and quietly flattened the whole
      scatter, horizontal offsets and vertical gaps alike. */
-  .when,.topic,.l{margin:0}
+  .when,.l,.expect,.give p{margin:0}
 
   .when{text-align:center;font-weight:700;text-transform:uppercase;
     font-size:clamp(16px,2.45vw,27px);letter-spacing:.17em;line-height:1.75}
 
-  .topic{font-weight:700;text-transform:uppercase;
-    font-size:clamp(10px,1.2vw,12px);letter-spacing:.26em;opacity:.5}
+  /* ------------ what to bring ------------
+     A collage, set the way it is in the Canva: the pink tissue note up on the
+     left, three foundation discs scattered across it, the invitation to click
+     them low on the left, and the closing card bottom right. The frame carries
+     the mockup's own proportions, so each piece is placed as a percentage of
+     it and the whole thing scales as one picture. */
+  .give{position:relative;margin:clamp(40px,6vh,72px) auto 0;
+    width:min(900px,100%);aspect-ratio:1630/1130}
+  .give > *{position:absolute}
 
-  .give{margin:clamp(24px,3.6vh,38px) auto 0;max-width:46ch;text-align:center;
-    display:flex;flex-direction:column;gap:9px}
-  .give .l{max-width:none}
+  /* Tissue paper: one lit corner and one shaded, which is most of what tells
+     the eye it is paper rather than a swatch of flat colour. */
+  .give__note{left:7%;top:2.5%;width:42%;aspect-ratio:690/455;
+    transform:rotate(-5deg);padding:clamp(12px,2.2vw,26px);
+    display:flex;align-items:center;justify-content:center;
+    background:
+      radial-gradient(64% 70% at 26% 22%,rgba(255,255,255,.44),rgba(255,255,255,0) 64%),
+      radial-gradient(76% 80% at 78% 84%,rgba(122,12,66,.16),rgba(122,12,66,0) 66%),
+      #F06CAE}
+  .give__note p{font-size:clamp(10.5px,1.52vw,17px);line-height:1.6;text-align:center}
+  .give__note b,.give__card b{font-weight:700}
 
-  /* One size for every line on the doily. */
-  .l{font-size:clamp(12.5px,1.6vw,15.5px);line-height:1.8;max-width:34ch}
+  /* Placeholders for the three foundations, a different confetti colour each,
+     mixed back towards white so they read as tissue discs rather than as the
+     dots themselves. Each becomes a link once the foundations are chosen. */
+  .found{aspect-ratio:1;border-radius:50%;color:inherit;text-decoration:none;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    background:var(--dot);
+    background:
+      radial-gradient(62% 66% at 30% 26%,rgba(255,255,255,.5),rgba(255,255,255,0) 64%),
+      radial-gradient(72% 78% at 72% 78%,rgba(0,0,0,.07),rgba(0,0,0,0) 66%),
+      color-mix(in srgb,var(--dot) 62%,#fff)}
+  .found--1{left:49.4%;top:3%;width:24%}
+  .found--2{left:22.4%;top:41.2%;width:24.5%}
+  .found--3{left:73.6%;top:31.4%;width:24.5%}
+  .found__k{font-size:clamp(10px,1.4vw,15px);line-height:1.5;font-weight:700;padding:0 12%}
 
-  /* Kept near its own 296px so it stays crisp, pushed low and right of centre
-     so the words sit across it off balance rather than framed by it. The
-     bottom padding is what stops it reaching into the birthday girls. */
-  .doily{position:relative;margin:clamp(34px,5.5vh,58px) 0 0;
-    padding:clamp(34px,6vh,74px) 0 clamp(70px,11vh,130px)}
-  .doily__img{position:absolute;left:58%;top:58%;width:min(360px,62%);
+  .give__cta{left:6%;top:77%;width:27%;text-align:center;
+    font-size:clamp(12px,1.95vw,22px);line-height:1.45}
+
+  /* Cream mount with a pink bloom in the middle of it. */
+  .give__card{left:51.2%;top:57.5%;width:34.7%;aspect-ratio:565/405;
+    display:flex;align-items:center;justify-content:center;
+    padding:clamp(10px,1.8vw,22px);
+    background:
+      radial-gradient(56% 62% at 50% 55%,rgba(222,70,145,.28),rgba(222,70,145,0) 72%),
+      #F7F2EA;
+    box-shadow:0 0 0 clamp(6px,1.1vw,13px) #FCFAF6,var(--cast)}
+  .give__card p{font-size:clamp(10.5px,1.52vw,17px);line-height:1.6;text-align:center}
+
+  /* ------------ you can expect ------------ */
+  .expect{text-align:center;font-weight:700;letter-spacing:.07em;
+    font-size:clamp(17px,2.1vw,25px);margin-top:clamp(56px,8.5vh,98px)}
+
+  /* One size for every line on the doily, and all of it bold. The scatter is
+     made of where a line starts and how far it sits from the one above it. */
+  .l{font-weight:700;font-size:clamp(12.5px,1.62vw,16.5px);line-height:1.78;
+    max-width:34ch}
+
+  /* Big enough now that the words sit across the lace rather than beside it. */
+  .doily{position:relative;margin:clamp(16px,2.6vh,28px) 0 0;
+    padding:clamp(30px,5vh,56px) 0 clamp(70px,11vh,130px)}
+  .doily__img{position:absolute;left:53%;top:53%;width:min(480px,76%);
     transform:translate(-50%,-50%);opacity:.92;pointer-events:none;z-index:-1}
   .doily__lines{display:flex;flex-direction:column}
 
-  .l--a{align-self:flex-start;letter-spacing:.24em}
-  .l--b{align-self:flex-end;text-align:right;margin-top:clamp(26px,4vh,44px);letter-spacing:.04em}
-  .l--c{align-self:center;text-align:center;margin-top:clamp(14px,2vh,22px);
-    margin-left:7%;letter-spacing:.15em}
-  .l--d{align-self:flex-start;margin-top:clamp(30px,4.6vh,50px);margin-left:14%;letter-spacing:.02em}
-  .l--e{align-self:flex-end;text-align:right;margin-top:clamp(12px,1.8vh,20px);
-    margin-right:11%;letter-spacing:.2em}
-  /* Dress code and its line sit ON the lace, not beside it. */
-  .l--f{align-self:flex-start;margin-top:clamp(34px,5.4vh,58px);margin-left:34%}
-  .l--g{align-self:flex-start;margin-top:clamp(11px,1.6vh,16px);margin-left:34%;
-    max-width:26ch;letter-spacing:.06em}
+  .l--a{align-self:flex-start;margin-left:20%}
+  .l--b{align-self:flex-end;text-align:right;margin-right:16%;
+    margin-top:clamp(22px,3.4vh,38px)}
+  .l--c{align-self:flex-start;margin-left:32%;margin-top:clamp(9px,1.5vh,16px)}
+  .l--d{align-self:flex-end;text-align:right;margin-right:17%;
+    margin-top:clamp(24px,3.8vh,42px)}
+  .l--e{align-self:flex-start;margin-left:12%;max-width:31ch;
+    margin-top:clamp(22px,3.4vh,38px)}
+  /* The dress code is the one thing centred: a label, then the instruction. */
+  .l--f{align-self:center;text-align:center;text-transform:uppercase;
+    color:#8E8E8E;margin-top:clamp(28px,4.4vh,48px)}
+  .l--g{align-self:center;text-align:center;text-transform:uppercase;
+    max-width:50ch;margin-top:clamp(10px,1.6vh,18px)}
 
   /* ------------ the birthday girls ------------ */
   .girls{margin:clamp(70px,12vh,126px) auto 0;width:min(980px,100%)}
@@ -298,19 +349,36 @@
        around 14px on screen. */
     .card__say{font-size:3.7cqw}
     .card__sub{font-size:2.9cqw}
-    .hero__in{aspect-ratio:375/620}
-    .hero__photo{width:54%;left:0;top:0;transform:none;aspect-ratio:5/5.6}
-    .stage{width:104%;right:-6%;left:auto;top:auto;bottom:-6%;
-      transform:rotate(9deg)}
+    /* The photograph takes the top of the frame whole, the envelope the width
+       beneath it, and the frame is tall enough to hold all of the tilted
+       envelope rather than cropping into it. */
+    .hero__in{aspect-ratio:375/640}
+    .hero__photo{width:62%;left:0;top:0;transform:none}
+    .stage{width:86%;right:0;left:auto;top:auto;bottom:0;transform:rotate(9deg)}
     .stage.is-turned .card{transform:translate3d(0,-73.2%,0) rotate(0deg) rotateY(180deg) scale(1.35)}
     .guest__hd{flex-direction:column}
     .guest__pola{width:120px;align-self:flex-end;margin-top:-54px}
-    .l{max-width:27ch}
-    .l--c{margin-left:0}
-    .l--d{margin-left:6%}
-    .l--e{margin-right:4%}
-    .l--f,.l--g{margin-left:14%}
-    .doily__img{left:52%;width:82%}
+
+    /* The collage cannot hold its places this narrow, so it stacks, with the
+       three foundation discs kept together on one row. */
+    .give{aspect-ratio:auto;display:flex;flex-wrap:wrap;
+      justify-content:center;align-items:center;gap:16px 5%}
+    .give > *{position:static}
+    .give__note{width:96%;transform:rotate(-3deg)}
+    .give__note p,.give__card p{font-size:13px}
+    .found{width:27%}
+    .give__cta{width:100%;text-align:center;font-size:17px}
+    .give__card{width:96%}
+
+    .expect{font-size:19px}
+    .l{max-width:27ch;font-size:13px}
+    .l--a{margin-left:6%}
+    .l--b{margin-right:2%}
+    .l--c{margin-left:16%}
+    .l--d{margin-right:3%}
+    .l--e{margin-left:2%}
+    .l--g{max-width:30ch}
+    .doily__img{left:52%;width:94%}
   }
 
   /* ------------ confetti ------------
@@ -318,21 +386,26 @@
      the fold and come to rest on the floor of the page by the footer. They
      sit behind the footer text, which keeps the words readable. */
   .fetti{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
-  /* One size for every piece. */
-  .fetti i{position:absolute;bottom:0;display:block;width:6px;height:6px;border-radius:50%;
-    animation:drop var(--dur) cubic-bezier(.25,.1,.45,1) var(--lag) both}
+  /* One size for every piece, and big enough to read as confetti rather than
+     as dust. No tumble and no drift: they fall, which is all they do. */
+  /* Linear, because a piece of paper reaches its falling speed almost at once
+     and then holds it. Easing made it slow to a crawl down at the footer. */
+  .fetti i{position:absolute;bottom:0;display:block;width:11px;height:11px;
+    border-radius:50%;opacity:0;
+    animation:drop var(--dur) linear var(--lag) both}
+  /* Held invisible through its delay, so a piece appears at the header at the
+     moment it starts to fall rather than queueing up there in a visible line
+     of dots. The fill is both, so the 0% state is what shows during the wait. */
   @keyframes drop{
-    0%  {transform:translate3d(0,var(--rise),0) rotateX(0) rotateY(0)}
-    25% {transform:translate3d(var(--sway),calc(var(--rise) * .74),0)
-         rotateX(calc(var(--rx) * .25)) rotateY(calc(var(--ry) * .25))}
-    50% {transform:translate3d(calc(var(--sway) * -1),calc(var(--rise) * .49),0)
-         rotateX(calc(var(--rx) * .5))  rotateY(calc(var(--ry) * .5))}
-    75% {transform:translate3d(var(--sway),calc(var(--rise) * .23),0)
-         rotateX(calc(var(--rx) * .75)) rotateY(calc(var(--ry) * .75))}
-    100%{transform:translate3d(0,0,0) rotateX(var(--rx)) rotateY(var(--ry))}
+    0%  {opacity:0;          transform:translate3d(0,var(--rise),0)}
+    4%  {opacity:var(--op)}
+    100%{opacity:var(--op);  transform:translate3d(0,0,0)}
   }
   /* Reduced motion still gets the confetti, it is just already on the floor. */
-  @media (prefers-reduced-motion:reduce){.fetti i{animation:none}}
+  @media (prefers-reduced-motion:reduce){
+    .fetti i{animation:none;opacity:var(--op)}
+  }
+  @media (max-width:620px){.fetti i{width:9px;height:9px}}
 </style>
 </head>
 <body>
@@ -430,20 +503,40 @@
       <p class="when">Saturday, December 12<br>8:30pm to 11:30pm<br>Index Greenpoint</p>
 
       <div class="give">
-        <p class="topic">What to bring</p>
-        <p class="l">Instead of gifts this year, we're asking that you donate to causes of our choice on a sliding scale from $10 to $20. Stepping into this next year committed to giving back. Impact is sexy.</p>
+        <div class="give__note">
+          <p><b>INSTEAD</b> of gifts this year, we're asking friends to donate
+             $10-20+ towards one of these selected foundations</p>
+        </div>
+
+        <!-- Placeholders for the three foundations. Once they are chosen, each
+             disc becomes a link and keeps its class and its colour:
+             <a class="found found--1" style="--dot:#F7A8C4" target="_blank"
+                rel="noopener" href="https://…"
+             ><span class="found__k">Foundation name</span></a>            -->
+        <div class="found found--1" style="--dot:#F7A8C4" aria-hidden="true"></div>
+        <div class="found found--2" style="--dot:#2B5FCC" aria-hidden="true"></div>
+        <div class="found found--3" style="--dot:#7DC242" aria-hidden="true"></div>
+
+        <p class="give__cta">click to learn more!</p>
+
+        <div class="give__card">
+          <p>Stepping into next year committed to giving back.
+             <b>Impact is sexy.</b></p>
+        </div>
       </div>
+
+      <h2 class="expect">You can expect...</h2>
 
       <div class="doily">
         <img class="doily__img" src="../assets/img/1212/doily-square.png" alt="" aria-hidden="true">
         <div class="doily__lines">
-          <p class="l l--a">no phones.</p>
-          <p class="l l--b">drinks, food, and cake</p>
-          <p class="l l--c">beats by Ben Jacobs</p>
-          <p class="l l--d">A night of celebration, joy, and birthday wishes</p>
-          <p class="l l--e">all of our favorite people</p>
-          <p class="topic l--f">Dress code</p>
-          <p class="l l--g">Show out as your most authentic, maximalist self. No holding back. No dark colors.</p>
+          <p class="l l--a">no phones</p>
+          <p class="l l--b">with beats by Ben Jacobs</p>
+          <p class="l l--c">beer, wine, and cake</p>
+          <p class="l l--d">All of our favorite people</p>
+          <p class="l l--e">A night of celebration, joy, and birthday wishes :)</p>
+          <p class="l l--f">Dress code:</p>
+          <p class="l l--g">Show out as your most authentic, maximalist self. No holding back! No dark colors!</p>
         </div>
       </div>
     </div>
@@ -627,24 +720,32 @@
   function throwIt() {
     var small = window.matchMedia('(max-width: 620px)').matches;
     var H = fetti.offsetHeight || window.innerHeight;
-    var n = Math.max(small ? 54 : 94, Math.min(small ? 130 : 230, Math.round(H / 20)));
+    var n = Math.max(small ? 46 : 80, Math.min(small ? 110 : 190, Math.round(H / 24)));
     var frag = document.createDocumentFragment();
+    /* The fall starts at the header band, not somewhere off the top of the
+       page. A piece is placed where it will come to rest and then lifted by
+       everything between that and the header, so its first frame is up there. */
+    var TOP = 54;
 
     for (var i = 0; i < n; i++) {
       var bit = document.createElement('i');
+      /* Where it comes to rest: a shallow drift of a pile, not one flat line. */
+      var rest = Math.round(rnd(1, 34));
       bit.style.background = DOTS[(Math.random() * DOTS.length) | 0];
       bit.style.left = rnd(0, 99).toFixed(2) + '%';
-      /* Where it comes to rest: a shallow drift of a pile, not one flat line. */
-      bit.style.bottom = Math.round(rnd(1, 34)) + 'px';
-      /* Starting well above the page, by varying amounts, so they do not all
-         cross the top edge together. */
-      bit.style.setProperty('--rise', '-' + Math.round(H + rnd(40, 260)) + 'px');
-      bit.style.setProperty('--sway', Math.round(rnd(-34, 34)) + 'px');
-      bit.style.setProperty('--rx', (Math.round(rnd(2, 8)) * 180) + 'deg');
-      bit.style.setProperty('--ry', (Math.round(rnd(1, 6)) * 180) + 'deg');
-      bit.style.setProperty('--dur', rnd(3.1, 5.4).toFixed(2) + 's');
-      bit.style.setProperty('--lag', rnd(0, 1.5).toFixed(2) + 's');
-      bit.style.opacity = rnd(0.72, 1).toFixed(2);
+      bit.style.bottom = rest + 'px';
+      var dist = Math.round(H - rest - rnd(TOP - 16, TOP + 34));
+      bit.style.setProperty('--rise', '-' + dist + 'px');
+      /* Timed off a speed rather than a duration, so what is fixed is how
+         fast a piece falls, not how long it takes to cross the page. A fixed
+         duration made the speed depend on the length of the page, and on a
+         page this long that was a streak rather than a fall. At 250 to 430
+         pixels a second a piece takes a couple of seconds to cross a screen,
+         which is slow enough to watch and long enough that the fall is still
+         going while you scroll down through it. */
+      bit.style.setProperty('--dur', (dist / rnd(250, 430)).toFixed(2) + 's');
+      bit.style.setProperty('--lag', rnd(0, 5).toFixed(2) + 's');
+      bit.style.setProperty('--op', rnd(0.8, 1).toFixed(2));
       frag.appendChild(bit);
     }
     fetti.appendChild(frag);
@@ -663,25 +764,33 @@
   function openEnvelope() {
     if (!stage) return;
     if (still) { show(3); stage.classList.add('is-open', 'is-out', 'is-turned'); return; }
-    var beats = [[320, 1], [700, 2], [1010, 3]];
+    /* Each frame is held long enough to register as a separate photograph.
+       At the old spacing the four went by in a second and read as a flicker
+       rather than as a flap being lifted. */
+    var beats = [[560, 1], [1180, 2], [1800, 3]];
     beats.forEach(function (b) {
       timers.push(setTimeout(function () { show(b[1]); }, b[0]));
     });
     /* The front panel only goes up once the flap is out of the way. Below the
        mouth the open frame and the closed frames are the same pixels, so the
        moment it appears there is nothing to see. */
-    timers.push(setTimeout(function () { stage.classList.add('is-open'); }, 1010));
+    timers.push(setTimeout(function () { stage.classList.add('is-open'); }, 1800));
     /* The card is drawn out and held long enough to be read, */
-    timers.push(setTimeout(function () { stage.classList.add('is-out'); }, 1420));
+    timers.push(setTimeout(function () { stage.classList.add('is-out'); }, 2260));
     /* and only then turned over onto its other side. */
-    timers.push(setTimeout(function () { stage.classList.add('is-turned'); }, 3050));
+    timers.push(setTimeout(function () { stage.classList.add('is-turned'); }, 5100));
   }
 
   /* The confetti falls every time the page is opened, not only on the visit
      where the password was typed. Tying it to the gate meant a second look in
      the same session showed none at all, which reads as broken rather than as
      restraint. */
+  var opened = false;
   function open() {
+    /* Idempotent. Called twice it used to throw two full falls of confetti,
+       one over the other, which doubles the count and halves the gaps. */
+    if (opened) return;
+    opened = true;
     lock.classList.add('is-open');
     document.getElementById('inv').removeAttribute('aria-hidden');
     throwIt();

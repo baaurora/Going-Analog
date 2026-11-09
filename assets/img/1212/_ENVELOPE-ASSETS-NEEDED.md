@@ -1,73 +1,88 @@
-# Envelope assets needed for the 12.12 hero
+# Envelope assets for the 12.12 page
 
-## Why the current ones fall short
+Paste everything between the lines into ChatGPT. It asks for five PNG files.
 
-The four envelope photos we have are each a finished picture of a whole
-envelope. A card cannot go *inside* a finished picture. Right now the page
-fakes it by taking one of those photos, clipping everything above the mouth
-away, and stacking that clipped strip in front of the card. It works, but it
-only works because the envelope is translucent enough to forgive it, and the
-card never looks like it is truly behind the paper.
+Why five: right now the envelope is four flat photographs of the whole thing.
+A photograph of a whole envelope has no inside, so there is nothing for the
+card to come out of. Whatever we do, the card can only ever be drawn on top of
+the picture or hidden under all of it. Splitting the envelope into a back, a
+front and a flap is what lets the card sit between the back and the front, slide
+up through the mouth, and clear the paper properly.
 
-To do it properly the envelope has to come apart into the pieces it is
-actually made of, so the card can be sandwiched between them.
+---
 
-## The spec to hand to ChatGPT
+I need five PNG files of one pink vellum envelope, cut into layers.
 
-> I need a set of product photographs of a single translucent pink vellum
-> envelope, shot flat from directly above, broken into separate layers so the
-> envelope can be animated opening with a card sliding out of it.
->
-> Shoot or render one envelope, one camera position, one lighting setup. Do
-> not move the envelope or the camera between frames. Every file must be the
-> same pixel dimensions, and the envelope must sit in exactly the same place
-> in every file, so the layers stack in perfect register.
->
-> I need five files:
->
-> 1. **back.png** - the back wall of the envelope only. The flat rectangle
->    that sits behind everything. No flap, no front panel, no seams from the
->    front.
->
-> 2. **front.png** - the front pocket panel only. This is the face of the
->    envelope with its diagonal fold seams, the part that covers the lower
->    half of a card tucked inside. Everything above the mouth of the envelope
->    must be fully transparent, and the top edge of this panel is the mouth.
->    No flap.
->
-> 3. **flap-closed.png** - the triangular flap alone, folded all the way down
->    into its sealed position.
->
-> 4. **flap-half.png** - the same flap alone, lifted to roughly halfway.
->
-> 5. **flap-open.png** - the same flap alone, standing fully up and back.
->
-> Requirements for all five:
-> - PNG with a real alpha channel. Transparent background, not white.
-> - No drop shadows, no reflections and no background baked into the image.
->   Keep the paper's own translucency and texture.
-> - Identical canvas size and identical registration across all five.
-> - The flap must stay hinged at the same point in all three flap files, so
->   the three positions read as one flap moving rather than three flaps.
-> - Keep the vellum translucent, the same pink as the envelope we already
->   have.
+CANVAS, IDENTICAL IN ALL FIVE FILES
+2000 x 2400 pixels. Fully transparent background. Real alpha, not white.
+The envelope must not move, rotate, or change size between files. If I stack
+all five in order in Photoshop they have to line up into one complete,
+seamless envelope with no gaps and no doubled edges. Do not crop any one file
+tighter than the others.
 
-## What each one is for
+1. back.png
+The back wall of the envelope on its own: the single flat panel that a card
+would rest against. Full rectangle, square corners at the bottom, and the
+shallow V at the top where the flap is seated. Nothing in this file may be a
+part that would sit in front of a card.
 
-| file | where it sits |
-|---|---|
-| `back.png` | behind everything |
-| the card | between back and front |
-| `front.png` | in front of the card, so the card is inside the pocket |
-| `flap-*.png` | behind the card while open, in front of it while closing |
+2. front.png
+The front pocket on its own: the panel a card slides down behind, together
+with the two side flaps and the bottom flap that are glued onto it. Its top
+edge is the mouth of the envelope, a straight horizontal line running the full
+width, sitting about 45% of the way down the canvas. Everything above that
+line is fully transparent, with a clean hard edge, no feathering.
+This is the most important of the five. Without it the card cannot be inside
+the envelope at all.
 
-That last row is the whole point of splitting the flap out. A flap that is
-open belongs behind the card, and a flap that is closing has to pass in front
-of it. One image cannot do both, which is why three flap files on their own
-layer beat three pictures of a whole envelope.
+3. flap-closed.png
+The top flap sealed down, pointing downwards, covering the mouth.
 
-## If only some of it is possible
+4. flap-half.png
+The same flap lifted to roughly 45 degrees, caught halfway open.
 
-The single most useful file is **front.png**, the pocket panel on its own.
-With that one file the card can sit genuinely inside the envelope and the
-existing four photographs can keep carrying the flap movement behind it.
+5. flap-open.png
+The same flap folded all the way back, pointing upwards, mouth fully clear.
+
+In files 3, 4 and 5 the flap is the only thing in the file and everything else
+is transparent. The flap has to hinge on the same line in all three, so that
+playing them in order reads as one flap lifting rather than three different
+flaps.
+
+MATERIAL
+The same pink vellum paper in every file, matching the photographs I already
+have. Keep it semi translucent the way the real envelope is: the paper should
+be around 80 to 90 percent opaque in the alpha channel, so that a card behind
+it reads as a soft pink shape rather than vanishing. Keep the paper grain and
+the seam lines where the flaps are glued.
+
+DO NOT
+Do not bake in a drop shadow, a cast shadow or a reflection. Those get added
+afterwards in CSS and a baked one cannot be removed.
+Do not put a white or coloured background behind anything.
+Do not add a card, a letter, writing, confetti or any other object.
+Do not change the lighting between files.
+
+---
+
+## Where they go
+
+Save them into this folder as:
+
+    env-back.png
+    env-front.png
+    env-flap-closed.png
+    env-flap-half.png
+    env-flap-open.png
+
+## What the page does with them
+
+    z-index 1   env-back.png          the wall behind everything
+    z-index 2   the card              rises up through the mouth
+    z-index 3   env-front.png         the pocket the card slides out of
+    z-index 4   the flap frames       closed, half, open, played in order
+    z-index 5   the card once clear   so it can turn over on top of it all
+
+If only one of the five ever arrives, make it **env-front.png**. That single
+file is what turns the card from a rectangle drawn over a photograph into a
+card that is genuinely inside an envelope.
