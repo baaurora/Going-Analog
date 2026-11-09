@@ -180,15 +180,25 @@
     width:min(900px,100%);aspect-ratio:1630/1130}
   .give > *{position:absolute}
 
-  /* Tissue paper: one lit corner and one shaded, which is most of what tells
-     the eye it is paper rather than a swatch of flat colour. */
+  /* Fibrous grain, drawn rather than photographed: fractal noise desaturated
+     to grey and multiplied over the pink. It is what separates tissue paper
+     from a rectangle of flat colour, and it costs no asset. */
+  .sheet{--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
+
   .give__note{left:7%;top:2.5%;width:42%;aspect-ratio:690/455;
     transform:rotate(-5deg);padding:clamp(12px,2.2vw,26px);
     display:flex;align-items:center;justify-content:center;
-    background:
-      radial-gradient(64% 70% at 26% 22%,rgba(255,255,255,.44),rgba(255,255,255,0) 64%),
-      radial-gradient(76% 80% at 78% 84%,rgba(122,12,66,.16),rgba(122,12,66,0) 66%),
-      #F06CAE}
+    background-color:#F4A9CA;
+    background-image:
+      radial-gradient(58% 64% at 24% 20%,rgba(255,255,255,.32),rgba(255,255,255,0) 66%),
+      radial-gradient(64% 70% at 82% 86%,rgba(214,96,152,.16),rgba(214,96,152,0) 68%)}
+  /* soft-light, not multiply. Mid grey noise multiplied darkens the whole
+     sheet by about a fifth, which is what turned the pink muddy. Soft light
+     leaves the average alone and only lets the variance through, which is
+     what paper grain actually is. */
+  .give__note::before{content:'';position:absolute;inset:0;
+    background-image:var(--grain);mix-blend-mode:soft-light;opacity:.55;
+    pointer-events:none}
   .give__note p{font-size:clamp(10.5px,1.52vw,17px);line-height:1.6;text-align:center}
   .give__note b,.give__card b{font-weight:700}
 
@@ -197,14 +207,21 @@
      dots themselves. Each becomes a link once the foundations are chosen. */
   .found{aspect-ratio:1;border-radius:50%;color:inherit;text-decoration:none;
     display:flex;align-items:center;justify-content:center;text-align:center;
-    background:var(--dot);
-    background:
-      radial-gradient(62% 66% at 30% 26%,rgba(255,255,255,.5),rgba(255,255,255,0) 64%),
-      radial-gradient(72% 78% at 72% 78%,rgba(0,0,0,.07),rgba(0,0,0,0) 66%),
-      color-mix(in srgb,var(--dot) 62%,#fff)}
-  .found--1{left:49.4%;top:3%;width:24%}
-  .found--2{left:22.4%;top:41.2%;width:24.5%}
-  .found--3{left:73.6%;top:31.4%;width:24.5%}
+    background-color:var(--dot);
+    background-color:color-mix(in srgb,var(--dot) 44%,#fff);
+    background-image:var(--pic,none),
+      radial-gradient(124% 124% at 34% 28%,rgba(255,255,255,.16),rgba(255,255,255,0) 62%);
+    background-size:cover,cover;background-position:center;
+    background-repeat:no-repeat}
+  /* The colour is the stand-in. Drop confetti-1/2/3.png into this folder and
+     each disc becomes that photograph instead, with no edit here: a url that
+     404s simply does not paint, and the colour underneath shows through. */
+  .found--1{left:49.4%;top:3%;width:24%;
+    --pic:url(../assets/img/1212/confetti-1.png)}
+  .found--2{left:22.4%;top:41.2%;width:24.5%;
+    --pic:url(../assets/img/1212/confetti-2.png)}
+  .found--3{left:73.6%;top:31.4%;width:24.5%;
+    --pic:url(../assets/img/1212/confetti-3.png)}
   .found__k{font-size:clamp(10px,1.4vw,15px);line-height:1.5;font-weight:700;padding:0 12%}
 
   .give__cta{left:6%;top:77%;width:27%;text-align:center;
