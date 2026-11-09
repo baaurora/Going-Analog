@@ -189,10 +189,25 @@
      because the card is a fraction of the stage and the stage is a fraction
      of the picture, so on a phone the copy ran clean off the paper. In cqw
      the ratio of words to card is fixed and the overflow cannot come back. */
+  /* The two faces are also held a hair apart in depth, and that is the part
+     that actually holds on a phone. backface-visibility is the usual way to
+     hide the side that is turned away, but WebKit drops it on an element that
+     is also a query container, which this face is, so on an iPhone the
+     rhinestone lettering showed straight through the back of the card.
+     One pixel of z is enough to settle it without culling: the front sits a
+     pixel towards the viewer, the back a pixel away, and turning the card
+     swaps which of those is nearer. The sheet of paper on the near face is
+     opaque, so whatever is on the far one is simply behind it. The order of
+     the back face's two transforms is what does it. Rotating first puts the
+     translate in the flipped frame, so its pixel goes away from the viewer
+     rather than towards. There is no perspective anywhere in this file, so a
+     pixel of z changes the paint order and nothing else: no scale, no shift,
+     nothing to see on a screen that never had the bug. */
   .card__face{position:absolute;inset:0;backface-visibility:hidden;
     -webkit-backface-visibility:hidden;container-type:inline-size;
+    transform:translateZ(1px);
     display:flex;align-items:center;justify-content:center;text-align:center}
-  .card__face--back{transform:rotateY(180deg)}
+  .card__face--back{transform:rotateY(180deg) translateZ(1px)}
   /* max-width:none matters. The site sheet caps every image at 100% of its
      container, which was silently clamping this one from 133.14% back to
      100%, so the card rectangle inside the photograph came out at 75% of the
@@ -280,6 +295,11 @@
      from the line above it. The doily is decoration, pushed low and off to
      one side so the words are never centred on it. */
   .sheet{margin:clamp(66px,11vh,118px) auto 0;width:min(820px,100%);position:relative}
+  /* The date sits closer under the envelope than the sections further down
+     do. It is the first thing after the invitation and reads as part of it,
+     so it does not want the full gap that separates one section from the
+     next. About two fifths off. */
+  .sheet--when{margin-top:clamp(40px,6.6vh,72px)}
   /* These reset the browser's paragraph margins at the same weight as the
      scatter rules below and before them, so a .l--x offset still wins. A
      `.sheet p` reset outranked all of them and quietly flattened the whole
@@ -811,7 +831,7 @@
 
   <!-- ---------- when and where ---------- -->
   <section class="s">
-    <div class="sheet">
+    <div class="sheet sheet--when">
       <p class="when">Saturday, December 12<br>8:30pm to 11:30pm<br>Index Greenpoint</p>
     </div>
   </section>
@@ -840,7 +860,7 @@
           <div class="girl__shot">
             <div class="pola"><div class="pola__well"></div></div>
             <img class="girl__real" src="../assets/img/1212/polaroid-bianca.jpg" alt="Bianca Pagano">
-            <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="--hr:1deg;--ht:-5.4%;--hx:7.1%;--hw:28%">
+            <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="--hr:6deg;--ht:-5.4%;--hx:7.1%;--hw:28%">
           </div>
           <div class="girl__say">
             <div class="girl__say-in" style="--d:.2s">
