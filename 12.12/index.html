@@ -52,7 +52,7 @@
   /* Less dead air above it. What the hero can hold is capped by the height of
      the window, so every pixel of padding here comes straight off the size of
      the envelope. */
-  .hero{display:flex;justify-content:center;padding-top:clamp(56px,7.2vh,88px)}
+  .hero{display:flex;justify-content:center;padding-top:clamp(60px,7.2vh,88px)}
   /* The whole envelope has to fit, tilt included. The canvas is portrait at
      1413/1113, and tilting it 12 degrees swells the box it needs to
      1.449 times its own width. At 50% of the hero that is 797 of the 830
@@ -79,8 +79,19 @@
      binds rather than the window height. Checked: 59px of padding plus 750px
      of frame is 809 of the 820 there is, and the tilted envelope needs 743
      of that 750. Nothing is cut off. */
-  .hero__in{position:relative;aspect-ratio:1100/759;
-    width:min(1400px,100%,calc((100vh - 70px) * 1.4493))}
+  /* The frame no longer has a fixed ratio, and that is the whole trick. A
+     ratio ties height to width, so on any window taller than about 900px the
+     width was binding, the height came out as width/ratio, and 70 to 260px
+     of perfectly good vertical room sat unused while the envelope stayed the
+     same size. Width and height are set from different things now: width
+     from the container, height from the window. The frame fills both.
+     --fh is the height, and the envelope is sized off it rather than off the
+     width, so the envelope grows with the window until it hits its own cap.
+     The 820px ceiling stops a very tall window from stranding the whole
+     thing in the middle of an enormous empty frame. */
+  .hero__in{position:relative;
+    --fh:min(820px,calc(100vh - clamp(60px,7.2vh,88px) - 8px));
+    width:min(1400px,100%);height:var(--fh)}
   /* The photograph is a smaller object held to the left, the way it is in the
      collage. It is not a backdrop the envelope sits on: the envelope keeps its
      own white ground to the right of it. Shown whole, at its own proportions,
@@ -97,8 +108,22 @@
   /* 48 is as wide as it can go. Tilted 12 degrees the canvas needs 1.449
      times its own width in height, and 1.449 x 48% of the frame is 687 of the
      700 the window leaves. Anything larger and the envelope is cut again. */
-  .stage{position:absolute;left:46%;top:50%;width:48%;
-    aspect-ratio:1113/1413;transform:translateY(-50%) rotate(10deg)}
+  /* Two limits, whichever is smaller, and both are about not cropping it.
+     The height limit: tilted 4 degrees the canvas needs 1.3362 times its own
+     width in height, so --fh/1.3362 is the widest envelope the window can
+     show whole top to bottom.
+     The width limit: a tilted box is wider than the box. At 4 degrees it is
+     1.0862 times as wide, so starting at 48 percent its right edge lands at
+     0.48W + 1.0431w, and 51 percent is where that stops reaching past the
+     window. 54 percent did reach past it, by 22px at 982px tall, which was a
+     crop on the right that the vertical maths never saw.
+     The tilt is the only lever on size here. The envelope can be no wider
+     than the available height divided by what the tilt costs, and nothing
+     else in this file changes that number: 12 degrees cost 1.4496, 10 cost
+     1.4238, 4 costs 1.3362. Each degree off is about half a percent on. */
+  .stage{position:absolute;left:48%;top:50%;
+    width:min(calc(var(--fh) / 1.3362),51%);
+    aspect-ratio:1113/1413;transform:translateY(-50%) rotate(4deg)}
 
   .env,.env__front{position:absolute;inset:0}
   .env img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
@@ -470,9 +495,10 @@
     /* The photograph takes the top of the frame whole, the envelope the width
        beneath it, and the frame is tall enough to hold all of the tilted
        envelope rather than cropping into it. */
-    .hero__in{aspect-ratio:375/640}
+    .hero__in{aspect-ratio:375/640;height:auto}
     .hero__photo{width:62%;left:0;top:0;transform:none}
     .stage{width:86%;right:0;left:auto;top:auto;bottom:0;transform:rotate(9deg)}
+    .stage{width:86%}
     .stage.is-turned .card{transform:translate3d(0,-73.2%,0) rotate(0deg) rotateY(180deg) scale(1.35)}
     .guest__hd{flex-direction:column}
     .guest__pola{width:120px;align-self:flex-end;margin-top:-54px}
