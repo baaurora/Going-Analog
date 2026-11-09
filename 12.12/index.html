@@ -617,6 +617,30 @@
   .guest.is-sent .guest__alt{display:none}
   .guest.is-sent .guest__said{font-size:15px;letter-spacing:.02em}
 
+  /* ---- add to your calendar ----
+     Three ways out of this page and into whatever the guest actually keeps
+     their life in. Apple is a file rather than a link because a file is the
+     only thing an iPhone will take: tapping it hands the .ics straight to
+     Calendar and the event opens ready to be added. Google and Outlook both
+     accept the whole event in the query string, so for those there is
+     nothing to download and nothing to install.
+     All three carry the same two instants, written in UTC. In local time
+     each would need a timezone block travelling with it and three different
+     parsers agreeing on how to read it. December in New York is five hours
+     behind and stays there, so half past eight in the evening is 01:30Z on
+     the thirteenth and there is nothing left for anybody to work out.
+     This block is deliberately not in the list above that clears the form
+     once it has been sent. The moment somebody has said they are coming is
+     exactly the moment they want it in their calendar. */
+  .cal{margin-top:clamp(26px,4vh,40px)}
+  .cal__k{margin:0 0 12px;font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;opacity:.5}
+  .cal__row{margin:0;display:flex;flex-wrap:wrap;gap:10px}
+  .cal__a{border:1px solid var(--ink);padding:11px 20px;font-size:11px;
+    letter-spacing:.18em;text-transform:uppercase;text-decoration:none;
+    color:var(--ink);transition:background .18s ease,color .18s ease}
+  .cal__a:hover{background:var(--ink);color:var(--paper)}
+
   /* The line that closes the page sits straight on top of the footer's rule
      and runs the whole length of it. The rule is the footer's own border-top,
      inset by var(--pad) at both ends, so this takes the same margins and ends
@@ -1140,6 +1164,15 @@
       <button class="guest__go" type="submit">Send it</button>
       <p class="guest__said" id="gSaid" role="status"></p>
       <p class="guest__alt"><a id="gAlt" href="https://docs.google.com/forms/d/e/1FAIpQLSdz3JedwkVE_DTaTLioPtP0gH5CmvHpzQLFOLFPYoyZrEssIg/viewform" target="_blank" rel="noopener">Or open the form on its own</a></p>
+
+      <div class="cal">
+        <p class="cal__k">Add to your calendar</p>
+        <p class="cal__row">
+          <a class="cal__a" href="going-analog-1212.ics">Apple</a>
+          <a class="cal__a" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Going+Analog%2C+Birthday+Edition&amp;dates=20261213T013000Z%2F20261213T043000Z&amp;location=Index+Greenpoint&amp;details=Phone-free.+Three+birthdays.+Dress+code%3A+show+out+as+your+most+authentic%2C+maximalist+self.+No+holding+back.+No+dark+colors." target="_blank" rel="noopener">Google</a>
+          <a class="cal__a" href="https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&amp;rru=addevent&amp;subject=Going%20Analog%2C%20Birthday%20Edition&amp;startdt=2026-12-13T01%3A30%3A00Z&amp;enddt=2026-12-13T04%3A30%3A00Z&amp;location=Index%20Greenpoint&amp;body=Phone-free.%20Three%20birthdays.%20Dress%20code%3A%20show%20out%20as%20your%20most%20authentic%2C%20maximalist%20self.%20No%20holding%20back.%20No%20dark%20colors." target="_blank" rel="noopener">Outlook</a>
+        </p>
+      </div>
 
     </form>
   </section>

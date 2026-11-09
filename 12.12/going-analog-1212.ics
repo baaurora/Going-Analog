@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Going Analog//12.12//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:1212-birthday-edition@goinganalog
+DTSTAMP:20261109T000000Z
+DTSTART:20261213T013000Z
+DTEND:20261213T043000Z
+SUMMARY:Going Analog\, Birthday Edition
+LOCATION:Index Greenpoint
+DESCRIPTION:Phone-free. Three birthdays. Dress code: show out as your most 
+ authentic\, maximalist self. No holding back. No dark colors.
+END:VEVENT
+END:VCALENDAR
