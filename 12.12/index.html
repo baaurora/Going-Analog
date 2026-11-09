@@ -257,7 +257,7 @@
 
   /* Big enough now that the words sit across the lace rather than beside it. */
   .doily{position:relative;margin:clamp(16px,2.6vh,28px) 0 0;
-    padding:clamp(30px,5vh,56px) 0 clamp(70px,11vh,130px)}
+    padding:clamp(30px,5vh,56px) 0 clamp(34px,5vh,70px)}
   .doily__img{position:absolute;left:53%;top:53%;width:min(480px,76%);
     transform:translate(-50%,-50%);opacity:.92;pointer-events:none;z-index:-1}
   .doily__lines{display:flex;flex-direction:column}
@@ -277,12 +277,16 @@
     max-width:50ch;margin-top:clamp(10px,1.6vh,18px)}
 
   /* ------------ the birthday girls ------------ */
-  .girls{margin:clamp(70px,12vh,126px) auto 0;width:min(980px,100%)}
-  .girls__k{margin:0 0 clamp(26px,4vh,44px);font-size:13px;letter-spacing:.22em;
+  .girls{margin:clamp(44px,7vh,82px) auto 0;width:min(1120px,100%)}
+  .girls__k{margin:0 0 clamp(10px,1.6vh,18px);font-size:13px;letter-spacing:.22em;
     text-transform:lowercase;font-weight:700}
+  /* A hat stands 0.524 of a card's width above its photograph, which is its
+     offset times the 1.2278 the polaroid is tall. The row is given a little
+     more than that as head room. Without it the tallest hat runs straight up
+     through the heading, which is what it was doing. */
   .girls__row{display:flex;flex-wrap:wrap;justify-content:center;
-    gap:clamp(24px,4vw,52px)}
-  .girl{width:min(248px,76vw);display:flex;flex-direction:column;align-items:center;gap:14px}
+    gap:clamp(24px,4vw,56px);padding-top:calc(min(320px,76vw) * .56)}
+  .girl{width:min(320px,76vw);display:flex;flex-direction:column;align-items:center;gap:14px}
   .girl__shot{position:relative;width:100%}
   /* A polaroid stands in until the signed one arrives. The real photographs
      carry their own white border and signature, so when they land they are
@@ -293,8 +297,15 @@
   .girl__real{width:100%;box-shadow:var(--cast);display:none}
   .girl.has-real .pola{display:none}
   .girl.has-real .girl__real{display:block}
-  .hat{position:absolute;width:52%;left:50%;top:-30%;z-index:2;
-    filter:var(--obj-cast);display:none}
+  /* Each hat is set from where its own head actually is. The heads sit at
+     12.9, 15.8 and 12.7 percent down their polaroids, measured off the
+     pixels, and --ht puts the brim just into the hair from there. Rotating
+     about the bottom centre means the tilt swings the point of the cone and
+     leaves the brim sitting where it was put. */
+  .hat{position:absolute;left:50%;width:var(--hw,52%);top:var(--ht,-30%);
+    z-index:2;filter:var(--obj-cast);display:none;
+    transform:translateX(-50%) rotate(var(--hr,0deg));
+    transform-origin:center bottom}
   .hat.is-on{display:block}
   .girl__name{margin:0;font-size:13px;font-weight:700;letter-spacing:.06em;text-align:center}
   .girl__meta{margin:0;font-size:11.5px;line-height:1.75;letter-spacing:.03em;text-align:center;opacity:.72}
@@ -583,17 +594,17 @@
           <div class="girl__shot">
             <div class="pola"><div class="pola__well"></div></div>
             <img class="girl__real" src="../assets/img/1212/polaroid-judy.jpg" alt="Judy Li">
-            <img class="hat" src="../assets/img/1212/hat-dots.png" alt="" style="transform:rotate(-13deg) translateX(-50%);transform-origin:left bottom">
+            <img class="hat" src="../assets/img/1212/hat-dots.png" alt="" style="--hr:-13deg;--ht:-42.5%">
           </div>
           <p class="girl__name">Judy Li, '03</p>
-          <p class="girl__meta">Sagittarius<br>Ask me about Polaroid</p>
+          <p class="girl__meta">22 (going on 23)<br>Sagittarius<br>Ask me about Polaroid</p>
         </div>
 
         <div class="girl" data-girl="bianca">
           <div class="girl__shot">
             <div class="pola"><div class="pola__well"></div></div>
             <img class="girl__real" src="../assets/img/1212/polaroid-bianca.jpg" alt="Bianca Pagano">
-            <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="transform:rotate(6deg) translateX(-50%);transform-origin:left bottom">
+            <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="--hr:6deg;--ht:-30.8%">
           </div>
           <p class="girl__name">Bianca Pagano, '02</p>
           <p class="girl__meta">23 (going on 24)<br>Sagittarius<br>Ask me about child modeling</p>
@@ -603,7 +614,7 @@
           <div class="girl__shot">
             <div class="pola"><div class="pola__well"></div></div>
             <img class="girl__real" src="../assets/img/1212/polaroid-victoria.jpg" alt="Victoria Briggiler">
-            <img class="hat" src="../assets/img/1212/hat-red.png" alt="" style="transform:rotate(-7deg) translateX(-50%);transform-origin:left bottom">
+            <img class="hat" src="../assets/img/1212/hat-red.png" alt="" style="--hr:-7deg;--ht:-42.7%">
           </div>
           <p class="girl__name">Victoria Briggiler, '02</p>
           <p class="girl__meta">23 (going on 24)<br>Capricorn<br>Ask me about Bomba</p>
