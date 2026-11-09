@@ -130,22 +130,36 @@
      than the available height divided by what the tilt costs, and nothing
      else in this file changes that number: 12 degrees cost 1.4496, 10 cost
      1.4238, 4 costs 1.3362. Each degree off is about half a percent on. */
+  /* The five layers share one canvas, 1667 x 2000, and the envelope itself
+     is a landscape one where the photographs were portrait, so the whole of
+     this is measured off the art rather than carried over.
+     The ratio is the canvas, not the envelope: the top 45 percent of every
+     file is the room the flap needs when it is folded back, and the card
+     rises into that same room. Sizing the stage to the envelope alone and
+     letting the flap hang over the top would be the same picture with the
+     measurements hidden in two places instead of one.
+     1.1998 is 2000/1667, so at 4 degrees the stage needs sin4 + 1.1998*cos4
+     of its width in height, which is 1.2667. */
   .stage{position:absolute;left:50.2%;top:50%;
-    width:min(calc(var(--fh) / 1.3362),50%);
-    aspect-ratio:1113/1413;transform:translateY(-50%) rotate(4deg)}
+    width:min(calc(var(--fh) / 1.2667),50%);
+    aspect-ratio:1667/2000;transform:translateY(-50%) rotate(4deg)}
 
-  .env,.env__front{position:absolute;inset:0}
-  .env img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
-    opacity:0;filter:var(--obj-cast)}
+  /* Every layer is the same full canvas laid over the same box, which is what
+     keeps them in register. Nothing is positioned by eye. */
+  .env__back,.env__front,.env img{position:absolute;inset:0;
+    width:100%;height:100%;object-fit:contain;max-width:none}
+  /* The wall the card rests against. */
+  .env__back{z-index:1;filter:var(--obj-cast)}
+  /* The pocket, with the glued side and bottom flaps. Its top edge is the
+     mouth of the envelope, so everything the card does below 45 percent
+     happens behind this and everything above it happens in front. It is
+     always on: it is a real panel now, not a clipped copy of the whole
+     photograph that had to be hidden until the flap was out of the way. */
+  .env__front{z-index:3}
+  /* The flap, three frames of one hinge. */
+  .env{position:absolute;inset:0;z-index:4}
+  .env img{opacity:0}
   .env img.is-on{opacity:1}
-  /* The front panel is the same photograph with everything above the mouth
-     cut away. Nothing of the flap survives the clip, so it can be shown from
-     the moment the envelope is open and the seam is invisible: the pixels it
-     covers are the pixels that were already there. */
-  .env__front{z-index:3;opacity:0}
-  .env__front img{width:100%;height:100%;object-fit:contain;
-    clip-path:inset(45.01% 0 0 0)}
-  .stage.is-open .env__front{opacity:1}
 
   /* ---- the card ----
      The paper is a photograph of a real card lying at an angle. Its rectangle
@@ -160,8 +174,14 @@
      sheet would sit at the same depth as both faces and, being last in the
      markup, would paint straight over whichever side was turned towards you.
      Per face, backface-visibility hides the paper along with the words on it. */
+  /* Seated inside the envelope rather than on top of a photograph of one.
+     The pocket runs from 45 to 94 percent of the canvas and is 91.2 percent
+     of it wide. A card 80 percent of the canvas wide stands 45.5 percent of
+     the canvas tall, so at 46 percent it sits inside the pocket on all four
+     sides, a little under 6 percent of the width clear at each edge, and
+     entirely below the mouth. Which is to say: in the envelope. */
   .card{position:absolute;left:10%;width:80%;aspect-ratio:1051/718;
-    top:60%;z-index:2;transform-style:preserve-3d;
+    top:46%;z-index:2;transform-style:preserve-3d;
     transform:translate3d(0,0,0) rotate(4deg);
     transition:transform 1.15s cubic-bezier(.22,.61,.36,1)}
   /* The face is the container the writing is measured against. Sizing the
@@ -189,7 +209,10 @@
      Safe to hold together because the type is in cqw: the card's width and
      its font size move as one, so the number of characters that fit on a
      line is the same on a phone as on a desktop. If it fits once it fits. */
-  .card__say .nb{white-space:nowrap}
+  /* And set larger than the rest of the card, by a fifth, which is between
+     three and four points at the size the copy runs on a wide screen. In em,
+     so it keeps that relationship at every width the card takes. */
+  .card__say .nb{white-space:nowrap;font-size:1.2em}
 
   /* Front: the rhinestone lettering. Until that file is in the folder the
      type below stands in, and the swap is an image dropping in, not an edit. */
@@ -215,13 +238,14 @@
   /* Drawn out of the envelope and held there, face up, still a little askew,
      with its bottom edge still tucked behind the front panel. The invitation
      has to be readable before anything turns it over. */
-  .stage.is-out .card{z-index:4;transform:translate3d(0,-100%,0) rotate(2deg)}
+  .stage.is-out .card{z-index:5;transform:translate3d(0,-100%,0) rotate(2deg)}
   /* Then turned over, straightened, and set down in the middle of the picture.
-     Minus 73.2 percent of its own height is where the card's centre meets the
-     stage's centre, and the stage is centred on the photograph, so this lands
-     it dead centre of the whole hero. */
-  .stage.is-turned .card{z-index:4;
-    transform:translate3d(0,-73.2%,0) rotate(0deg) rotateY(180deg) scale(1.15)}
+     Its centre sits at 68.75 percent of the canvas when it is seated, and
+     41.2 percent of its own height is the distance from there to the middle.
+     The stage is centred on the picture, so this lands the card dead centre
+     of the whole hero. */
+  .stage.is-turned .card{z-index:5;
+    transform:translate3d(0,-41.2%,0) rotate(0deg) rotateY(180deg) scale(1.15)}
 
   @media (prefers-reduced-motion:reduce){.card{transition:none}}
 
@@ -311,12 +335,7 @@
     font-size:clamp(12px,1.95vw,22px);line-height:1.45}
 
   /* Cream mount with a pink bloom in the middle of it. */
-  /* Wider and a little higher than it was, because it holds the payment
-     details now as well as the line about giving back. Raising the top is
-     what keeps the taller box inside the collage: the collage's own height is
-     set by its aspect ratio, and at 57 percent the bottom of the bigger card
-     ran out through the floor of it into the heading below. */
-  .give__card{left:50%;top:55.5%;width:29.5%;aspect-ratio:565/405;
+  .give__card{left:50%;top:57%;width:25.7%;aspect-ratio:565/405;
     display:flex;align-items:center;justify-content:center;
     padding:clamp(10px,1.8vw,22px);
     background:
@@ -324,16 +343,33 @@
       #F7F2EA;
     box-shadow:0 0 0 clamp(6px,1.1vw,13px) #FCFAF6,var(--cast)}
   .give__card p{font-size:clamp(10.5px,1.52vw,17px);line-height:1.6;text-align:center}
-  /* Who to pay sits above the line about giving back, with a clear gap
-     between the two so they read as a label and a sentiment, not one block.
-     The handles are set on their own lines and tracked out a little, because
+  /* Who to pay is its own card in the top right of the collage, above the
+     green disc, which leaves the pink one to say only the thing it says.
+     Its own ratio, wider and shorter than the pink card's: the discs start at
+     33 percent of the collage, and at the pink card's 565/405 a box this wide
+     would have run down into the green one.
+     The handles sit on their own lines and are tracked out a little, because
      they are going to be copied by hand off a phone screen. */
-  .give__pay{margin:0 0 .95em}
+  .give__pay{left:69%;top:2.5%;width:25%;aspect-ratio:565/340;
+    display:flex;align-items:center;justify-content:center;
+    padding:clamp(10px,1.8vw,22px);
+    background:
+      radial-gradient(56% 62% at 50% 55%,rgba(222,70,145,.28),rgba(222,70,145,0) 72%),
+      #F7F2EA;
+    box-shadow:0 0 0 clamp(6px,1.1vw,13px) #FCFAF6,var(--cast)}
+  /* Set a little smaller than the pink card's. There are four things to say
+     here rather than one, and the card can grow no taller: the discs begin at
+     33 percent of the collage and this one has to end above them. */
+  .give__pay p{margin:0;font-size:clamp(9.5px,1.35vw,15px);line-height:1.6;text-align:center}
+  .give__pay .by{display:block;margin-top:.7em}
   .give__pay b{display:inline-block;letter-spacing:.04em;white-space:nowrap}
 
   /* ------------ you can expect ------------ */
   .expect{text-align:center;font-weight:700;letter-spacing:.07em;
     font-size:clamp(17px,2.1vw,25px);margin-top:clamp(56px,8.5vh,98px)}
+  /* It opens its own section now rather than following the date block, and
+     the sheet already carries the gap above it. Both and it is a chasm. */
+  .sheet > .expect:first-child{margin-top:0}
 
   /* One size for every line on the doily, and all of it bold. The scatter is
      made of where a line starts and how far it sits from the one above it. */
@@ -384,7 +420,21 @@
   .girls__row{display:flex;flex-wrap:wrap;justify-content:center;
     gap:calc(min(320px,76vw) * .20) clamp(24px,4vw,56px);
     padding-top:calc(min(320px,76vw) * .20)}
-  .girl{width:min(320px,76vw);display:flex;flex-direction:column;align-items:center;gap:14px}
+  /* No gap. The words are in a box whose top edge is flush with the bottom
+     of the polaroid, and they start above that edge, which is to say behind
+     the photograph. The 14px that used to be the gap is padding inside the
+     box instead, so it travels with them. */
+  .girl{width:min(320px,76vw);display:flex;flex-direction:column;align-items:center}
+  .girl__say{width:100%;overflow:hidden}
+  .girl__say-in{padding-top:14px;transform:translateY(-101%);
+    transition:transform .74s cubic-bezier(.22,.61,.36,1);
+    transition-delay:var(--d,0s)}
+  .girl.is-in .girl__say-in{transform:translateY(0)}
+  /* 101 rather than 100 because a fractional layout height can leave the top
+     line of type showing by a pixel under the photograph's edge. */
+  @media (prefers-reduced-motion:reduce){
+    .girl__say-in{transform:none;transition:none}
+  }
   .girl__shot{position:relative;width:100%}
   /* A polaroid stands in until the signed one arrives. The real photographs
      carry their own white border and signature, so when they land they are
@@ -525,7 +575,6 @@
      the picture. Without this step the stage fell straight from 88 to 42
      percent at the breakpoint and the card went abruptly tiny just above it. */
 
-
   @media (max-width:620px){
     /* On a phone the envelope takes most of the picture, so the card is
        physically big before it is ever scaled. Leaning on a large scale
@@ -547,7 +596,7 @@
     .hero__photo{width:62%;left:0;top:0;transform:none}
     .stage{width:86%;right:0;left:auto;top:auto;bottom:0;transform:rotate(9deg)}
     .stage{width:86%}
-    .stage.is-turned .card{transform:translate3d(0,-73.2%,0) rotate(0deg) rotateY(180deg) scale(1.35)}
+    .stage.is-turned .card{transform:translate3d(0,-41.2%,0) rotate(0deg) rotateY(180deg) scale(1.35)}
     .guest__hd{flex-direction:column}
     .guest__pola{width:120px;align-self:flex-end;margin-top:-54px}
 
@@ -562,6 +611,8 @@
     .found{width:27%}
     .give__cta{width:100%;text-align:center;font-size:17px}
     .give__card{width:96%}
+    .give__pay{width:96%;aspect-ratio:auto;padding:16px}
+    .give__pay p{font-size:13px}
 
     .expect{font-size:19px}
     .l{max-width:27ch;font-size:13px}
@@ -669,12 +720,7 @@
       <img class="hero__photo" src="../assets/img/1212/photo-backyard.jpg" alt="" decoding="async">
 
       <div class="stage" id="stage">
-        <div class="env" id="env">
-          <img data-f="0" src="../assets/img/1212/envelope-closed-2.webp" alt="" class="is-on">
-          <img data-f="1" src="../assets/img/1212/envelope-closed-1.webp" alt="">
-          <img data-f="2" src="../assets/img/1212/envelope-open-2.webp" alt="">
-          <img data-f="3" src="../assets/img/1212/envelope-open-1.webp" alt="" >
-        </div>
+        <img class="env__back" src="../assets/img/1212/env-back.webp" alt="" aria-hidden="true">
 
         <div class="card" id="card">
           <div class="card__face">
@@ -695,60 +741,21 @@
           </div>
         </div>
 
-        <div class="env__front" aria-hidden="true">
-          <img src="../assets/img/1212/envelope-open-1.webp" alt="">
+        <img class="env__front" src="../assets/img/1212/env-front.webp" alt="" aria-hidden="true">
+
+        <div class="env" id="env" aria-hidden="true">
+          <img data-f="0" src="../assets/img/1212/env-flap-closed.webp" alt="" class="is-on">
+          <img data-f="1" src="../assets/img/1212/env-flap-half.webp" alt="">
+          <img data-f="2" src="../assets/img/1212/env-flap-open.webp" alt="">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ---------- the sheet ---------- -->
+  <!-- ---------- when and where ---------- -->
   <section class="s">
     <div class="sheet">
       <p class="when">Saturday, December 12<br>8:30pm to 11:30pm<br>Index Greenpoint</p>
-
-      <div class="give">
-        <div class="give__note">
-          <p><b>INSTEAD</b> of gifts this year, we're asking friends to donate
-             $10-20+ towards one of these selected foundations</p>
-        </div>
-
-        <!-- Placeholders for the three foundations. Once they are chosen, each
-             disc becomes a link and keeps its class and its colour:
-             <a class="found found--1" style="--dot:#F7A8C4" target="_blank"
-                rel="noopener" href="https://…"
-             ><span class="found__k">Foundation name</span></a>            -->
-        <div class="found found--1" style="--dot:#F7A8C4" aria-hidden="true"></div>
-        <div class="found found--2" style="--dot:#2B5FCC" aria-hidden="true"></div>
-        <div class="found found--3" style="--dot:#7DC242" aria-hidden="true"></div>
-
-        <p class="give__cta">click to learn more!</p>
-
-        <div class="give__card">
-          <div>
-            <p class="give__pay">Payments can be made to<br>
-               <b>venmo: @Judyli1357</b><br>
-               <b>zelle: 781-491-5618</b></p>
-            <p>Stepping into next year committed to giving back.
-               <b>That's hot.</b></p>
-          </div>
-        </div>
-      </div>
-
-      <h2 class="expect">You can expect...</h2>
-
-      <div class="doily">
-        <img class="doily__img" src="../assets/img/1212/doily-square.png" alt="" aria-hidden="true">
-        <div class="doily__lines">
-          <p class="l l--a">no phones</p>
-          <p class="l l--b">with beats by Ben Jacobs</p>
-          <p class="l l--c">beer, wine, and cake</p>
-          <p class="l l--d">All of our favorite people</p>
-          <p class="l l--e">A night of celebration, joy, and birthday wishes :)</p>
-          <p class="l l--f">Dress code:</p>
-          <p class="l l--g">Show out as your most authentic, maximalist self. No holding back! No dark colors!</p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -764,8 +771,12 @@
             <img class="girl__real" src="../assets/img/1212/polaroid-judy.jpg" alt="Judy Li">
             <img class="hat" src="../assets/img/1212/hat-dots.png" alt="" style="--hr:-13deg;--ht:-9.6%;--hx:-3.8%">
           </div>
-          <p class="girl__name">Judy Li, '03</p>
-          <p class="girl__meta">22 (going on 23)<br>Sagittarius<br>Ask me about Polaroid</p>
+          <div class="girl__say">
+            <div class="girl__say-in" style="--d:0s">
+              <p class="girl__name">Judy Li, '03</p>
+              <p class="girl__meta">22 (going on 23)<br>Sagittarius<br>Ask me about Polaroid</p>
+            </div>
+          </div>
         </div>
 
         <div class="girl" data-girl="bianca">
@@ -774,8 +785,12 @@
             <img class="girl__real" src="../assets/img/1212/polaroid-bianca.jpg" alt="Bianca Pagano">
             <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="--hr:1deg;--ht:-5.4%;--hx:7.1%;--hw:28%">
           </div>
-          <p class="girl__name">Bianca Pagano, '02</p>
-          <p class="girl__meta">23 (going on 24)<br>Sagittarius<br>Ask me about child modeling</p>
+          <div class="girl__say">
+            <div class="girl__say-in" style="--d:.11s">
+              <p class="girl__name">Bianca Pagano, '02</p>
+              <p class="girl__meta">23 (going on 24)<br>Sagittarius<br>Ask me about child modeling</p>
+            </div>
+          </div>
         </div>
 
         <div class="girl" data-girl="victoria">
@@ -784,10 +799,64 @@
             <img class="girl__real" src="../assets/img/1212/polaroid-victoria.jpg" alt="Victoria Briggiler">
             <img class="hat" src="../assets/img/1212/hat-red.png" alt="" style="--hr:-17deg;--ht:-9.8%;--hx:-2.8%">
           </div>
-          <p class="girl__name">Victoria Briggiler, '02</p>
-          <p class="girl__meta">23 (going on 24)<br>Capricorn<br>Ask me about Bomba</p>
+          <div class="girl__say">
+            <div class="girl__say-in" style="--d:.22s">
+              <p class="girl__name">Victoria Briggiler, '02</p>
+              <p class="girl__meta">23 (going on 24)<br>Capricorn<br>Ask me about Bomba</p>
+            </div>
+          </div>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- what to expect, and the giving ---------- -->
+  <section class="s">
+    <div class="sheet">
+      <h2 class="expect">You can expect...</h2>
+
+      <div class="doily">
+        <img class="doily__img" src="../assets/img/1212/doily-square.png" alt="" aria-hidden="true">
+        <div class="doily__lines">
+          <p class="l l--a">no phones</p>
+          <p class="l l--b">with beats by Ben Jacobs</p>
+          <p class="l l--c">beer, wine, and cake</p>
+          <p class="l l--d">All of our favorite people</p>
+          <p class="l l--e">A night of celebration, joy, and birthday wishes :)</p>
+          <p class="l l--f">Dress code:</p>
+          <p class="l l--g">Show out as your most authentic, maximalist self. No holding back! No dark colors!</p>
+        </div>
+      </div>
+
+      <div class="give">
+        <div class="give__note">
+          <p><b>INSTEAD</b> of gifts this year, we're asking friends to donate
+             $10-20+. All proceeds will go towards our selected foundations.</p>
+        </div>
+
+        <!-- Placeholders for the three foundations. Once they are chosen, each
+             disc becomes a link and keeps its class and its colour:
+             <a class="found found--1" style="--dot:#F7A8C4" target="_blank"
+                rel="noopener" href="https://…"
+             ><span class="found__k">Foundation name</span></a>            -->
+        <div class="found found--1" style="--dot:#F7A8C4" aria-hidden="true"></div>
+        <div class="found found--2" style="--dot:#2B5FCC" aria-hidden="true"></div>
+        <div class="found found--3" style="--dot:#7DC242" aria-hidden="true"></div>
+
+        <div class="give__pay">
+          <p>Payments can be made to<br>
+             <b>venmo: @Judyli1357</b><br>
+             <b>zelle: 781-491-5618</b>
+             <span class="by">Put your foundation of choice in your byline</span></p>
+        </div>
+
+        <p class="give__cta">click to learn more!</p>
+
+        <div class="give__card">
+          <p>Stepping into next year committed to giving back.
+             <b>That's hot.</b></p>
+        </div>
       </div>
     </div>
   </section>
@@ -980,22 +1049,19 @@
   }
   function openEnvelope() {
     if (!stage) return;
-    if (still) { show(3); stage.classList.add('is-open', 'is-out', 'is-turned'); return; }
+    if (still) { show(2); stage.classList.add('is-open', 'is-out', 'is-turned'); return; }
     /* Each frame is held long enough to register as a separate photograph.
        At the old spacing the four went by in a second and read as a flicker
        rather than as a flap being lifted. */
-    var beats = [[560, 1], [1180, 2], [1800, 3]];
+    var beats = [[640, 1], [1320, 2]];
     beats.forEach(function (b) {
       timers.push(setTimeout(function () { show(b[1]); }, b[0]));
     });
-    /* The front panel only goes up once the flap is out of the way. Below the
-       mouth the open frame and the closed frames are the same pixels, so the
-       moment it appears there is nothing to see. */
-    timers.push(setTimeout(function () { stage.classList.add('is-open'); }, 1800));
+    timers.push(setTimeout(function () { stage.classList.add('is-open'); }, 1320));
     /* The card is drawn out and held long enough to be read, */
-    timers.push(setTimeout(function () { stage.classList.add('is-out'); }, 2260));
+    timers.push(setTimeout(function () { stage.classList.add('is-out'); }, 1780));
     /* and only then turned over onto its other side. */
-    timers.push(setTimeout(function () { stage.classList.add('is-turned'); }, 5100));
+    timers.push(setTimeout(function () { stage.classList.add('is-turned'); }, 4620));
   }
 
   /* The confetti falls every time the page is opened, not only on the visit
@@ -1100,6 +1166,28 @@
         if (alt) alt.focus();
       });
   });
+})();
+
+/* ---------- the birthday girls ----------
+   The names and the lines under them come down from behind each polaroid
+   when the row is scrolled to, one after the next. It happens once: this is
+   an entrance, and a thing that slid away and came back every time it left
+   the window would be a fidget. Without an observer, or with motion turned
+   down, they are simply there. */
+(function () {
+  var girls = [].slice.call(document.querySelectorAll('.girl'));
+  if (!girls.length) return;
+  function showAll() { girls.forEach(function (g) { g.classList.add('is-in'); }); }
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) { showAll(); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-in');
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.3 });
+  girls.forEach(function (g) { io.observe(g); });
 })();
 
 /* Whether the header band is filled in or clear. See .top above. */
