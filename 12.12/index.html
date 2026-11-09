@@ -665,6 +665,11 @@
     /* 21px holds, the tracking gives way. At .22em the heading is 396px wide
        and a phone is 339, so it was breaking after "birthday" and leaving
        "girls" on a line of its own. */
+    /* Centred, not justified. Justifying every line including the last is
+       what makes it meet the ends of the rule on a wide screen, where it is
+       one line. Here it is two, and the last of them is "INDEX GREENPOINT.",
+       which justification shoved to opposite edges with a chasm between. */
+    .bash{text-align:center;text-align-last:center;letter-spacing:.1em}
     .girls__k{letter-spacing:.08em}
     .expect{font-size:19px}
     .l{max-width:27ch;font-size:13px}
