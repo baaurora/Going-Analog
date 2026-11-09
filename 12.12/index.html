@@ -96,7 +96,12 @@
      collage. It is not a backdrop the envelope sits on: the envelope keeps its
      own white ground to the right of it. Shown whole, at its own proportions,
      rather than cropped to a shape chosen for it. */
-  .hero__photo{position:absolute;left:-3%;top:50%;transform:translateY(-50%);
+  /* Off the edge of the window, not against it. At -3 percent its left edge
+     sat 5px from the glass, which read as falling out of the page rather
+     than sitting on it. At 2 percent it is 60px in, past the page gutter the
+     wordmark lines up on, and its right side runs a good 130px behind the
+     envelope instead of stopping just short of it. */
+  .hero__photo{position:absolute;left:2%;top:50%;transform:translateY(-50%);
     width:56%;height:auto;box-shadow:var(--cast)}
 
   /* The stage is the envelope's own aspect ratio. The card's destination is
@@ -113,16 +118,20 @@
      width in height, so --fh/1.3362 is the widest envelope the window can
      show whole top to bottom.
      The width limit: a tilted box is wider than the box. At 4 degrees it is
-     1.0862 times as wide, so starting at 48 percent its right edge lands at
-     0.48W + 1.0431w, and 51 percent is where that stops reaching past the
-     window. 54 percent did reach past it, by 22px at 982px tall, which was a
-     crop on the right that the vertical maths never saw.
+     1.0862 times as wide, so from left L its right edge lands at
+     L*W + 1.0431w. 54 percent reached past the window by 22px at 982px
+     tall, which was a crop on the right that the vertical maths never saw.
+     The two numbers move together. The 0.25 inch to the right, 24px, is
+     2.2 points of a 1104px frame, and at 51 percent that landed the right
+     edge on 1179 of 1180, which is a crop waiting for a scrollbar. So the
+     cap came back to 50 to pay for the move. Shifting right and growing
+     wider are the same budget on a 1180px window.
      The tilt is the only lever on size here. The envelope can be no wider
      than the available height divided by what the tilt costs, and nothing
      else in this file changes that number: 12 degrees cost 1.4496, 10 cost
      1.4238, 4 costs 1.3362. Each degree off is about half a percent on. */
-  .stage{position:absolute;left:48%;top:50%;
-    width:min(calc(var(--fh) / 1.3362),51%);
+  .stage{position:absolute;left:50.2%;top:50%;
+    width:min(calc(var(--fh) / 1.3362),50%);
     aspect-ratio:1113/1413;transform:translateY(-50%) rotate(4deg)}
 
   .env,.env__front{position:absolute;inset:0}
@@ -172,6 +181,15 @@
     height:auto;transform:translate(-50%,-50%) rotate(-34.41deg);
     filter:var(--obj-cast);pointer-events:none}
   .card__ink{position:relative;z-index:1;width:86%}
+  /* The name of the party does not break across two lines. It was splitting
+     after "Going", which read as two different things. The full stop lives
+     inside the bold run rather than after it: as its own text node beside the
+     closing tag it broke away onto a line of its own and sat there as a
+     single orphan dot, nowrap on the wrapper notwithstanding.
+     Safe to hold together because the type is in cqw: the card's width and
+     its font size move as one, so the number of characters that fit on a
+     line is the same on a phone as on a desktop. If it fits once it fits. */
+  .card__say .nb{white-space:nowrap}
 
   /* Front: the rhinestone lettering. Until that file is in the folder the
      type below stands in, and the swap is an image dropping in, not an edit. */
@@ -185,9 +203,14 @@
      magnifying everything at the same ratio. */
   .card__sub{margin:3.4cqw 0 0;font-size:clamp(8px,2cqw,11px);letter-spacing:.34em;
     text-transform:uppercase;opacity:.5}
-  .card__say{margin:0;font-size:clamp(12px,3.2cqw,17px);line-height:1.74;letter-spacing:.01em}
+  /* Lines inside a clause are set close, and the three clauses are held well
+     apart, so the card reads as three statements rather than one block. The
+     two move together on purpose: 0.19em came off every line to pay for the
+     0.8em that went between the clauses, which keeps the whole of it inside
+     the card. */
+  .card__say{margin:0;font-size:clamp(12px,3.2cqw,17px);line-height:1.55;letter-spacing:.01em}
   .card__say b{font-weight:700;text-transform:uppercase;letter-spacing:.06em}
-  .card__say+.card__say{margin-top:.7em}
+  .card__say+.card__say{margin-top:1.5em}
 
   /* Drawn out of the envelope and held there, face up, still a little askew,
      with its bottom edge still tucked behind the front panel. The invitation
@@ -288,7 +311,12 @@
     font-size:clamp(12px,1.95vw,22px);line-height:1.45}
 
   /* Cream mount with a pink bloom in the middle of it. */
-  .give__card{left:50%;top:57%;width:25.7%;aspect-ratio:565/405;
+  /* Wider and a little higher than it was, because it holds the payment
+     details now as well as the line about giving back. Raising the top is
+     what keeps the taller box inside the collage: the collage's own height is
+     set by its aspect ratio, and at 57 percent the bottom of the bigger card
+     ran out through the floor of it into the heading below. */
+  .give__card{left:50%;top:55.5%;width:29.5%;aspect-ratio:565/405;
     display:flex;align-items:center;justify-content:center;
     padding:clamp(10px,1.8vw,22px);
     background:
@@ -296,6 +324,12 @@
       #F7F2EA;
     box-shadow:0 0 0 clamp(6px,1.1vw,13px) #FCFAF6,var(--cast)}
   .give__card p{font-size:clamp(10.5px,1.52vw,17px);line-height:1.6;text-align:center}
+  /* Who to pay sits above the line about giving back, with a clear gap
+     between the two so they read as a label and a sentiment, not one block.
+     The handles are set on their own lines and tracked out a little, because
+     they are going to be copied by hand off a phone screen. */
+  .give__pay{margin:0 0 .95em}
+  .give__pay b{display:inline-block;letter-spacing:.04em;white-space:nowrap}
 
   /* ------------ you can expect ------------ */
   .expect{text-align:center;font-weight:700;letter-spacing:.07em;
@@ -309,23 +343,26 @@
   /* Big enough now that the words sit across the lace rather than beside it. */
   .doily{position:relative;margin:clamp(16px,2.6vh,28px) 0 0;
     padding:clamp(30px,5vh,56px) 0 clamp(34px,5vh,70px)}
-  .doily__img{position:absolute;left:53%;top:53%;width:min(480px,76%);
+  /* The lace is centred on the page, the same centre the heading above it and
+     the dress code below it are centred on. It used to sit at 53 percent,
+     which meant three different centres in one section. Everything that was
+     placed against the old one came 3 points left with it, so each line keeps
+     the same seat on the lace. */
+  .doily__img{position:absolute;left:50%;top:53%;width:min(480px,76%);
     transform:translate(-50%,-50%);opacity:.92;pointer-events:none;z-index:-1}
   .doily__lines{display:flex;flex-direction:column}
 
-  .l--a{align-self:flex-start;margin-left:20%}
-  .l--b{align-self:flex-end;text-align:right;margin-right:16%;
+  .l--a{align-self:flex-start;margin-left:17%}
+  .l--b{align-self:flex-end;text-align:right;margin-right:19%;
     margin-top:clamp(22px,3.4vh,38px)}
-  .l--c{align-self:flex-start;margin-left:32%;margin-top:clamp(9px,1.5vh,16px)}
-  .l--d{align-self:flex-end;text-align:right;margin-right:17%;
+  .l--c{align-self:flex-start;margin-left:29%;margin-top:clamp(9px,1.5vh,16px)}
+  .l--d{align-self:flex-end;text-align:right;margin-right:20%;
     margin-top:clamp(24px,3.8vh,42px)}
-  .l--e{align-self:flex-start;margin-left:12%;max-width:31ch;
+  .l--e{align-self:flex-start;margin-left:9%;max-width:31ch;
     margin-top:clamp(22px,3.4vh,38px)}
-  /* The dress code is the one thing centred: a label, then the instruction. */
-  /* The doily is centred at 53 percent of the section, not 50, so centring
-     the dress code on the section left it sitting off the lace. 3 percent of
-     the container puts it on the middle of the doily instead. */
-  .l--f,.l--g{position:relative;left:3%}
+  /* The dress code is the one thing centred: a label, then the instruction.
+     It needs no offset any more. The lace is on the page's centre line now,
+     so centre of section, centre of doily and centre of screen are one. */
   .l--f{align-self:center;text-align:center;text-transform:uppercase;
     color:#8E8E8E;margin-top:clamp(28px,4.4vh,48px)}
   .l--g{align-self:center;text-align:center;text-transform:uppercase;
@@ -333,7 +370,7 @@
 
   /* ------------ the birthday girls ------------ */
   .girls{margin:clamp(44px,7vh,82px) auto 0;width:min(1120px,100%)}
-  .girls__k{margin:0 0 clamp(10px,1.6vh,18px);font-size:13px;letter-spacing:.22em;
+  .girls__k{margin:0 0 clamp(10px,1.6vh,18px);font-size:21px;letter-spacing:.22em;
     text-transform:lowercase;font-weight:700}
   /* A hat stands 0.32 of a card's width above its photograph, which is its
      offset times the 1.2278 the polaroid is tall. The row is given a little
@@ -469,9 +506,20 @@
   .guest.is-sent .guest__alt{display:none}
   .guest.is-sent .guest__said{font-size:15px;letter-spacing:.02em}
 
-  .bash{margin:0;padding:clamp(26px,4vh,40px) 0 0;text-align:center;
-    font-size:clamp(10.5px,1.35vw,13px);font-weight:700;letter-spacing:.14em;
-    text-transform:uppercase;line-height:1.9}
+  /* The line that closes the page sits straight on top of the footer's rule
+     and runs the whole length of it. The rule is the footer's own border-top,
+     inset by var(--pad) at both ends, so this takes the same margins and ends
+     where it ends. Justified on both edges, the last line included, which is
+     what makes it meet the ends of the rule at any width instead of at the
+     one size that happens to fit. On a phone that is three justified lines
+     rather than one. */
+  .bash{margin:clamp(64px,10vh,112px) var(--pad) 11px;padding:0;
+    font-size:clamp(11px,1.92vw,25px);font-weight:700;letter-spacing:.055em;
+    text-transform:uppercase;line-height:1.44;
+    text-align:justify;text-align-last:justify}
+  /* The closing line carries the gap above the rule now, so the footer's own
+     60px would only push the rule away from the words it belongs to. */
+  .foot{margin-top:0}
 
   /* Between a phone and a wide screen the envelope takes a middle share of
      the picture. Without this step the stage fell straight from 88 to 42
@@ -517,14 +565,13 @@
 
     .expect{font-size:19px}
     .l{max-width:27ch;font-size:13px}
-    .l--a{margin-left:6%}
-    .l--b{margin-right:2%}
-    .l--c{margin-left:16%}
-    .l--d{margin-right:3%}
-    .l--e{margin-left:2%}
+    .l--a{margin-left:4%}
+    .l--b{margin-right:4%}
+    .l--c{margin-left:14%}
+    .l--d{margin-right:5%}
+    .l--e{margin-left:0}
     .l--g{max-width:30ch}
-    .doily__img{left:52%;width:94%}
-    .l--f,.l--g{left:2%}
+    .doily__img{left:50%;width:94%}
   }
 
   /* ------------ confetti ------------
@@ -642,7 +689,7 @@
             <img class="card__paper" src="../assets/img/1212/card-blank.webp" alt="" aria-hidden="true">
             <div class="card__ink">
               <p class="card__say">They say all good things come in threes. Let's put it to the test.</p>
-              <p class="card__say">You are hereby cordially invited to <b>Going Analog, Birthday Edition</b>.</p>
+              <p class="card__say">You are hereby cordially invited to <b class="nb">Going Analog, Birthday Edition.</b></p>
               <p class="card__say">Prepare to put your phones away, leave everything on the dance floor, and celebrate not one, not two, but THREE birthdays.</p>
             </div>
           </div>
@@ -678,8 +725,13 @@
         <p class="give__cta">click to learn more!</p>
 
         <div class="give__card">
-          <p>Stepping into next year committed to giving back.
-             <b>That's hot.</b></p>
+          <div>
+            <p class="give__pay">Payments can be made to<br>
+               <b>venmo: @Judyli1357</b><br>
+               <b>zelle: 781-491-5618</b></p>
+            <p>Stepping into next year committed to giving back.
+               <b>That's hot.</b></p>
+          </div>
         </div>
       </div>
 
@@ -763,9 +815,9 @@
 
         <div class="q__row"><label class="q__l" for="gWish">Make a wish:</label>
           <input class="q__i" id="gWish" type="text"></div>
-        <div class="q__row"><label class="q__l" for="gSong">Favorite song:</label>
+        <div class="q__row"><label class="q__l" for="gSong">Song you want to hear:</label>
           <input class="q__i" id="gSong" type="text"></div>
-        <div class="q__row q__row--stack"><label class="q__l" for="gThing">Favorite thing about our birthday girls:</label>
+        <div class="q__row q__row--stack"><label class="q__l" for="gThing">Birthday message to your favorite girls:</label>
           <input class="q__i" id="gThing" type="text"></div>
         <div class="q__row q__row--stack"><label class="q__l" for="gCake">If you were a cake flavor, what would you be and why?</label>
           <input class="q__i" id="gCake" type="text"></div>
@@ -797,11 +849,12 @@
       <p class="guest__said" id="gSaid" role="status"></p>
       <p class="guest__alt"><a id="gAlt" href="https://docs.google.com/forms/d/e/1FAIpQLSdz3JedwkVE_DTaTLioPtP0gH5CmvHpzQLFOLFPYoyZrEssIg/viewform" target="_blank" rel="noopener">Or open the form on its own</a></p>
 
-      <p class="bash">Birthday bash. Saturday, December 12. 8:30pm to 11:30pm. Index Greenpoint.</p>
     </form>
   </section>
 
 </main>
+
+<p class="bash">Birthday bash. Saturday, December 12. 8:30pm to 11:30pm. Index Greenpoint.</p>
 
 <footer class="foot">
   <div class="foot__col">
