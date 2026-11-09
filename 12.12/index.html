@@ -54,7 +54,12 @@
      1413/1113, and tilting it 12 degrees swells the box it needs to
      1.449 times its own width. At 50% of the hero that is 797 of the 830
      available, so nothing is cut off at the top or the bottom. */
-  .hero__in{position:relative;width:min(1100px,100%);aspect-ratio:1100/830}
+  /* And the frame itself has to fit the window, or the envelope is whole but
+     half of it is below the fold, which looks exactly like a crop. The third
+     term is the width at which the frame is as tall as the screen leaves it:
+     height x 1100/830. Whichever of the three is smallest wins. */
+  .hero__in{position:relative;aspect-ratio:1100/830;
+    width:min(1100px,100%,calc((100vh - 170px) * 1.3253))}
   /* The photograph is a smaller object held to the left, the way it is in the
      collage. It is not a backdrop the envelope sits on: the envelope keeps its
      own white ground to the right of it. Shown whole, at its own proportions,
