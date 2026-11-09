@@ -211,15 +211,21 @@
      line is the same on a phone as on a desktop. If it fits once it fits. */
   /* And set larger than the rest of the card, by a fifth, which is between
      three and four points at the size the copy runs on a wide screen. In em,
-     so it keeps that relationship at every width the card takes. */
-  .card__say .nb{white-space:nowrap;font-size:1.2em}
+     so it keeps that relationship at every width the card takes.
+     Inline-block only so it can take a margin: an inline box ignores one, and
+     the name wants air above it now that it is the biggest thing on the card
+     and sits on a line of its own. */
+  .card__say .nb{white-space:nowrap;font-size:1.2em;
+    display:inline-block;margin-top:.42em}
 
-  /* Front: the rhinestone lettering. Until that file is in the folder the
-     type below stands in, and the swap is an image dropping in, not an edit. */
-  /* multiply drops a white background against the cream paper without needing
-     the file to be cut out, so the rhinestone lettering works whether it
-     arrives as a transparent PNG or flat on white. */
-  .card__art{width:min(86%,420px);margin:0 auto;mix-blend-mode:multiply}
+  /* Front: the rhinestone lettering, 1774 x 887 and properly cut out, alpha
+     running the full 0 to 255. It was going to be composited with multiply in
+     case it arrived flat on white; it did not, so it is drawn plainly. Over
+     cream, multiply would have taken a few percent off every stone and dulled
+     the one thing on this card that is meant to catch the light.
+     If this file is ever missing the type below stands in for it, and that is
+     still a file dropping into the folder rather than an edit here. */
+  .card__art{width:min(86%,420px);margin:0 auto}
   .card__art--miss{display:none}
   /* Measured against the face, so the words can never outgrow the paper, but
      clamped so that making the card bigger buys room rather than just
@@ -542,6 +548,12 @@
   .q__i:focus{border-bottom-width:2px;padding-bottom:2px}
   .q__row--stack{display:block}
   .q__row--stack .q__i{width:100%;margin-top:7px;flex:none}
+  /* A stacked row's label has the whole width to itself and is the only one
+     long enough to need more than one line of it. The nowrap above keeps a
+     short label on the same line as its rule, which is right for the short
+     ones and was running the cake flavour question 76px off the side of a
+     375px phone, where overflow:hidden quietly ate the end of it. */
+  .q__row--stack .q__l{white-space:normal;line-height:1.5}
   .q__hint{font-size:10.5px;letter-spacing:.04em;opacity:.45;font-weight:400;text-transform:none}
   /* The plus one. Nobody is asked for a name and a number until they have
      said there is someone to name, and the two fields are not sitting there
@@ -643,10 +655,17 @@
     .give__note p,.give__card p{font-size:13px}
     .found{width:27%}
     .give__cta{width:100%;text-align:center;font-size:17px}
-    .give__card{width:96%}
+    /* Both cards take their height from what is in them here. Stacked and
+       nearly full width, the collage's ratios left the pink one a tall box
+       with two lines floating in the middle of it. */
+    .give__card{width:96%;aspect-ratio:auto;padding:18px 16px}
     .give__pay{width:96%;aspect-ratio:auto;padding:16px}
     .give__pay p{font-size:13px}
 
+    /* 21px holds, the tracking gives way. At .22em the heading is 396px wide
+       and a phone is 339, so it was breaking after "birthday" and leaving
+       "girls" on a line of its own. */
+    .girls__k{letter-spacing:.08em}
     .expect{font-size:19px}
     .l{max-width:27ch;font-size:13px}
     .l--a{margin-left:4%}
@@ -759,7 +778,7 @@
           <div class="card__face">
             <img class="card__paper" src="../assets/img/1212/card-blank.webp" alt="" aria-hidden="true">
             <div class="card__ink">
-              <img class="card__art" id="cardArt" src="../assets/img/1212/youre-invited.png" alt="You're Invited">
+              <img class="card__art" id="cardArt" src="../assets/img/1212/youre-invited.webp" alt="You're Invited">
               <p class="card__say card__art--miss" id="cardArtAlt">You're Invited</p>
               <p class="card__sub">12.12</p>
             </div>
@@ -878,10 +897,10 @@
         <div class="found found--3" style="--dot:#7DC242" aria-hidden="true"></div>
 
         <div class="give__pay">
-          <p>Payments can be made to<br>
-             <b>venmo: @Judyli1357</b><br>
-             <b>zelle: 781-491-5618</b>
-             <span class="by">Put your foundation of choice in your byline</span></p>
+          <p>Payments can be made to:<br>
+             <b>Venmo: @Judyli1357</b><br>
+             <b>Zelle: 781-491-5618</b>
+             <span class="by">Put your foundation of choice in your byline.</span></p>
         </div>
 
         <p class="give__cta">click to learn more!</p>
@@ -1276,13 +1295,23 @@
   function showAll() { girls.forEach(function (g) { g.classList.add('is-in'); }); }
   if (!('IntersectionObserver' in window) ||
       window.matchMedia('(prefers-reduced-motion: reduce)').matches) { showAll(); return; }
+  /* Held back by the bottom fifth of the window rather than by how much of
+     the card is showing. A high threshold read well when you scrolled at a
+     normal pace and failed outright when you did not: a card that never
+     happened to be 45 percent visible never fired at all, and what you got
+     was a polaroid with a blank space where the name should be. A low
+     threshold always fires, and the margin is what makes it wait.
+     The second test catches the other way of missing it. Jump past the row
+     and the callback arrives with nothing intersecting, so the words would
+     stay hidden above a row you have already scrolled below. If its top is
+     off the top of the window, it has been passed: show it. */
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
-      if (!e.isIntersecting) return;
+      if (!e.isIntersecting && e.boundingClientRect.top > 0) return;
       e.target.classList.add('is-in');
       io.unobserve(e.target);
     });
-  }, { threshold: 0.45, rootMargin: '0px 0px -14% 0px' });
+  }, { threshold: [0, 0.18], rootMargin: '0px 0px -20% 0px' });
   girls.forEach(function (g) { io.observe(g); });
 })();
 
