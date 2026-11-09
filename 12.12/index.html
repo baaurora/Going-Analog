@@ -554,8 +554,19 @@
   .guest__hd{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
   .guest__t{margin:4px 0 0;font-size:clamp(26px,4.6vw,46px);line-height:1.08;
     letter-spacing:.07em;font-weight:700;text-transform:uppercase}
-  .guest__pola{width:min(136px,30%);flex:none}
-  .guest__pola .pola{aspect-ratio:4/4.9}
+  /* Where the blank polaroid stood. A postmark rather than a picture: the
+     envelope in the hero is a posted envelope, this is the cancellation mark
+     on it, and it carries this event's own serial the way every GO.A mark
+     does. Rotated a little because a hand holds a rubber stamp, and set back
+     to 62 percent so it reads as ink soaked into paper and never competes
+     with the heading next to it. */
+  .guest__stamp{flex:none;align-self:flex-start;margin:3px 0 0;
+    border:1.5px solid var(--ink);padding:9px 15px 8px;text-align:center;
+    transform:rotate(-5.5deg);opacity:.62;-webkit-user-select:none;user-select:none}
+  .guest__stamp b{display:block;font-size:13px;font-weight:700;letter-spacing:.14em}
+  .guest__stamp i{display:block;margin:5px 0;height:1px;background:var(--ink);opacity:.55}
+  .guest__stamp span{display:block;font-size:9.5px;letter-spacing:.17em;
+    line-height:1.8;text-transform:uppercase}
 
   .q{display:flex;flex-direction:column;gap:clamp(13px,1.9vh,19px);
     margin:clamp(26px,4vh,40px) 0 0}
@@ -687,7 +698,7 @@
        neat. */
     .stage.is-turned .card{transform:translate3d(0,-41.2%,0) rotate(-5deg) rotateY(180deg) scale(1.35)}
     .guest__hd{flex-direction:column}
-    .guest__pola{width:120px;align-self:flex-end;margin-top:-54px}
+    .guest__stamp{align-self:flex-end;margin-top:2px}
 
     /* The collage cannot hold its places this narrow, so it stacks, with the
        three foundation discs kept together on one row. */
@@ -1089,7 +1100,8 @@
           <p class="guest__by">RSVP by 12/1</p>
           <h2 class="guest__t">Guest of<br>the year</h2>
         </div>
-        <div class="guest__pola"><div class="pola"><div class="pola__well"></div></div></div>
+        <p class="guest__stamp" aria-hidden="true"><b>GO.A1212</b><i></i>
+          <span>Dec 12 2026<br>Greenpoint NY</span></p>
       </div>
 
       <div class="q">
