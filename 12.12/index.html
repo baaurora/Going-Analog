@@ -140,8 +140,14 @@
      measurements hidden in two places instead of one.
      1.1998 is 2000/1667, so at 4 degrees the stage needs sin4 + 1.1998*cos4
      of its width in height, which is 1.2667. */
-  .stage{position:absolute;left:50.2%;top:50%;
-    width:min(calc(var(--fh) / 1.2667),50%);
+  /* Grown 5 percent and walked left, 2026-11-11. Both caps had to move or
+     only one of them would have bound: 1.2667 / 1.05 is 1.2064, and 50
+     becomes 52.5. The left shift is not decoration, it pays for the growth.
+     Five percent on the width pushes the tilted right edge out by 0.05 x
+     1.0431w, about 34px on a 1240 frame, which is 2.7 points of it, and
+     50.2 less 2.7 is 47.5. The right edge lands where it already was. */
+  .stage{position:absolute;left:47.5%;top:50%;
+    width:min(calc(var(--fh) / 1.2064),52.5%);
     aspect-ratio:1667/2000;transform:translateY(-50%) rotate(4deg)}
 
   /* Every layer is the same full canvas laid over the same box, which is what
@@ -493,7 +499,7 @@
      which meant three different centres in one section. Everything that was
      placed against the old one came 3 points left with it, so each line keeps
      the same seat on the lace. */
-  .doily__img{position:absolute;left:50%;top:53%;width:min(480px,76%);
+  .doily__img{position:absolute;left:50%;top:45%;width:min(480px,76%);
     transform:translate(-50%,-50%);opacity:.92;pointer-events:none;z-index:-1}
   .doily__lines{display:flex;flex-direction:column}
 
@@ -627,9 +633,20 @@
   .girl__meta{margin:0;font-size:11.5px;line-height:1.75;letter-spacing:.03em;text-align:center;opacity:.72}
 
   /* ------------ guest of the year ------------ */
-  .guest{margin:clamp(74px,13vh,134px) auto clamp(60px,9vh,96px);
+  /* The lace on this form and the lace on the section above it were landing
+     on each other: 54px across and 22px down of real overlap at 1280 x 900,
+     two pieces of the same pattern reading as one torn one. The lace above
+     came up 8 points to 45 percent and this whole block went down about
+     22px, which is what opens the clearance. */
+  .guest{margin:clamp(92px,15.4vh,156px) auto clamp(60px,9vh,96px);
     width:min(760px,100%);position:relative}
-  .guest__doily{position:absolute;right:-6%;top:-7%;width:min(240px,34%);
+  /* Measured off the window, not off the form. A percentage here resolved
+     against .guest's own height, and the form grows a lot taller as the page
+     narrows, so the lace rode further and further up into the section above
+     it: 29px of clearance at 1280 but -2 at 560 and 8 at 760. A length holds
+     the same gap at every width. */
+  .guest__doily{position:absolute;right:-6%;top:calc(-1 * clamp(18px,2.8vh,42px));
+    width:min(240px,34%);
     opacity:.75;pointer-events:none;z-index:-1}
   .guest__by{margin:0;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
   .guest__hd{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
