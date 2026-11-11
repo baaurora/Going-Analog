@@ -1,3 +1,6 @@
 .DS_Store
 *.tif
 node_modules/
+
+# local PNG exports, not part of the site
+_exports/
