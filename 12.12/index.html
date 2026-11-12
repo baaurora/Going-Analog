@@ -557,8 +557,18 @@
      width. */
   .expect--lg{text-transform:uppercase;letter-spacing:.14em;
     font-size:clamp(21px,2.9vw,35px)}
+  /* --fw is the frame's own width, named because the wave has to do
+     arithmetic with it. It holds Bianca's 1380 from 1468 up to 1769 and only
+     then starts growing again, at 78vw. That floor is not a taste call: the
+     wave reaches the screen edge by carrying the gutter in its width, so on
+     a fixed frame a wider screen means a taller wave and a taller cut, while
+     the wash that hides that cut stays the same size. The cut outgrew the
+     wash at about 1800. Pinning the frame to 78vw past that point holds the
+     ratio of gutter to frame at .141, under the .152 the wash can cover, at
+     any width at all. */
   .dress{position:relative;margin:clamp(16px,2.6vh,30px) 0 0;
-    width:min(1380px,94vw);margin-left:50%;transform:translateX(-50%);
+    --fw:min(94vw, max(1380px, 80vw));
+    width:var(--fw);margin-left:50%;transform:translateX(-50%);
     aspect-ratio:1100/975}
   .dress > *{position:absolute}
 
@@ -617,7 +627,7 @@
   .dnote__t--big{text-transform:uppercase;letter-spacing:.06em;line-height:1.1;
     font-size:clamp(22px,4vw,50px)}
 
-  /* Stacking, back to front: the yellow sheet, the squiggle running across
+  /* Stacking, back to front: the yellow sheet, the wave running across
      its foot and off the bottom left, the pink wash over both, then the ball
      sitting on the wash's top corner. The foil stars have the bottom right
      to themselves. */
@@ -630,8 +640,21 @@
      percent of the frame keeps it well inside the wash at every width,
      while the width carries the page gutter so the left end still bleeds
      off the edge of the screen rather than stopping at the frame. */
-  .dsp--squiggle{right:47.7%;left:auto;top:32.1%;
-    width:calc(52.3% + (100vw - min(1380px,94vw)) / 2 + 2px);z-index:2}
+  /* Bianca's wave, which replaced the near square squiggle. Profiled on the
+     real file, it is cut at BOTH ends: the right edge is flat from the top
+     down to 60 percent, and the left edge is flat across the bottom 20.
+     So each cut gets hidden by a different thing. The left one runs off the
+     side of the screen, which is what the gutter in the width is for: the
+     frame is 94vw and this carries the other 3vw plus two pixels, so the end
+     is past the edge at any width. The right one goes under the pink wash,
+     which is z-index 3 to this 2: the right edge is set at 58 percent, well
+     inside the wash's 47 to 91, and the top at 20.7 so that the cut sits
+     centred in the window the wash gives it rather than against its bottom.
+     That one number has to satisfy both ends at once: the window is roomy at
+     1280, where anything from 20.5 to 26.4 works, and only six points wide
+     at 1920. Re-derive all four if the file or the wash ever changes. */
+  .dsp--wave{right:42%;left:auto;top:20.7%;
+    width:calc(58% + (100vw - var(--fw)) / 2 + 2px);z-index:2}
   /* The ball is z-index 4, above every sheet of paper, so unlike the wave
      it cannot be allowed to reach the words: it paints over them rather
      than under. Lifted above the frame and cut back until its circle clears
@@ -912,8 +935,15 @@
     .give > *{position:static}
     /* Except the charm layer, which is absolute:inset-0 against .give and
        has to stay that way: flattened to static it becomes a flex item in
-       the stack and its charms lose the box they are placed against. */
+       the stack and its charms lose the box they are placed against.
+       And except the two paper cards. Each holds its sheet and its words as
+       absolute children, so flattening the card to static left both of them
+       anchored to the whole 1139px block instead: the words for the pink
+       card landed above the collage entirely and the Venmo card's landed
+       below its own paper. They are flex items here, so relative, not
+       absolute. */
     .give > .charms{position:absolute}
+    .give > .give__pay,.give > .give__card{position:relative}
     .give__note{width:96%;transform:rotate(-3deg)}
     .give__note p,.give__card p{font-size:13px}
     .found{width:27%}
@@ -981,7 +1011,7 @@
     .dnote--b{order:-1}
     .dnote--a{left:auto;top:auto;width:100%;transform:rotate(-2deg);padding:0 9%}
     .dnote--b{left:auto;top:auto;width:100%;transform:rotate(5deg);padding:0 8%}
-    .dnote--c{left:auto;top:auto;width:100%;transform:rotate(-3deg);padding:0 8% 0 34%}
+    .dnote--c{left:auto;top:auto;width:100%;transform:rotate(-3deg);padding:0 13% 0 28%}
     .dnote--c .dnote__t{font-size:13px}
     .dnote--a .dnote__t{font-size:13px}
     .dnote__t--big{font-size:30px}
@@ -1001,8 +1031,20 @@
        the bottom of the words and the bottom of the sheet, and only the
        flowing end comes out below it. Measured off the wash, so re-measure
        if its copy or type size ever changes. */
-    .dsp--squiggle{right:61%;left:auto;top:233px;bottom:auto;
-      width:calc(39% + var(--pad) + 2px)}
+    /* The phone does not tuck the wave, it drops it. Turned a quarter and
+       blown up past the width of the screen it reads as a cascade running
+       down the back of the stack, and at z-index 0 it is behind all three
+       sheets and behind the stars, so the only places it shows are the gaps
+       between the notes and the margins beside them. Nothing has to hide
+       its cut ends any more because both of them are off the block.
+       Laid out at 300 percent it is 1017 wide and 758 tall; the quarter turn
+       swaps those, so it stands 1017 tall, and its centre sits at 379 down,
+       which puts it over the block from -129 to 888. The block clips, which
+       is what stops 758 pixels of width scrolling the page sideways. */
+    .dress{overflow:hidden}
+    .dsp--wave{left:50%;right:auto;top:0;bottom:auto;width:300%;
+      max-width:none;
+      transform:translateX(-50%) rotate(90deg);z-index:0}
     .dsp--stars{left:auto;right:-2%;top:auto;bottom:6%;width:30%}
     .expect--lg{letter-spacing:.08em}
     .ch--6{left:10%;top:75%}
@@ -1350,7 +1392,7 @@
              your mom wouldn't approve of...</p>
         </div>
 
-        <img class="dsp dsp--squiggle" src="../assets/img/1212/deco-squiggle.webp" alt="" aria-hidden="true">
+        <img class="dsp dsp--wave" src="../assets/img/1212/deco-wave.webp" alt="" aria-hidden="true">
 
         <div class="dnote dnote--b">
           <img class="dnote__p dnote__p--turn" src="../assets/img/1212/wash-pink.webp" alt="" aria-hidden="true">
