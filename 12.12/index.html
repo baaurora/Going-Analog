@@ -7,7 +7,7 @@
 <meta name="description" content="A very special rendition of Going Analog. Saturday, December 12.">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="../assets/css/site.css?v=1794452513">
+<link rel="stylesheet" href="../assets/css/site.css?v=1794453906">
 <style>
   body{min-height:100vh;display:flex;flex-direction:column;position:relative}
 
@@ -987,8 +987,17 @@
     .hero__photo{width:62%;left:0;top:0;transform:none}
     /* 84, not 86. The stage is turned 9 degrees, so its corners reach wider
        than it is, and at 414 the invite's own face came out 3px past the
-       edge of the screen. 84 clears it at every width from 320 up. */
-    .stage{width:84%;right:0;left:auto;top:auto;bottom:0;transform:rotate(9deg)}
+       edge of the screen. 84 clears it at every width from 320 up.
+       right is 8 percent and not 0 for the same reason, one level up. A box
+       of width W turned 9 degrees reaches 0.0877W past the side it is pinned
+       to, which at 375 is 25px of envelope sticking out over an 18px gutter,
+       and html carries overflow-x:hidden so it was simply being shaved off.
+       0.0877 x 84 is 7.4 percent of the container, so 8 cancels it with a
+       little to spare and the overhang scales with the screen instead of
+       being a pixel count that only holds at one width. The invite itself
+       rides inside the stage and was landing flush on the right edge at 375,
+       so this is what pulls the card in too. */
+    .stage{width:84%;right:8%;left:auto;top:auto;bottom:0;transform:rotate(9deg)}
     /* Bigger than the envelope here on purpose, and so still sitting over
        it rather than in it. Fitting it in the pocket would set the body copy
        at around 8px on a phone, and the card has to be readable before it is
@@ -1039,8 +1048,8 @@
        tap goes above the things it is telling you to tap rather than under
        them. Desktop is absolutely positioned and does not read any of this.
        .give__cta and .charms keep the default 0 and fall between. */
-    .give__pay{order:-2}
-    .give__note{order:-1}
+    .give__note{order:-2}
+    .give__pay{order:-1}
     .found{order:1}
     .give__card{order:2}
 
@@ -1120,7 +1129,7 @@
        no cut off stars on the phone either. They keep their sizes, so this
        is a move and not a shrink. */
     .dcor--burst{left:auto;right:0;top:1%;width:40%}
-    .dcor--spark{left:auto;right:0;top:auto;bottom:0;width:34%}
+    .dcor--spark{left:0;right:auto;top:auto;bottom:0;width:34%}
     .doily .ch--9{left:38%;top:14px}
   }
 
@@ -1401,6 +1410,80 @@
     </div>
   </section>
 
+  <!-- ---------- the birthday girls ---------- -->
+  <section class="s">
+    <div class="girls">
+      <div class="charms" aria-hidden="true"><i class="ch ch--7"></i><i class="ch ch--8"></i></div>
+      <h2 class="girls__k">meet the birthday&nbsp;girls</h2>
+      <div class="girls__row">
+
+        <div class="girl" data-girl="judy">
+          <div class="girl__shot">
+            <div class="pola"><div class="pola__well"></div></div>
+            <img class="girl__real" src="../assets/img/1212/polaroid-judy.jpg" alt="Judy Li">
+            <img class="hat" src="../assets/img/1212/hat-dots.png" alt="" style="--hr:-13deg;--ht:-9.6%;--hx:-3.8%">
+          </div>
+          <div class="girl__say">
+            <div class="girl__say-in" style="--d:0s">
+              <p class="girl__name">Judy Li, '03</p>
+              <p class="girl__meta">22 (going on 23)<br>Sagittarius<br>Ask me about Polaroid</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="girl" data-girl="bianca">
+          <div class="girl__shot">
+            <div class="pola"><div class="pola__well"></div></div>
+            <img class="girl__real" src="../assets/img/1212/polaroid-bianca.jpg" alt="Bianca Pagano">
+            <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="--hr:6deg;--ht:-5.4%;--hx:7.1%;--hw:28%">
+          </div>
+          <div class="girl__say">
+            <div class="girl__say-in" style="--d:.2s">
+              <p class="girl__name">Bianca Pagano, '02</p>
+              <p class="girl__meta">23 (going on 24)<br>Sagittarius<br>Ask me about child modeling</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="girl" data-girl="victoria">
+          <div class="girl__shot">
+            <div class="pola"><div class="pola__well"></div></div>
+            <img class="girl__real" src="../assets/img/1212/polaroid-victoria.jpg" alt="Victoria Briggiler">
+            <img class="hat" src="../assets/img/1212/hat-red.png" alt="" style="--hr:-17deg;--ht:-9.8%;--hx:-2.8%">
+          </div>
+          <div class="girl__say">
+            <div class="girl__say-in" style="--d:.4s">
+              <p class="girl__name">Victoria Briggiler, '03</p>
+              <p class="girl__meta">23 (going on 24)<br>Capricorn<br>Ask me about Bomba</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- what to expect ---------- -->
+  <section class="s">
+    <div class="sheet">
+      <h2 class="expect expect--lg sr">what to expect</h2>
+
+      <div class="doily">
+        <div class="charms" aria-hidden="true"><i class="ch ch--9"></i><i class="ch ch--11"></i></div>
+        <img class="doily__img" src="../assets/img/1212/doily-square.png" alt="" aria-hidden="true">
+        <img class="dcor dcor--burst" src="../assets/img/1212/deco-burst-red.webp" alt="" aria-hidden="true">
+        <img class="dcor dcor--spark" src="../assets/img/1212/deco-sparkle-peach.webp" alt="" aria-hidden="true">
+        <div class="doily__lines">
+          <p class="l l--a">no phones</p>
+          <p class="l l--b">with beats by our friend Ben</p>
+          <p class="l l--c">beer, wine, and cake</p>
+          <p class="l l--d">All of our favorite people</p>
+          <p class="l l--e">A night of celebration, joy, and birthday wishes :)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ---------- the cover ---------- -->
   <section class="s">
     <div class="sheet">
@@ -1481,80 +1564,6 @@
 
         <img class="dsp dsp--ball" src="../assets/img/1212/deco-discoball.webp" alt="" aria-hidden="true">
         <img class="dsp dsp--stars" src="../assets/img/1212/deco-stars-pink.webp" alt="" aria-hidden="true">
-      </div>
-    </div>
-  </section>
-
-  <!-- ---------- the birthday girls ---------- -->
-  <section class="s">
-    <div class="girls">
-      <div class="charms" aria-hidden="true"><i class="ch ch--7"></i><i class="ch ch--8"></i></div>
-      <h2 class="girls__k">meet the birthday&nbsp;girls</h2>
-      <div class="girls__row">
-
-        <div class="girl" data-girl="judy">
-          <div class="girl__shot">
-            <div class="pola"><div class="pola__well"></div></div>
-            <img class="girl__real" src="../assets/img/1212/polaroid-judy.jpg" alt="Judy Li">
-            <img class="hat" src="../assets/img/1212/hat-dots.png" alt="" style="--hr:-13deg;--ht:-9.6%;--hx:-3.8%">
-          </div>
-          <div class="girl__say">
-            <div class="girl__say-in" style="--d:0s">
-              <p class="girl__name">Judy Li, '03</p>
-              <p class="girl__meta">22 (going on 23)<br>Sagittarius<br>Ask me about Polaroid</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="girl" data-girl="bianca">
-          <div class="girl__shot">
-            <div class="pola"><div class="pola__well"></div></div>
-            <img class="girl__real" src="../assets/img/1212/polaroid-bianca.jpg" alt="Bianca Pagano">
-            <img class="hat" src="../assets/img/1212/hat-pink.png" alt="" style="--hr:6deg;--ht:-5.4%;--hx:7.1%;--hw:28%">
-          </div>
-          <div class="girl__say">
-            <div class="girl__say-in" style="--d:.2s">
-              <p class="girl__name">Bianca Pagano, '02</p>
-              <p class="girl__meta">23 (going on 24)<br>Sagittarius<br>Ask me about child modeling</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="girl" data-girl="victoria">
-          <div class="girl__shot">
-            <div class="pola"><div class="pola__well"></div></div>
-            <img class="girl__real" src="../assets/img/1212/polaroid-victoria.jpg" alt="Victoria Briggiler">
-            <img class="hat" src="../assets/img/1212/hat-red.png" alt="" style="--hr:-17deg;--ht:-9.8%;--hx:-2.8%">
-          </div>
-          <div class="girl__say">
-            <div class="girl__say-in" style="--d:.4s">
-              <p class="girl__name">Victoria Briggiler, '03</p>
-              <p class="girl__meta">23 (going on 24)<br>Capricorn<br>Ask me about Bomba</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ---------- what to expect ---------- -->
-  <section class="s">
-    <div class="sheet">
-      <h2 class="expect expect--lg sr">what to expect</h2>
-
-      <div class="doily">
-        <div class="charms" aria-hidden="true"><i class="ch ch--9"></i><i class="ch ch--11"></i></div>
-        <img class="doily__img" src="../assets/img/1212/doily-square.png" alt="" aria-hidden="true">
-        <img class="dcor dcor--burst" src="../assets/img/1212/deco-burst-red.webp" alt="" aria-hidden="true">
-        <img class="dcor dcor--spark" src="../assets/img/1212/deco-sparkle-peach.webp" alt="" aria-hidden="true">
-        <div class="doily__lines">
-          <p class="l l--a">no phones</p>
-          <p class="l l--b">with beats by our friend Ben</p>
-          <p class="l l--c">beer, wine, and cake</p>
-          <p class="l l--d">All of our favorite people</p>
-          <p class="l l--e">A night of celebration, joy, and birthday wishes :)</p>
-        </div>
       </div>
     </div>
   </section>
@@ -1681,7 +1690,7 @@
   <p class="lock__no" id="no" role="alert"></p>
 </div>
 
-<script src="../assets/js/menu.js?v=1794452513"></script>
+<script src="../assets/js/menu.js?v=1794453906"></script>
 <script>
 /* ---------- assets that may not be in the folder yet ----------
    The party hats, the signed polaroids and the rhinestone lettering are still
