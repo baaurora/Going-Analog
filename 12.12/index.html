@@ -517,67 +517,53 @@
   .l--e{align-self:flex-start;margin-left:9%;max-width:31ch}
 
   /* ------------ dress code ------------
-     A collage built the way the cover's is: a frame carrying its own ratio,
-     every piece in it placed as a percentage of that frame, so the whole
-     thing scales as one picture rather than as six objects that have to be
-     re-agreed at each width. */
-  /* The answer to the question the heading asks, set white and large on the
-     red lace, which lies on its long side like everything else here. The red
-     underneath is the lace's own ground colour, so the plate reads right on
-     its own and the photograph only deepens it when it lands. */
-  .dress__k{margin:clamp(16px,2.6vh,28px) auto 0;width:min(560px,86%);
-    aspect-ratio:1086/736;display:flex;align-items:center;
-    justify-content:center;padding:0 17%;text-align:center;position:relative;
-    background:#B4202A;filter:var(--obj-cast)}
-  /* The lace is photographed upright and has to lie down without being
-     stretched to do it, so it is turned rather than scaled: before the turn
-     it is as wide as the plate is tall, 736/1086 of the plate's width, and
-     as tall as the plate is wide. Same arithmetic as the yellow note. The
-     red underneath is the lace's own ground, so the plate is right either
-     way and the photograph only deepens it. */
-  .dress__k::before{content:'';position:absolute;left:50%;top:50%;
-    width:67.77%;aspect-ratio:736/1086;
-    background:url(../assets/img/1212/doily-lace-red.webp) center/contain no-repeat;
-    transform:translate(-50%,-50%) rotate(90deg)}
-  .dress__k span{position:relative}
-  .dress__k span{color:#fff;font-weight:700;text-transform:uppercase;
-    letter-spacing:.17em;line-height:1.1;
-    font-size:clamp(23px,4.4vw,52px)}
+     Built to Bianca's collage: a frame carrying her proportions, 1100 by 945,
+     with every piece placed as a percentage of it, so the arrangement scales
+     as one picture instead of six objects that have to be re-agreed at each
+     width. */
+  .expect--dress{text-transform:uppercase;letter-spacing:.14em;
+    font-size:clamp(21px,2.9vw,35px)}
   .dress{position:relative;margin:clamp(16px,2.6vh,30px) 0 0;
     width:min(1380px,94vw);margin-left:50%;transform:translateX(-50%);
-    aspect-ratio:1630/700}
+    aspect-ratio:1100/945}
   .dress > *{position:absolute}
 
   .dnote{display:flex;align-items:center;justify-content:center}
+  /* The paper is an <img> layer under the words rather than a background,
+     because both sheets are turned ninety degrees and their words are not. */
   .dnote__p{position:absolute;left:50%;top:50%;width:100%;height:auto;
     transform:translate(-50%,-50%);filter:var(--obj-cast);z-index:-1}
-  /* Sideways. The note photographs 698 x 971, so to lie on its side and fill
-     a landscape box of ratio 971/698 it has to be, before the turn, as wide
-     as that box is tall: 698/971 of the box's width, which is 71.88 percent.
-     Re-crop the photograph and this number changes with it. */
-  .dnote__p--turn{width:71.88%;transform:translate(-50%,-50%) rotate(90deg)}
+  /* Turned, never cropped, so the torn edge of the one and the painted edge
+     of the other both survive. To lie down and fill a landscape box a sheet
+     has to be, before the turn, as wide as that box is tall: its own portrait
+     ratio, as a share of the box's width. 698/971 is 71.88 percent for the
+     yellow note, 564/757 is 74.50 for the pink wash. Re-crop either
+     photograph and its number changes with it. */
+  .dnote__p--turn{width:var(--turn);transform:translate(-50%,-50%) rotate(90deg)}
   .dnote__t{margin:0;position:relative;font-weight:700;text-align:center;
     line-height:1.7}
 
-  /* One on the left, one on the right, both on their long side, both the
-     same size. 44 percent of a 1630 frame is 717 wide, and at 971/698 that
-     is 515 tall, which is 73.6 percent of a frame 700 deep. They are offset
-     vertically rather than lined up, which is what keeps it a collage. */
-  .dnote--a{left:2%;top:7%;width:44%;aspect-ratio:971/698;
-    transform:rotate(-2.5deg);padding:0 5%}
-  .dnote--a .dnote__t{font-size:clamp(11px,1.42vw,17px)}
-  .dnote--b{left:53%;top:16%;width:44%;aspect-ratio:971/698;
-    transform:rotate(2.5deg);padding:0 7%;
-    background:#D9709F url(../assets/img/1212/wash-pink.webp) center/cover no-repeat;
-    filter:var(--obj-cast)}
-  .dnote--b .dnote__t{font-size:clamp(12px,1.62vw,21px);color:#fff}
+  .dnote--a{left:0.7%;top:14.8%;width:46.5%;aspect-ratio:971/698;--turn:71.88%;
+    transform:rotate(-2deg);padding:0 5.8%;z-index:1}
+  .dnote--a .dnote__t{font-size:clamp(12px,1.72vw,22px)}
 
-  /* The ball sits in the gap between the two notes and laps onto both, so
-     the pair read as one arrangement rather than two pictures side by side. */
+  .dnote--b{left:45.5%;top:32.3%;width:47.7%;aspect-ratio:757/564;--turn:74.5%;
+    transform:rotate(6deg);padding:0 4.5%;z-index:3}
+  /* One line, as it is in the collage. The measure is the note less 4.5
+     percent of the frame a side, 466px at 1280, and twelve characters of
+     Courier at 50px with .06em between them come to 436. At 4.3vw and 6.5
+     percent it was 436 into 418 and broke across two. */
+  .dnote__t--big{text-transform:uppercase;letter-spacing:.06em;line-height:1.1;
+    font-size:clamp(22px,4vw,50px)}
+
+  /* Stacking, back to front: the yellow sheet, the squiggle running across
+     its foot and off the bottom left, the pink wash over both, then the ball
+     sitting on the wash's top corner. The foil stars have the bottom right
+     to themselves. */
   .dsp{height:auto;pointer-events:none}
-  .dsp--ball{left:41%;top:-4%;width:17%;aspect-ratio:1;
-    background:url(../assets/img/1212/deco-discoball.webp) center/contain no-repeat;
-    z-index:2}
+  .dsp--squiggle{left:-0.2%;top:46%;width:52.5%;z-index:2}
+  .dsp--ball{left:65%;top:1.6%;width:32.3%;z-index:4;filter:var(--obj-cast)}
+  .dsp--stars{left:73.6%;top:78.8%;width:25%;z-index:2}
 
   /* ------------ the birthday girls ------------ */
   /* The same gap every other section opens with. It used to run about two
@@ -884,20 +870,24 @@
     /* The collage unstacks into a column, but the three stickers and the two
        charms stay absolute against it so they still sit half on the paper.
        Only the notes become flow items. */
+    /* The collage unstacks into a column. Only the notes become flow items,
+       so the ball, the squiggle and the stars stay absolute against the
+       block and still lap onto the paper. */
     .dress{aspect-ratio:auto;display:flex;flex-direction:column;
-      align-items:center;gap:clamp(16px,3.4vh,28px);
+      align-items:center;gap:clamp(20px,4vh,34px);
       width:100%;margin-left:0;transform:none;
-      padding:clamp(16px,3vh,28px) 0 clamp(14px,2.6vh,24px)}
+      padding:clamp(14px,2.6vh,24px) 0 clamp(34px,7vh,64px)}
     .dress > .dnote{position:relative}
     .dnote--a{left:auto;top:auto;width:100%;transform:rotate(-2deg);padding:0 9%}
-    .dnote--b{left:auto;top:auto;width:100%;transform:rotate(2.5deg);padding:0 10%}
-    .dnote--a .dnote__t{font-size:12.5px}
-    .dnote--b .dnote__t{font-size:14px}
-    .dsp--ball{left:auto;right:-2%;top:38%;width:30%}
-    .dress__k{width:100%;padding:0 7%}
-    .dress__k span{letter-spacing:.1em}
-    .ch--6{left:84%;top:26%}
-    .ch--10{left:4%;top:62%}
+    .dnote--b{left:auto;top:auto;width:100%;transform:rotate(5deg);padding:0 8%}
+    .dnote--a .dnote__t{font-size:13px}
+    .dnote__t--big{font-size:30px}
+    .dsp--ball{left:auto;right:-4%;top:30%;width:34%}
+    .dsp--squiggle{left:-8%;top:16%;width:52%}
+    .dsp--stars{left:auto;right:2%;top:auto;bottom:0;width:34%}
+    .expect--dress{letter-spacing:.08em}
+    .ch--6{left:4%;top:50%}
+    .ch--10{left:86%;top:8%}
     .doily__img{left:50%;width:94%}
   }
 
@@ -1210,22 +1200,16 @@
   <!-- ---------- dress code ---------- -->
   <section class="s">
     <div class="sheet">
-      <h2 class="expect">dress code</h2>
-      <p class="dress__k"><span>Disco formal</span></p>
+      <h2 class="expect expect--dress">Dress code</h2>
 
-      <!-- Two sheets off the same pad. The long half of the instruction goes
-           on the big one, turned on its side so a line of Courier has
-           somewhere to run, and the short half on a scrap set left under the
-           heading. The paper is an <img> layer rather than a background
-           because the big note turns ninety degrees and its words do not. -->
+      <!-- Built to Bianca's collage. Two sheets of real paper, both lying on
+           their long side, both turned rather than cropped so their torn and
+           painted edges survive. The instruction is on the yellow one, the
+           answer is on the pink wash, and the ball, the squiggle and the
+           foil stars lap over the pair to tie them together. -->
       <div class="dress">
         <div class="charms" aria-hidden="true"><i class="ch ch--6"></i><i class="ch ch--10"></i></div>
 
-        <!-- Both notes lie on their long side. The yellow sheet is
-             photographed upright, so it is turned ninety degrees as a whole
-             sheet and keeps its torn edges. The pink wash is a texture rather
-             than a sheet, so it is a cover background and crops to landscape
-             with nothing lost. -->
         <div class="dnote dnote--a">
           <img class="dnote__p dnote__p--turn" src="../assets/img/1212/note-stars-yellow.webp" alt="" aria-hidden="true">
           <p class="dnote__t">Show up as your most authentic and maximalist
@@ -1233,11 +1217,15 @@
              your mom wouldn't approve of...</p>
         </div>
 
+        <img class="dsp dsp--squiggle" src="../assets/img/1212/deco-squiggle.webp" alt="" aria-hidden="true">
+
         <div class="dnote dnote--b">
-          <p class="dnote__t">Most importantly, wear something you can have fun in.</p>
+          <img class="dnote__p dnote__p--turn" src="../assets/img/1212/wash-pink.webp" alt="" aria-hidden="true">
+          <p class="dnote__t dnote__t--big">Disco formal</p>
         </div>
 
-        <i class="dsp dsp--ball" aria-hidden="true"></i>
+        <img class="dsp dsp--ball" src="../assets/img/1212/deco-discoball.webp" alt="" aria-hidden="true">
+        <img class="dsp dsp--stars" src="../assets/img/1212/deco-stars-pink.webp" alt="" aria-hidden="true">
       </div>
     </div>
   </section>
