@@ -1654,18 +1654,18 @@
         <div class="q__row"><label class="q__l" for="gName">Name:</label>
           <input class="q__i" id="gName" type="text" autocomplete="name" required></div>
         <div class="q__row"><label class="q__l" for="gPhone">Phone #:</label>
-          <input class="q__i" id="gPhone" type="tel" autocomplete="tel" inputmode="tel"></div>
+          <input class="q__i" id="gPhone" type="tel" autocomplete="tel" inputmode="tel" required></div>
         <div class="q__row"><label class="q__l" for="gEmail">Email:</label>
-          <input class="q__i" id="gEmail" type="email" autocomplete="email" inputmode="email"></div>
+          <input class="q__i" id="gEmail" type="email" autocomplete="email" inputmode="email" required></div>
 
         <div class="q__row"><label class="q__l" for="gWish">Make a wish:</label>
-          <input class="q__i" id="gWish" type="text"></div>
+          <input class="q__i" id="gWish" type="text" required></div>
         <div class="q__row"><label class="q__l" for="gSong">Song you want to hear:</label>
-          <input class="q__i" id="gSong" type="text"></div>
+          <input class="q__i" id="gSong" type="text" required></div>
         <div class="q__row q__row--stack"><label class="q__l" for="gThing">Birthday message to your favorite girls:</label>
-          <input class="q__i" id="gThing" type="text"></div>
+          <input class="q__i" id="gThing" type="text" required></div>
         <div class="q__row q__row--stack"><label class="q__l" for="gCake">If you were a cake flavor, what would you be and why?</label>
-          <input class="q__i" id="gCake" type="text"></div>
+          <input class="q__i" id="gCake" type="text" required></div>
         <div class="q__row q__row--stack">
           <span class="q__l">Bringing a plus one? <span class="q__hint">one per person</span></span>
           <div class="q__yn">
@@ -1688,9 +1688,9 @@
 
         <div class="q__more" id="plusMore" hidden>
           <div class="q__row"><label class="q__l" for="gPlus">Their name:</label>
-            <input class="q__i" id="gPlus" type="text"></div>
+            <input class="q__i" id="gPlus" type="text" required></div>
           <div class="q__row"><label class="q__l" for="gPlusPhone">Their phone #:</label>
-            <input class="q__i" id="gPlusPhone" type="tel" autocomplete="off" inputmode="tel"></div>
+            <input class="q__i" id="gPlusPhone" type="tel" autocomplete="off" inputmode="tel" required></div>
         </div>
       </div>
 
@@ -1949,10 +1949,20 @@
      No empties them as well as hiding them, or a name typed and thought
      better of would still be posted from a field nobody can see. */
   var plusMore = document.getElementById('plusMore');
+  var PLUS = [document.getElementById('gPlus'), document.getElementById('gPlusPhone')];
+  /* The markup carries required on both, which is right when the section is
+     open and wrong while it is shut, and it starts shut. Sync it once here so
+     the attribute never sits on a field nobody can see. */
+  PLUS.forEach(function (el) { el.removeAttribute('required'); });
   [].forEach.call(form.querySelectorAll('input[name="plusone"]'), function (r) {
     r.addEventListener('change', function () {
       var yes = form.querySelector('input[name="plusone"]:checked').value === 'yes';
       plusMore.hidden = !yes;
+      /* required follows the section. A hidden field is barred from
+         validation anyway, but leaving the attribute on something nobody
+         can see would make the check below ask for an answer to a question
+         that is not on the page. */
+      PLUS.forEach(function (el) { if (yes) el.setAttribute('required', ''); else el.removeAttribute('required'); });
       if (!yes) {
         document.getElementById('gPlus').value = '';
         document.getElementById('gPlusPhone').value = '';
@@ -1960,16 +1970,49 @@
     });
   });
 
+  /* Every question is required, Bianca's call. The form carries novalidate
+     because the browser's own bubbles do not belong on this paper, so the
+     checking happens here and speaks in the page's own line of type. The
+     list is in the order the questions are asked, so whoever is filling it
+     in gets sent to the first thing they skipped rather than the last.
+     The plus one's two questions are only asked when the answer above them
+     is yes, and they are skipped entirely when it is no. */
+  var ASK = [
+    ['gName',      'Need a name first.'],
+    ['gPhone',     'Need a phone number.'],
+    ['gEmail',     'Need an email.'],
+    ['gWish',      'Make a wish first.'],
+    ['gSong',      'Name a song.'],
+    ['gThing',     'Leave the girls a message.'],
+    ['gCake',      'Pick a cake flavor.'],
+    ['gPlus',      "Need your plus one's name."],
+    ['gPlusPhone', "Need your plus one's phone number."]
+  ];
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var nameEl = document.getElementById('gName');
-    if (!(nameEl.value || '').trim()) {
-      said.textContent = 'Need a name first.';
-      nameEl.focus();
-      return;
-    }
 
     var yes = form.querySelector('input[name="plusone"]:checked').value === 'yes';
+
+    for (var i = 0; i < ASK.length; i++) {
+      var id = ASK[i][0];
+      if (!yes && (id === 'gPlus' || id === 'gPlusPhone')) continue;
+      var el = document.getElementById(id);
+      if (!(el.value || '').trim()) {
+        said.textContent = ASK[i][1];
+        el.focus();
+        return;
+      }
+    }
+
+    /* Something with an @ and a dot after it. Deliberately loose: this is a
+       party, and the only job here is to catch the obvious slip. */
+    var mail = document.getElementById('gEmail');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail.value.trim())) {
+      said.textContent = 'That email does not look right.';
+      mail.focus();
+      return;
+    }
 
     var body = new URLSearchParams();
     for (var id in FIELD) {
