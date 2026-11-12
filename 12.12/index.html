@@ -7,7 +7,7 @@
 <meta name="description" content="A very special rendition of Going Analog. Saturday, December 12.">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="../assets/css/site.css?v=1794453906">
+<link rel="stylesheet" href="../assets/css/site.css?v=1794454966">
 <style>
   body{min-height:100vh;display:flex;flex-direction:column;position:relative}
 
@@ -430,7 +430,11 @@
     pointer-events:none}
   .give__p--turn{width:var(--turn);transform:translate(-50%,-50%) rotate(-90deg)}
 
-  .give__cta{left:3%;top:79%;width:34%;text-align:center;
+  /* Over the green disc, which is .found--3 at 72.3 across and 37.7 down.
+     It used to sit bottom left, nowhere near the thing it is telling you to
+     tap. 64 to 98 across is centred close enough on the disc, and 29.5 down
+     drops it between the ticket, which ends at 25.3, and the disc. */
+  .give__cta{left:64%;top:29.5%;width:34%;text-align:center;
     font-size:clamp(12px,1.95vw,22px);line-height:1.45}
 
   /* Real paper now, not a cream mount with a gradient in it. The sheet is
@@ -600,7 +604,11 @@
      the frame, and the celebration line was moved right from 20 to 26 to
      keep two points between the two of them. */
   .dcor{position:absolute;height:auto;pointer-events:none;z-index:-1}
-  .dcor--burst{left:74.5%;top:1%;width:25%}
+  /* 19.8 and not 25, and seated at 79.7. The lines moved two centimetres
+     right and now end at 940 on the 1200 frame, so the burst needs to begin
+     past that with a gap. It was already flush to the frame's right edge at
+     25 percent, so the only way right was to come down in size. */
+  .dcor--burst{left:79.7%;top:1%;width:19.8%}
   .dcor--spark{left:0;top:48%;width:24%}
 
   /* Five lines now that the dress code has a section of its own, and the
@@ -623,11 +631,28 @@
      fine now that it is beside them. Both stop at 72 and the burst starts
      at 73.5. */
   .l + .l{margin-top:clamp(20px,3.3vh,36px)}
-  .l--a{align-self:flex-start;margin-left:28%}
-  .l--b{align-self:flex-end;text-align:right;margin-right:28%}
-  .l--c{align-self:flex-start;margin-left:29%}
-  .l--d{align-self:flex-end;text-align:right;margin-right:28%}
-  .l--e{align-self:flex-start;margin-left:26%;max-width:31ch}
+  /* Every line moved right about two centimetres at Bianca's word. On the
+     1200px frame that is 6.3 points, taken off the left margins and off the
+     right ones alike so the rag they make together is unchanged. The red
+     starburst had to come with them: at 25 percent it began at 894 and the
+     right hand lines now end at 940, and it cannot simply slide right
+     because it was already 6px off the frame's edge. See .dcor--burst. */
+  .l--a{align-self:flex-start;margin-left:34.3%}
+  .l--b{align-self:flex-end;text-align:right;margin-right:21.7%}
+  .l--c{align-self:flex-start;margin-left:35.3%}
+  .l--d{align-self:flex-end;text-align:right;margin-right:21.7%}
+  /* One line, at Bianca's word. max-width:none is the whole fix: .l caps
+     every line at 34ch and this one is 50 characters, so the cap was
+     breaking it in two. With the cap gone it fits on one line at every
+     desktop width, 588 of 658 at 700 and 941 of 1380 at 1600, and
+     text-wrap:pretty does not break a line that fits.
+     Do NOT reach for white-space:nowrap here. white-space is a shorthand
+     for white-space-collapse and text-wrap, so the text-wrap:pretty rule
+     further down this sheet overrides its text-wrap half and the nowrap
+     silently computes back to normal. On a phone .l re-caps the measure at
+     27ch, which is lower in the file again, so this line wraps there - which
+     is what a 375px screen wants. */
+  .l--e{align-self:flex-start;margin-left:32.3%;max-width:none}
 
   /* ------------ dress code ------------
      Built to Bianca's collage: a frame carrying her proportions, 1100 by 945,
@@ -686,8 +711,17 @@
      Each height is its width times this frame's 1.5278 times its own
      portrait ratio, which is 56.9 for the wash at 50 across and 50.5 for
      the yellow at 46. */
-  .dnote--b{left:1.5%;top:7%;width:50%;aspect-ratio:757/564;--turn:74.5%;
-    transform:rotate(-3deg);padding:0 5%;z-index:3}
+  /* 54 and not 50, on 2 percent of padding and not 5. Judy asked for the
+     first sentence to end on its own line with "self." on it, and that is 51
+     characters: at 19px Courier it wants 581px of measure and the old box
+     gave 481. The card is sized off this frame, so both numbers are shares
+     of it and the fit holds as the page grows. Below about 700 the clamp
+     floor stops the type shrinking with the box and the sentence takes two
+     lines again, which is fine - the break before "Think" is in the markup
+     and holds at every width.
+     z-index 1, not 3: the right hand card lies over this one now. */
+  .dnote--b{left:1.5%;top:7%;width:54%;aspect-ratio:757/564;--turn:74.5%;
+    transform:rotate(-3deg);padding:0 2%;z-index:1}
 
   /* Not a photograph. Bianca asked for a plain gradient pink rectangle
      here, so this one is drawn: the same tissue recipe the cover's note
@@ -695,7 +729,7 @@
      over the top in soft light. 690/455 is that note's ratio too, which is
      what keeps the two reading as one material. */
   .dnote--a{left:50%;top:32%;width:46%;aspect-ratio:690/455;
-    transform:rotate(3deg);padding:0 4.5%;z-index:1;
+    transform:rotate(3deg);padding:0 4.5%;z-index:3;
     background-color:#F4A9CA;
     background-image:
       radial-gradient(58% 64% at 24% 20%,rgba(255,255,255,.32),rgba(255,255,255,0) 66%),
@@ -1190,8 +1224,12 @@
      paper down each side. */
   .ch--9{--pic:url(../assets/img/1212/charm-star-stitch.webp);--ca:1.0345;
     --cw:36px;--cr:-18deg;left:24%;top:2%}
+  /* Up out of the pink starburst, which fills the bottom left of this frame
+     from 0 to 288 across and 293 down. At 3 and 72 the smiley sat inside it.
+     22 percent down is above the starburst's top edge and left of the lace,
+     which starts at 378. */
   .ch--11{--pic:url(../assets/img/1212/charm-smiley-pink.webp);--ca:1.036;
-    --cw:30px;--cr:0deg;left:3%;top:72%}
+    --cw:30px;--cr:0deg;left:5%;top:22%}
   /* The giving collage leans right. Everything in it, the three discs, the
      pink card and the payment card, sits from 145 across, so the left edge
      is free top to bottom. */
@@ -1548,8 +1586,8 @@
           <div class="dnote__g">
             <p class="dnote__t dnote__t--big">Dress code:<br>Disco formal</p>
             <p class="dnote__t">Show up as your most authentic and maximalist
-               self. Think bright colors, funky patterns, sparkles, something
-               your mom wouldn't approve of...</p>
+               self.<br>Think bright colors, funky patterns, sparkles,
+               something your mom wouldn't approve of...</p>
           </div>
         </div>
 
@@ -1690,7 +1728,7 @@
   <p class="lock__no" id="no" role="alert"></p>
 </div>
 
-<script src="../assets/js/menu.js?v=1794453906"></script>
+<script src="../assets/js/menu.js?v=1794454966"></script>
 <script>
 /* ---------- assets that may not be in the folder yet ----------
    The party hats, the signed polaroids and the rhinestone lettering are still
@@ -2024,8 +2062,7 @@
         'Anera has delivered humanitarian aid and long term development in ' +
         'Palestine, Lebanon and Jordan since 1968. Food, clean water, medical ' +
         'supplies and schools, run by local staff and local partners rather ' +
-        'than flown in.',
-        'It is independent, with no political or religious affiliation.'
+        'than flown in.'
       ]
     },
     innocence: {
