@@ -275,6 +275,14 @@
   .card__say{margin:0;font-size:clamp(12px,3.2cqw,17px);line-height:1.55;letter-spacing:.01em}
   .card__say b{font-weight:700;text-transform:uppercase;letter-spacing:.06em}
   .card__say+.card__say{margin-top:1.5em}
+  /* Equal margins print unequal white here. The first statement ends on
+     "Let's put it to the test.", which has a descender in "put", and the
+     second ends on GOING ANALOG, BIRTHDAY EDITION., which is caps and drops
+     nothing below the baseline but the comma. Measured ink to ink at 1280 the
+     two gaps came out 31.9 and 33.4, and the lower one read as the bigger
+     one. 0.09em comes off the last gap to settle it. In em, because the
+     descender that causes it scales with the type. */
+  .card__face--back .card__say+.card__say+.card__say{margin-top:1.41em}
 
   /* Drawn out of the envelope and held there, face up, with its bottom edge
      still tucked behind the front panel. The invitation has to be readable
