@@ -1094,7 +1094,14 @@
        block. 93, 96 and 92 put every corner back inside it. */
     .give__note{width:93%;transform:rotate(-3deg)}
     .give__note p,.give__card p{font-size:13px}
-    .found{width:27%}
+    /* z-index:-2 is what lets the paper cards lap over the discs in the
+       desktop collage. Here it was making them untappable. Flattening the
+       collage turns each disc into a FLEX ITEM, and a flex item honours
+       z-index even at position:static, so -2 kept applying and dropped all
+       three behind .give itself. A tap at the middle of a disc was landing
+       on DIV.give, not on the button. Nothing laps them in the stacked
+       layout, so the lapping trick is not wanted here at all. */
+    .found{width:27%;z-index:auto}
     .give__cta{width:100%;text-align:center;font-size:17px}
     /* These two cannot go nearly full width the way they used to. They are
        photographs of paper now, so the box has to keep the sheet's own ratio
