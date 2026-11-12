@@ -561,7 +561,16 @@
      sitting on the wash's top corner. The foil stars have the bottom right
      to themselves. */
   .dsp{height:auto;pointer-events:none}
-  .dsp--squiggle{left:-0.2%;top:46%;width:52.5%;z-index:2}
+  /* Anchored by its RIGHT edge, not its left, and that is the whole trick.
+     The photograph is a cutout: its strands run off the right side of the
+     frame over the top half of the image, measured, bands 0 to 4 of 10 all
+     reach x=734 of 735. That cut has to die behind the pink wash or the
+     thing reads as a picture that ran out. Pinning the right edge at 50
+     percent of the frame keeps it well inside the wash at every width,
+     while the width carries the page gutter so the left end still bleeds
+     off the edge of the screen rather than stopping at the frame. */
+  .dsp--squiggle{right:50%;left:auto;top:31.4%;
+    width:calc(50% + (100vw - min(1380px,94vw)) / 2 + 2px);z-index:2}
   .dsp--ball{left:65%;top:1.6%;width:32.3%;z-index:4;filter:var(--obj-cast)}
   .dsp--stars{left:73.6%;top:78.8%;width:25%;z-index:2}
 
@@ -873,18 +882,38 @@
     /* The collage unstacks into a column. Only the notes become flow items,
        so the ball, the squiggle and the stars stay absolute against the
        block and still lap onto the paper. */
+    /* The collage unstacks into a column. Only the notes become flow items,
+       so the ball, the squiggle and the stars stay absolute against the
+       block and still lap onto the paper.
+       The paper runs nearly edge to edge at this width, which leaves no
+       clear ground for a sticker to sit on: dropped straight in, the
+       squiggle covered 120 by 106 of the instruction and the ball clipped
+       another 73 by 21. So the block is given a band of its own at each end,
+       76px at the top and 150 at the bottom, and every sticker lives in one
+       of them and laps only onto the strip of a note that carries no words.
+       Both notes centre their type, so each has a clear head and foot. */
     .dress{aspect-ratio:auto;display:flex;flex-direction:column;
-      align-items:center;gap:clamp(20px,4vh,34px);
+      align-items:center;gap:clamp(18px,3.6vh,30px);
       width:100%;margin-left:0;transform:none;
-      padding:clamp(14px,2.6vh,24px) 0 clamp(34px,7vh,64px)}
+      padding:76px 0 150px}
     .dress > .dnote{position:relative}
     .dnote--a{left:auto;top:auto;width:100%;transform:rotate(-2deg);padding:0 9%}
     .dnote--b{left:auto;top:auto;width:100%;transform:rotate(5deg);padding:0 8%}
     .dnote--a .dnote__t{font-size:13px}
     .dnote__t--big{font-size:30px}
-    .dsp--ball{left:auto;right:-4%;top:30%;width:34%}
-    .dsp--squiggle{left:-8%;top:16%;width:52%}
-    .dsp--stars{left:auto;right:2%;top:auto;bottom:0;width:34%}
+    .dsp--ball{left:auto;right:-5%;top:0;width:31%}
+    /* Same trick at this width: right edge pinned under the wash's clear
+       foot, width carrying var(--pad) so the left end still runs off the
+       screen. */
+    /* Same two jobs at this width and they pull against each other. The cut
+       is half the image's height, so a wide squiggle has a tall cut, and the
+       only clear paper to bury it in is the wash's foot below its type,
+       about 96px. Hence a right edge further in, at 61 percent, which lets
+       the width come down to just over 150 and the cut to 77, while still
+       carrying var(--pad) so the left end runs off the screen. */
+    .dsp--squiggle{right:61%;left:auto;top:auto;bottom:85px;
+      width:calc(39% + var(--pad) + 2px)}
+    .dsp--stars{left:auto;right:-2%;top:auto;bottom:6%;width:30%}
     .expect--dress{letter-spacing:.08em}
     .ch--6{left:4%;top:50%}
     .ch--10{left:86%;top:8%}
