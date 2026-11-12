@@ -14,7 +14,7 @@
      deep link to one of those still has to land on it. -->
 <script>
   if ('scrollRestoration' in history) { try { history.scrollRestoration = 'manual'; } catch (e) {} }
-  addEventListener('pageshow', function () { if (!location.hash) scrollTo(0, 0); });
+  addEventListener('pageshow', function () { if (!location.hash) scrollTo({ top: 0, left: 0, behavior: 'instant' }); });
 </script>
 <link rel="stylesheet" href="assets/css/site.css?v=1794454966">
 </head>

@@ -19,7 +19,10 @@
      because it can run long after this has. -->
 <script>
   if ('scrollRestoration' in history) { try { history.scrollRestoration = 'manual'; } catch (e) {} }
-  addEventListener('pageshow', function () { scrollTo(0, 0); });
+  /* instant, not the sheet's scroll-behavior:smooth, which would animate the
+     page back up from wherever the browser restored it instead of simply
+     starting there. */
+  addEventListener('pageshow', function () { scrollTo({ top: 0, left: 0, behavior: 'instant' }); });
 </script>
 <link rel="stylesheet" href="../assets/css/site.css?v=1794454966">
 <style>
@@ -1882,7 +1885,7 @@
     opened = true;
     /* The reveal starts at the top of the invite, not at whatever offset the
        page was left at before the password went in. */
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     lock.classList.add('is-open');
     document.getElementById('inv').removeAttribute('aria-hidden');
     throwIt();
