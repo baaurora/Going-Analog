@@ -517,22 +517,67 @@
   .l--e{align-self:flex-start;margin-left:9%;max-width:31ch}
 
   /* ------------ dress code ------------
-     Centred, because the instruction is the whole of it and there is nothing
-     for the words to scatter around. The measure is capped at 46 characters
-     so the block holds the page's centre line, the one the lace and the
-     three discs are already on, instead of running the width of the sheet.
-     Bianca is sending a picture for this section: .dress__img is written for
-     it and sits under the words without the type being re-set. */
-  .dress{position:relative;margin:clamp(14px,2.4vh,26px) auto 0;
-    max-width:46ch;text-align:center;
-    padding:clamp(18px,3vh,34px) 0 clamp(26px,4vh,46px)}
-  .dress__k{margin:0 0 clamp(12px,1.9vh,20px);font-weight:700;
-    text-transform:uppercase;letter-spacing:.2em;
-    font-size:clamp(15px,2.1vw,23px)}
-  .dress__p{margin:0;font-weight:700;line-height:1.78;
-    font-size:clamp(12.5px,1.62vw,16.5px)}
-  .dress__img{display:block;width:min(360px,82%);height:auto;
-    margin:clamp(24px,3.8vh,42px) auto 0;filter:var(--obj-cast)}
+     A collage built the way the cover's is: a frame carrying its own ratio,
+     every piece in it placed as a percentage of that frame, so the whole
+     thing scales as one picture rather than as six objects that have to be
+     re-agreed at each width. */
+  /* The answer to the question the heading asks, set white and large on the
+     red lace, which lies on its long side like everything else here. The red
+     underneath is the lace's own ground colour, so the plate reads right on
+     its own and the photograph only deepens it when it lands. */
+  .dress__k{margin:clamp(16px,2.6vh,28px) auto 0;width:min(560px,86%);
+    aspect-ratio:1086/736;display:flex;align-items:center;
+    justify-content:center;padding:0 17%;text-align:center;position:relative;
+    background:#B4202A;filter:var(--obj-cast)}
+  /* The lace is photographed upright and has to lie down without being
+     stretched to do it, so it is turned rather than scaled: before the turn
+     it is as wide as the plate is tall, 736/1086 of the plate's width, and
+     as tall as the plate is wide. Same arithmetic as the yellow note. The
+     red underneath is the lace's own ground, so the plate is right either
+     way and the photograph only deepens it. */
+  .dress__k::before{content:'';position:absolute;left:50%;top:50%;
+    width:67.77%;aspect-ratio:736/1086;
+    background:url(../assets/img/1212/doily-lace-red.webp) center/contain no-repeat;
+    transform:translate(-50%,-50%) rotate(90deg)}
+  .dress__k span{position:relative}
+  .dress__k span{color:#fff;font-weight:700;text-transform:uppercase;
+    letter-spacing:.17em;line-height:1.1;
+    font-size:clamp(23px,4.4vw,52px)}
+  .dress{position:relative;margin:clamp(16px,2.6vh,30px) 0 0;
+    width:min(1380px,94vw);margin-left:50%;transform:translateX(-50%);
+    aspect-ratio:1630/700}
+  .dress > *{position:absolute}
+
+  .dnote{display:flex;align-items:center;justify-content:center}
+  .dnote__p{position:absolute;left:50%;top:50%;width:100%;height:auto;
+    transform:translate(-50%,-50%);filter:var(--obj-cast);z-index:-1}
+  /* Sideways. The note photographs 698 x 971, so to lie on its side and fill
+     a landscape box of ratio 971/698 it has to be, before the turn, as wide
+     as that box is tall: 698/971 of the box's width, which is 71.88 percent.
+     Re-crop the photograph and this number changes with it. */
+  .dnote__p--turn{width:71.88%;transform:translate(-50%,-50%) rotate(90deg)}
+  .dnote__t{margin:0;position:relative;font-weight:700;text-align:center;
+    line-height:1.7}
+
+  /* One on the left, one on the right, both on their long side, both the
+     same size. 44 percent of a 1630 frame is 717 wide, and at 971/698 that
+     is 515 tall, which is 73.6 percent of a frame 700 deep. They are offset
+     vertically rather than lined up, which is what keeps it a collage. */
+  .dnote--a{left:2%;top:7%;width:44%;aspect-ratio:971/698;
+    transform:rotate(-2.5deg);padding:0 5%}
+  .dnote--a .dnote__t{font-size:clamp(11px,1.42vw,17px)}
+  .dnote--b{left:53%;top:16%;width:44%;aspect-ratio:971/698;
+    transform:rotate(2.5deg);padding:0 7%;
+    background:#D9709F url(../assets/img/1212/wash-pink.webp) center/cover no-repeat;
+    filter:var(--obj-cast)}
+  .dnote--b .dnote__t{font-size:clamp(12px,1.62vw,21px);color:#fff}
+
+  /* The ball sits in the gap between the two notes and laps onto both, so
+     the pair read as one arrangement rather than two pictures side by side. */
+  .dsp{height:auto;pointer-events:none}
+  .dsp--ball{left:41%;top:-4%;width:17%;aspect-ratio:1;
+    background:url(../assets/img/1212/deco-discoball.webp) center/contain no-repeat;
+    z-index:2}
 
   /* ------------ the birthday girls ------------ */
   /* The same gap every other section opens with. It used to run about two
@@ -836,7 +881,23 @@
     .l--c{margin-left:14%}
     .l--d{margin-right:5%}
     .l--e{margin-left:0}
-    .dress{max-width:none;padding-top:clamp(12px,2vh,22px)}
+    /* The collage unstacks into a column, but the three stickers and the two
+       charms stay absolute against it so they still sit half on the paper.
+       Only the notes become flow items. */
+    .dress{aspect-ratio:auto;display:flex;flex-direction:column;
+      align-items:center;gap:clamp(16px,3.4vh,28px);
+      width:100%;margin-left:0;transform:none;
+      padding:clamp(16px,3vh,28px) 0 clamp(14px,2.6vh,24px)}
+    .dress > .dnote{position:relative}
+    .dnote--a{left:auto;top:auto;width:100%;transform:rotate(-2deg);padding:0 9%}
+    .dnote--b{left:auto;top:auto;width:100%;transform:rotate(2.5deg);padding:0 10%}
+    .dnote--a .dnote__t{font-size:12.5px}
+    .dnote--b .dnote__t{font-size:14px}
+    .dsp--ball{left:auto;right:-2%;top:38%;width:30%}
+    .dress__k{width:100%;padding:0 7%}
+    .dress__k span{letter-spacing:.1em}
+    .ch--6{left:84%;top:26%}
+    .ch--10{left:4%;top:62%}
     .doily__img{left:50%;width:94%}
   }
 
@@ -906,12 +967,16 @@
     --cw:38px;--cr:-12deg;left:37%;top:5%}
   .ch--13{--pic:url(../assets/img/1212/charm-star-foil.webp);--ca:1;
     --cw:34px;--cr:14deg;left:25%;top:83%}
-  /* The dress code. One capped measure of words sitting on the page's centre
-     line, so there is clear paper down both margins the whole way. */
+  /* The dress code is the one section where the charms are allowed on top of
+     the work rather than tucked behind it. Everywhere else they sit at
+     z-index -1 because nothing on this page has a background of its own and
+     a stray charm would read straight through the letters. Here there are
+     two sheets of real paper to sit on, so they can. */
+  .dress .charms{z-index:3}
   .ch--6{--pic:url(../assets/img/1212/charm-star-button.webp);--ca:1.0376;
-    --cw:34px;--cr:-14deg;left:1%;top:34%}
+    --cw:34px;--cr:-14deg;left:30%;top:63%}
   .ch--10{--pic:url(../assets/img/1212/charm-smiley-pink.webp);--ca:1.036;
-    --cw:30px;--cr:0deg;left:92%;top:66%}
+    --cw:30px;--cr:0deg;left:71%;top:12%}
   /* The form fills its own box, so these two go in the gaps above and below
      it, which is why their tops are outside nought to a hundred. */
   .ch--14{--pic:url(../assets/img/1212/charm-smiley-teal.webp);--ca:1.0374;
@@ -1145,17 +1210,34 @@
   <!-- ---------- dress code ---------- -->
   <section class="s">
     <div class="sheet">
-      <div class="charms" aria-hidden="true"><i class="ch ch--6"></i><i class="ch ch--10"></i></div>
       <h2 class="expect">dress code</h2>
+      <p class="dress__k"><span>Disco formal</span></p>
+
+      <!-- Two sheets off the same pad. The long half of the instruction goes
+           on the big one, turned on its side so a line of Courier has
+           somewhere to run, and the short half on a scrap set left under the
+           heading. The paper is an <img> layer rather than a background
+           because the big note turns ninety degrees and its words do not. -->
       <div class="dress">
-        <p class="dress__k">Disco formal</p>
-        <p class="dress__p">Show up as your most authentic and maximalist self.
-           Think bright colors, funky patterns, sparkles, something your mom
-           wouldn't approve of... Most importantly, wear something you can have
-           fun in.</p>
-        <!-- Bianca is sending a picture for this section. It drops in under
-             .dress__p as <img class="dress__img" src="..." alt=""> and the
-             rule for it is already written. -->
+        <div class="charms" aria-hidden="true"><i class="ch ch--6"></i><i class="ch ch--10"></i></div>
+
+        <!-- Both notes lie on their long side. The yellow sheet is
+             photographed upright, so it is turned ninety degrees as a whole
+             sheet and keeps its torn edges. The pink wash is a texture rather
+             than a sheet, so it is a cover background and crops to landscape
+             with nothing lost. -->
+        <div class="dnote dnote--a">
+          <img class="dnote__p dnote__p--turn" src="../assets/img/1212/note-stars-yellow.webp" alt="" aria-hidden="true">
+          <p class="dnote__t">Show up as your most authentic and maximalist
+             self. Think bright colors, funky patterns, sparkles, something
+             your mom wouldn't approve of...</p>
+        </div>
+
+        <div class="dnote dnote--b">
+          <p class="dnote__t">Most importantly, wear something you can have fun in.</p>
+        </div>
+
+        <i class="dsp dsp--ball" aria-hidden="true"></i>
       </div>
     </div>
   </section>
