@@ -360,6 +360,9 @@
     pointer-events:none}
   .give__note p{font-size:clamp(10.5px,1.52vw,17px);line-height:1.6;text-align:center}
   .give__note b,.give__card b{font-weight:700}
+  /* Kept on one line. It is the punchline, and the measure on this card is
+     narrow enough that it was breaking after "That's". */
+  .give__card b{white-space:nowrap}
 
   /* Placeholders for the three foundations, a different confetti colour each,
      mixed back towards white so they read as tissue discs rather than as the
@@ -412,13 +415,15 @@
      photographed on white and cut out on its alpha, so it needs no box of
      its own: the box is only the frame the sheet is sized and placed in, and
      the shadow comes off the cutout rather than off a rectangle.
-     Hot pink, with a paperclip over the top left corner. The clip stands
-     proud of the sheet, so the picture is taller than the paper in it: the
-     paper starts about a sixth of the way down and its middle is at 58
-     percent of the box, not 50. */
-  .give__card{left:44%;top:44%;width:19%;aspect-ratio:1053/1332}
-  .give__card p{position:absolute;left:0;right:0;top:58%;
-    transform:translateY(-50%);padding:0 13%;
+     Cream, torn at every edge, with a black paperclip over the top right
+     and two gold stars overhanging opposite corners. Profiled on the file,
+     the paper itself runs x 6 to 91 and the stars are what reaches past it
+     at the very top and the very bottom. The words sit low enough to clear
+     the clip, which hangs into the top right quarter.
+     13 percent of the card is 2.34 of the frame: see .dnote--c for why. */
+  .give__card{left:44%;top:40%;width:18%;aspect-ratio:668/997}
+  .give__card p{position:absolute;left:0;right:0;top:55%;
+    transform:translateY(-50%);padding:0 2.34%;
     font-size:clamp(10.5px,1.52vw,17px);line-height:1.6;text-align:center}
   /* Who to pay is its own card in the top right of the collage, above the
      green disc, which leaves the pink one to say only the thing it says.
@@ -427,16 +432,26 @@
      would have run down into the green one.
      The handles sit on their own lines and are tracked out a little, because
      they are going to be copied by hand off a phone screen. */
-  /* Torn pink, taped at the head, with a barcode sticker and a folded flap
-     across the foot. The clear ground is the upper middle, so the words are
-     hung off a centre of their own rather than the box's. */
-  .give__pay{left:70%;top:0%;width:17%;aspect-ratio:665/1108}
+  /* A real ticket stub, which is what the card says it is. It is the only
+     landscape object in the collage, so it is also the widest: 32 percent,
+     because the measure has to hold "Your Venmo is your ticket in." on one
+     line and the stub only gives up its middle. Profiled on the file, the
+     printed rule and the torn edge take x 0 to 10 and the 146017 band takes
+     80 to 100, so the words run 13 to 76 and are centred on 44.5, not 50.
+     Those are shares of the stub; against the frame they are 4.16 and 7.68,
+     the stub being 32 percent of it. The longest line fills its measure
+     almost exactly, so the four points between it and the band are the only
+     margin there is. */
+  .give__pay{left:64%;top:4%;width:32%;aspect-ratio:645/376}
   /* Set a little smaller than the pink card's. There are four things to say
      here rather than one, and the card can grow no taller: the discs begin at
      33 percent of the collage and this one has to end above them. */
-  .give__pay p{margin:0;position:absolute;left:0;right:0;top:40%;
-    transform:translateY(-50%);padding:0 12%;
-    font-size:clamp(9.5px,1.35vw,15px);line-height:1.6;text-align:center}
+  .give__pay p{margin:0;position:absolute;left:0;right:0;top:50%;
+    transform:translateY(-50%);padding:0 7.68% 0 4.16%;
+    font-size:clamp(8px,1.05vw,13px);line-height:1.6;text-align:center}
+  /* Fine print, the way a ticket carries fine print. It is the one line of
+     the four that is an instruction rather than a thing to copy down. */
+  .give__pay .by{font-size:.82em}
   .give__pay .by{display:block;margin-top:.7em}
   /* The first thing the card says, because it is the thing that gets you
      through the door. */
@@ -943,7 +958,10 @@
        below its own paper. They are flex items here, so relative, not
        absolute. */
     .give > .charms{position:absolute}
-    .give > .give__pay,.give > .give__card{position:relative}
+    /* left and top have to go with it. Static ignored them; relative does
+       not, it OFFSETS by them, so the desktop left:64% and left:44% shoved
+       both cards most of a screen to the right. */
+    .give > .give__pay,.give > .give__card{position:relative;left:auto;top:auto}
     .give__note{width:96%;transform:rotate(-3deg)}
     .give__note p,.give__card p{font-size:13px}
     .found{width:27%}
@@ -951,9 +969,13 @@
     /* These two cannot go nearly full width the way they used to. They are
        photographs of paper now, so the box has to keep the sheet's own ratio
        or the paper stretches. */
-    .give__card{width:78%;aspect-ratio:1053/1332;padding:0}
-    .give__pay{width:72%;aspect-ratio:665/1108;padding:0}
-    .give__card p,.give__pay p{font-size:13px}
+    .give__card{width:62%;aspect-ratio:668/997;padding:0}
+    .give__card p{padding:0 13%}
+    /* The stub is the one thing here that wants the whole width: landscape,
+       and only its middle 64 percent takes type. */
+    .give__pay{width:100%;aspect-ratio:645/376;padding:0}
+    .give__pay p{padding:0 24% 0 13%;font-size:11px}
+    .give__card p{font-size:13px}
     /* The phone reads this collage as a list, so the order is set by hand.
        The pay card comes straight after the note, where the dots would
        otherwise push it under three screens of scrolling, and the prompt to
@@ -1354,7 +1376,7 @@
         </button>
 
         <div class="give__pay">
-          <img class="give__p" src="../assets/img/1212/note-torn-pink.webp" alt="" aria-hidden="true">
+          <img class="give__p" src="../assets/img/1212/ticket-pink.webp" alt="" aria-hidden="true">
           <p><span class="tick">Your Venmo is your ticket&nbsp;in.</span>
              <b>Venmo: @Judyli1357</b><br>
              <b>Zelle: 781-491-5618</b>
@@ -1364,7 +1386,7 @@
         <p class="give__cta">click to learn more!</p>
 
         <div class="give__card">
-          <img class="give__p" src="../assets/img/1212/note-clip-pink.webp" alt="" aria-hidden="true">
+          <img class="give__p" src="../assets/img/1212/note-stars-cream.webp" alt="" aria-hidden="true">
           <p>Stepping into next year committed to giving back.
              <b>That's hot.</b></p>
         </div>
