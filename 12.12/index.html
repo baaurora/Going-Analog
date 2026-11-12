@@ -7,6 +7,20 @@
 <meta name="description" content="A very special rendition of Going Analog. Saturday, December 12.">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="robots" content="noindex">
+<!-- Every visit starts at the top. A browser restores the scroll offset on a
+     reload, which on this page means coming back to the middle of a collage
+     with the lock sitting over it, and then unlocking reveals the invite from
+     wherever you happened to have been. scrollRestoration:manual turns that
+     off, and pageshow covers the other way back in: iOS Safari keeps a page
+     alive in its back/forward cache and restores the offset from there no
+     matter what scrollRestoration says, so the only event that catches it is
+     this one. There are no in-page anchors on this page, so nothing here
+     wants a restored offset. The unlock scrolls to the top itself as well,
+     because it can run long after this has. -->
+<script>
+  if ('scrollRestoration' in history) { try { history.scrollRestoration = 'manual'; } catch (e) {} }
+  addEventListener('pageshow', function () { scrollTo(0, 0); });
+</script>
 <link rel="stylesheet" href="../assets/css/site.css?v=1794454966">
 <style>
   body{min-height:100vh;display:flex;flex-direction:column;position:relative}
@@ -651,8 +665,12 @@
      further down this sheet overrides its text-wrap half and the nowrap
      silently computes back to normal. On a phone .l re-caps the measure at
      27ch, which is lower in the file again, so this line wraps there - which
-     is what a 375px screen wants. */
-  .l--e{align-self:flex-start;margin-left:32.3%;max-width:none}
+     is what a 375px screen wants.
+     30.3 and not 32.3: a nudge left at Bianca's word, two points of the 1200
+     frame, about 6mm. It only moves the left end - the line ends at 72.3 now,
+     further from the starburst's 79.7 than before, and 6.3 points still
+     separate it from the peach sparkle, which stops at 24. */
+  .l--e{align-self:flex-start;margin-left:30.3%;max-width:none}
 
   /* ------------ dress code ------------
      Built to Bianca's collage: a frame carrying her proportions, 1100 by 945,
@@ -1854,6 +1872,9 @@
        one over the other, which doubles the count and halves the gaps. */
     if (opened) return;
     opened = true;
+    /* The reveal starts at the top of the invite, not at whatever offset the
+       page was left at before the password went in. */
+    window.scrollTo(0, 0);
     lock.classList.add('is-open');
     document.getElementById('inv').removeAttribute('aria-hidden');
     throwIt();

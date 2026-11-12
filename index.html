@@ -8,6 +8,14 @@
 <meta name="theme-color" content="#FFFFFF">
 <meta property="og:title" content="GOING ANALOG">
 <meta property="og:description" content="We take your phone at the door and give it back on your way out.">
+<!-- Same as the invite page: a reload starts at the top rather than at the
+     offset the browser kept, which here would be behind the entry gate.
+     Guarded on the hash, because the menu links to #home and #what and a
+     deep link to one of those still has to land on it. -->
+<script>
+  if ('scrollRestoration' in history) { try { history.scrollRestoration = 'manual'; } catch (e) {} }
+  addEventListener('pageshow', function () { if (!location.hash) scrollTo(0, 0); });
+</script>
 <link rel="stylesheet" href="assets/css/site.css?v=1794454966">
 </head>
 <body>
