@@ -7,7 +7,7 @@
 <meta name="description" content="A very special rendition of Going Analog. Saturday, December 12.">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="../assets/css/site.css?v=1794452142">
+<link rel="stylesheet" href="../assets/css/site.css?v=1794452330">
 <style>
   body{min-height:100vh;display:flex;flex-direction:column;position:relative}
 
@@ -402,7 +402,7 @@
      three brands fighting on a page. 64 percent leaves the hand cut edge of
      the tissue showing all the way round. */
   .found__logo{width:64%;display:block;pointer-events:none}
-  .found__sr{position:absolute;width:1px;height:1px;overflow:hidden;
+  .found__sr,.sr{position:absolute;width:1px;height:1px;overflow:hidden;
     clip:rect(0 0 0 0);white-space:nowrap}
   /* Ten dots are filed, one per colour. Picking a foundation means pointing
      --pic at whichever one suits it: jade, red, pink, green, wine, yellow,
@@ -636,6 +636,13 @@
      width. */
   .expect--lg{letter-spacing:.14em;
     font-size:clamp(21px,2.9vw,35px)}
+  /* Bianca cut every section heading but "meet the birthday girls". They are
+     still in the markup, unseen, because a page of unlabelled sections is a
+     worse page to land on with a screen reader and the invite reads the same
+     either way. They were also what held each sheet off the one above it, so
+     the space they carried moves to whatever now comes first. */
+  .expect.sr{margin:0}
+  .expect.sr + *{margin-top:clamp(74px,11vh,128px)}
   /* Two sheets now, not three, and no wave. --fw used to exist so the wave
      could do arithmetic with the page gutter; with the wave gone the frame
      is just Bianca's 1380, and the ratio came in from 1100/975 to 1100/720
@@ -1389,7 +1396,7 @@
   <section class="s">
     <div class="sheet sheet--when">
       <div class="charms" aria-hidden="true"><i class="ch ch--4"></i><i class="ch ch--5"></i></div>
-      <h2 class="expect expect--lg">party details</h2>
+      <h2 class="expect expect--lg sr">party details</h2>
       <p class="when">Saturday, December 12<br>8:30pm to 11:30pm<br>Index Greenpoint</p>
     </div>
   </section>
@@ -1397,7 +1404,7 @@
   <!-- ---------- the cover ---------- -->
   <section class="s">
     <div class="sheet">
-      <h2 class="expect expect--lg">cover details</h2>
+      <h2 class="expect expect--lg sr">cover details</h2>
 
       <div class="give">
         <div class="charms" aria-hidden="true"><i class="ch ch--12"></i><i class="ch ch--13"></i></div>
@@ -1463,13 +1470,13 @@
           </div>
         </div>
 
-        <!-- Judy's own board. The non breaking space in front of it is load
-             bearing: it is the last word of the card and pretty alone cannot
-             save a word this long from being left on a line by itself. -->
+        <!-- Judy's own board. The link is on "here" rather than on the word
+             pinterest, at Bianca's word. The non breaking space binds it to
+             the word before it so the link can never be left alone at the
+             end of a line. -->
         <div class="dnote dnote--a">
           <p class="dnote__t">Most importantly, wear something you can have
-             fun in and dance in. And if you need more inspo, refer
-             here:&nbsp;<a class="dnote__a" href="https://www.pinterest.com/jujuli1219/1212-birthday-bash/" target="_blank" rel="noopener">pinterest</a></p>
+             fun in and dance in. And if you need more inspo, refer&nbsp;<a class="dnote__a" href="https://www.pinterest.com/jujuli1219/1212-birthday-bash/" target="_blank" rel="noopener">here</a>.</p>
         </div>
 
         <img class="dsp dsp--ball" src="../assets/img/1212/deco-discoball.webp" alt="" aria-hidden="true">
@@ -1534,7 +1541,7 @@
   <!-- ---------- what to expect ---------- -->
   <section class="s">
     <div class="sheet">
-      <h2 class="expect expect--lg">what to expect</h2>
+      <h2 class="expect expect--lg sr">what to expect</h2>
 
       <div class="doily">
         <div class="charms" aria-hidden="true"><i class="ch ch--9"></i><i class="ch ch--11"></i></div>
@@ -1674,7 +1681,7 @@
   <p class="lock__no" id="no" role="alert"></p>
 </div>
 
-<script src="../assets/js/menu.js?v=1794452142"></script>
+<script src="../assets/js/menu.js?v=1794452330"></script>
 <script>
 /* ---------- assets that may not be in the folder yet ----------
    The party hats, the signed polaroids and the rhinestone lettering are still
