@@ -190,6 +190,11 @@ main{position:relative}
   width:min(340px,31vw);z-index:var(--z-text);pointer-events:none}
 .side--vol{width:min(300px,30vw);top:-210px}
 .side--vol .vol{grid-template-columns:minmax(0,1fr);gap:1px;margin-bottom:14px}
+/* No widows. pretty is the browser solving every measure at once and it is
+   simply ignored where it is not supported, so the three lines that actually
+   broke at 320 carry a non breaking space in the markup as well. pretty alone
+   cannot save a last word longer than the room left before it. */
+.mission p,.rules li,.sec-h,.creator p,.foot__col,.gate__tag{text-wrap:pretty}
 .says{position:relative;z-index:var(--z-text);pointer-events:none;
   margin-right:auto;margin-left:0;width:75%}
 @media (max-width:820px){.says{margin-right:0}}
@@ -279,8 +284,27 @@ main{position:relative}
      is where the overlapping, cut off copy below the hero was coming from. */
   .side,.side--vol{position:static;order:2;width:100%;top:auto;right:auto}
   .creator{order:2}
-  /* the scatter becomes its own canvas under the copy, still fully draggable */
-  .things{order:3;position:relative;inset:auto;width:100%;height:64vh;min-height:340px}
+  /* #what carries a 2200 pixel floor so the walk has a page to run down at
+     1440. It is set by id, specificity 1-0-0, so the min-height:auto two
+     rules up never touched it and on a phone that floor was nineteen hundred
+     pixels of blank white between "Come again soon!" and the footer. That
+     void, not the scatter, is what made this page read as broken next to the
+     desktop one. */
+  #what{min-height:auto}
+
+  /* The scatter keeps a canvas of its own - full width photographs behind
+     full width Courier is not readable, which is why it is not simply
+     inset:0 the way the desktop is - but the canvas now sits BETWEEN the two
+     sections instead of above the first heading, so the photographs arrive
+     as you scroll, the way the walk does on a desktop, rather than as a pile
+     on top of the page. order needs that main to be a column: .things is main's
+     child, not the section's, so the orders already set inside .scene never
+     reached it and it simply stayed first. The class is there because the
+     invite page shares this stylesheet and has a main of its own. */
+  main.walk{display:flex;flex-direction:column}
+  #home{order:1}
+  .things{order:2;position:relative;inset:auto;width:100%;height:78vh;min-height:430px}
+  #what{order:3}
   .words{display:none}
   .thing{touch-action:pan-y}
   .thing.is-armed{touch-action:none}

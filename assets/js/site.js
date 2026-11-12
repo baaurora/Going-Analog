@@ -402,10 +402,30 @@
     }
   }
 
+  /* A rotated cutout is wider than the box it is placed in: a 92 pixel clip
+     at 38 degrees turns its corners out to 129, so an x that looks safe puts
+     17 pixels of paper past the edge. The zigzag on a phone starts its first
+     column 4 percent in, which is less than that overhang, so the binder clip
+     hung off the left of every phone. Measure what is actually painted and
+     pull anything that crosses an edge back inside. Left hand overflow costs
+     no sideways scroll, but it still reads as a cut. */
+  function tuckIn() {
+    var r = host.getBoundingClientRect(), edge = 4;
+    placements.forEach(function (p) {
+      if (p.el.dataset.moved) return;
+      var b = p.el.getBoundingClientRect(), dx = 0;
+      if (b.left < r.left + edge) dx = (r.left + edge) - b.left;
+      else if (b.right > r.right - edge) dx = (r.right - edge) - b.right;
+      if (!dx) return;
+      p.el.style.left = Math.round((parseFloat(p.el.style.left) || 0) + dx) + 'px';
+    });
+  }
+
   function layout() {
     TOP = measureTop();
     placements.forEach(place);
     dodgeText();
+    tuckIn();
     labelHost.style.display = SMALL() ? 'none' : '';
     var note = document.querySelector('.drag-note');
     if (note) note.textContent = SMALL()

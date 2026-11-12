@@ -7,7 +7,7 @@
 <meta name="description" content="A very special rendition of Going Analog. Saturday, December 12.">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="../assets/css/site.css?v=1794188800">
+<link rel="stylesheet" href="../assets/css/site.css?v=1794452142">
 <style>
   body{min-height:100vh;display:flex;flex-direction:column;position:relative}
 
@@ -350,10 +350,13 @@
      from a rectangle of flat colour, and it costs no asset. */
   .sheet{--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
 
+  /* The gap is a blank LINE, not a paragraph space: Judy asked for a line
+     entry between "care about" and "Your venmo is your entry." so it is set
+     to one line box of the card's own type, 19px at 1.6. */
   .give__note{left:2%;top:2.5%;width:39%;aspect-ratio:690/455;
     transform:rotate(-5deg);padding:clamp(12px,2.2vw,26px);
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:clamp(7px,1.1vw,13px);
+    gap:clamp(17px,2.4vw,31px);
     background-color:#F4A9CA;
     background-image:
       radial-gradient(58% 64% at 24% 20%,rgba(255,255,255,.32),rgba(255,255,255,0) 66%),
@@ -476,15 +479,15 @@
      number band. */
   .give__pay{left:69%;top:1.5%;width:30%;aspect-ratio:645/376;
     transform:rotate(-3deg)}
-  /* Set a little smaller than the pink card's. There are four things to say
-     here rather than one, and the card can grow no taller: the discs begin at
-     33 percent of the collage and this one has to end above them. */
+  /* These are handles somebody is going to copy off a phone screen, so they
+     are the one place on the page that is sized for legibility before
+     composition. No fine print any more either: Judy asked for one size
+     across the stub, so the byline instruction reads at the same size as the
+     handles above it. The stub grew with the type rather than the type being
+     held down to the stub. */
   .give__pay p{margin:0;position:absolute;left:0;right:0;top:50%;
-    transform:translateY(-50%);padding:0 24% 0 13%;
-    font-size:clamp(8px,1.05vw,13px);line-height:1.6;text-align:center}
-  /* Fine print, the way a ticket carries fine print. It is the one line of
-     the four that is an instruction rather than a thing to copy down. */
-  .give__pay .by{font-size:.82em}
+    transform:translateY(-50%);padding:0 23% 0 12%;
+    font-size:clamp(11px,1.45vw,18px);line-height:1.6;text-align:center}
   .give__pay .by{display:block;margin-top:.7em}
   /* The first thing the card says, because it is the thing that gets you
      through the door. */
@@ -589,12 +592,16 @@
      for. Worth knowing before anyone re-cuts the files: neither is clipped
      in the picture itself, their shapes stop well short of the file border
      on all four sides, so any cut either has ever shown was this frame's.
-     The sparkle is 41.4 points tall at 25 across, which is what keeps it
-     clear of the words: it ends at 42.4 and the first line that reaches
-     back that far to the left is the celebration line at 54.9. */
+     Bianca's placing: pink low on the left, red high on the right, and
+     neither of them touching the lace. The lace runs 31.5 to 73.5 across,
+     so the sparkle stops at 24 and the burst starts at 74.5, a point clear
+     of it either side. The sparkle is 48.4 points tall at 24 across on this
+     frame, so sitting it at 48 puts it in the bottom half and still inside
+     the frame, and the celebration line was moved right from 20 to 26 to
+     keep two points between the two of them. */
   .dcor{position:absolute;height:auto;pointer-events:none;z-index:-1}
-  .dcor--burst{left:73.5%;top:1%;width:26%}
-  .dcor--spark{left:0;top:1%;width:25%}
+  .dcor--burst{left:74.5%;top:1%;width:25%}
+  .dcor--spark{left:0;top:48%;width:24%}
 
   /* Five lines now that the dress code has a section of its own, and the
      same gap between every pair of them. The old run was 38, 16, 42, 38:
@@ -608,8 +615,8 @@
      to .97 of its own width at every row. So the lace really does begin at
      frame x 32.3 and not somewhere inboard of it. "no phones" went from 17
      to 28 and now runs 28 to 35.4, which is 42 percent of the word on lace,
-     and the celebration line went from 9 to 20 and runs 20 to 43.1, which
-     is 47 percent of it.
+     and the celebration line went from 9 to 20, then to 26 to clear the
+     sparkle when that came down the left hand side.
      The two right hand lines were pulled in from 19 and 20 to 28 when the
      block came up. They used to end at 81 and 80, out past the lace's right
      edge at 73.5, which was fine while the burst was above them and is not
@@ -620,7 +627,7 @@
   .l--b{align-self:flex-end;text-align:right;margin-right:28%}
   .l--c{align-self:flex-start;margin-left:29%}
   .l--d{align-self:flex-end;text-align:right;margin-right:28%}
-  .l--e{align-self:flex-start;margin-left:20%;max-width:31ch}
+  .l--e{align-self:flex-start;margin-left:26%;max-width:31ch}
 
   /* ------------ dress code ------------
      Built to Bianca's collage: a frame carrying her proportions, 1100 by 945,
@@ -652,8 +659,20 @@
      yellow note, 564/757 is 74.50 for the pink wash. Re-crop either
      photograph and its number changes with it. */
   .dnote__p--turn{width:var(--turn);transform:translate(-50%,-50%) rotate(90deg)}
+  /* One size for the body copy on BOTH cards, at Judy's word. The gradient
+     card carried this clamp alone and the wash card was left on the
+     inherited 15px, which read as two different papers rather than one
+     spread: 15 against 19 at 1280. */
   .dnote__t{margin:0;position:relative;font-weight:700;text-align:center;
-    line-height:1.7}
+    line-height:1.7;font-size:clamp(11.5px,1.52vw,19px)}
+  /* No widows. text-wrap:pretty is the browser doing it for every measure at
+     once, and it is ignored where it is not supported, so the two places
+     that actually broke carry a non breaking space as well: "here: pinterest"
+     on the dress code card and "your byline." on the ticket. Any new copy
+     wants both, because pretty alone cannot save a last word longer than the
+     room left on the line before it. */
+  .dnote__t,.l,.card__say,.girl__meta,.give__cta,
+  .give__note p,.give__card p,.give__pay p{text-wrap:pretty}
 
   /* Swapped at Bianca's word: the pink wash holds the left and carries the
      rule itself, the yellow sheet holds the right and carries the footnote.
@@ -677,8 +696,6 @@
   .dnote--a::before{content:'';position:absolute;inset:0;
     background-image:var(--grain);mix-blend-mode:soft-light;opacity:.55;
     pointer-events:none}
-  .dnote--a .dnote__t{font-size:clamp(11.5px,1.52vw,19px)}
-
   /* The wash carries two blocks of type now, the rule and the paragraph
      under it, so they go in a column with a gap rather than straight into
      the flex centre. */
@@ -687,7 +704,7 @@
   /* Two lines, not one, and no longer the only thing on its sheet, so it
      came down from clamp(22,4vw,50) to leave the paragraph its room. */
   .dnote__t--big{text-transform:uppercase;letter-spacing:.06em;line-height:1.14;
-    font-size:clamp(15px,2.35vw,30px)}
+    font-size:clamp(19px,3.1vw,40px)}
   .dnote__a{color:inherit;text-decoration:underline;
     text-underline-offset:3px;text-decoration-thickness:1px}
 
@@ -814,7 +831,11 @@
      narrows, so the lace rode further and further up into the section above
      it: 29px of clearance at 1280 but -2 at 560 and 8 at 760. A length holds
      the same gap at every width. */
-  .guest__doily{position:absolute;right:-6%;top:calc(-1 * clamp(18px,2.8vh,42px));
+  /* The overhang is the page gutter itself and not a share of the form.
+     At -6 percent it was 45px on a 760 wide form, which is wider than the
+     gutter below about 900 and put the lace off the side of the screen: 15px
+     of it past the edge at 768. var(--pad) is exactly the room there is. */
+  .guest__doily{position:absolute;right:calc(-1 * var(--pad));top:calc(-1 * clamp(18px,2.8vh,42px));
     width:min(240px,34%);
     opacity:.75;pointer-events:none;z-index:-1}
   .guest__by{margin:0;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
@@ -957,8 +978,10 @@
        envelope rather than cropping into it. */
     .hero__in{aspect-ratio:375/640;height:auto}
     .hero__photo{width:62%;left:0;top:0;transform:none}
-    .stage{width:86%;right:0;left:auto;top:auto;bottom:0;transform:rotate(9deg)}
-    .stage{width:86%}
+    /* 84, not 86. The stage is turned 9 degrees, so its corners reach wider
+       than it is, and at 414 the invite's own face came out 3px past the
+       edge of the screen. 84 clears it at every width from 320 up. */
+    .stage{width:84%;right:0;left:auto;top:auto;bottom:0;transform:rotate(9deg)}
     /* Bigger than the envelope here on purpose, and so still sitting over
        it rather than in it. Fitting it in the pocket would set the body copy
        at around 8px on a phone, and the card has to be readable before it is
@@ -1001,7 +1024,7 @@
     /* The stub is the one thing here that wants the whole width: landscape,
        and only its middle 64 percent takes type. */
     .give__pay{width:96%;aspect-ratio:645/376;padding:0}
-    .give__pay p{font-size:11px}
+    .give__pay p{font-size:15px}
     .give__card p{font-size:13px}
     /* The phone reads this collage as a list, so the order is set by hand.
        The pay card comes straight after the note, where the dots would
@@ -1064,16 +1087,11 @@
        tilt or either ratio changes. */
     .dnote--b{left:auto;top:auto;width:92%;transform:rotate(-3deg);padding:0 7%}
     .dnote--a{left:auto;top:auto;width:92%;transform:rotate(3deg);padding:0 8%}
-    .dnote--a .dnote__t{font-size:13px}
-    .dnote__t--big{font-size:21px}
+    .dnote__t{font-size:14px}
+    .dnote__t--big{font-size:26px}
     .dsp--ball{left:auto;right:0;top:0;width:31%}
     .dress{overflow:hidden}
     .dsp--stars{left:0;right:auto;top:auto;bottom:6%;width:30%}
-    /* The lace on the form hangs 6 percent off the right of its block, which
-       at this width puts the last third of a pixel of the pattern past the
-       edge of the screen. Nothing to see, but Bianca asked for no figure
-       cut off anywhere on a phone, so it comes in flush. */
-    .guest__doily{right:0}
     .expect--lg{letter-spacing:.08em}
     /* Both stickers moved into the bands with everything else: at 75 and 8
        they were sitting on "Most importantly" and on DISCO FORMAL.
@@ -1096,7 +1114,7 @@
        is a move and not a shrink. */
     .dcor--burst{left:auto;right:0;top:1%;width:40%}
     .dcor--spark{left:auto;right:0;top:auto;bottom:0;width:34%}
-    .ch--9{left:38%;top:3%}
+    .doily .ch--9{left:38%;top:14px}
   }
 
 
@@ -1181,6 +1199,25 @@
     --cw:32px;--cr:0deg;left:5%;top:-6%}
   .ch--15{--pic:url(../assets/img/1212/charm-star-chenille.webp);--ca:.9667;
     --cw:32px;--cr:-10deg;left:86%;top:101.5%}
+
+  /* The narrowest phones get one notch less on the dress code, because the
+     wash card is the tightest box on the page: at 320 its two blocks of type
+     filled all 213 pixels of the paper with nothing to spare, which reads as
+     cut off whether or not a pixel actually crosses the edge. The card
+     cannot grow - 92 percent is already the most a 3 degree tilt leaves at
+     this width - so the type steps down and the measure opens up instead.
+     Both cards step together, so Judy's one size across the spread holds. */
+  @media (max-width:360px){
+    .dnote__t{font-size:13px;line-height:1.45}
+    /* The rule's own leading has to be restated here. It is one class, same
+       weight as .dnote__t, and this query is further down the file, so the
+       1.45 above was winning over the 1.14 the heading sets for itself and
+       quietly adding fifteen pixels back. */
+    .dnote__t--big{font-size:23px;line-height:1.14}
+    .dnote__g{gap:8px}
+    .dnote--b{padding:0 5%}
+    .dnote--a{padding:0 6%}
+  }
 
   /* These two blocks have to come after the sixteen above and not before
      them. A rule inside a media query carries no extra weight of its own, so
@@ -1366,7 +1403,7 @@
         <div class="charms" aria-hidden="true"><i class="ch ch--12"></i><i class="ch ch--13"></i></div>
         <div class="give__note">
           <p><b>INSTEAD</b> of gifts this year, we're asking guests to donate
-             $10-20+. All proceeds go to causes we care about.</p>
+             $10-20+. All proceeds go to causes we care&nbsp;about.</p>
           <p>Your venmo is your entry.</p>
         </div>
 
@@ -1391,7 +1428,7 @@
           <img class="give__p" src="../assets/img/1212/ticket-pink.webp" alt="" aria-hidden="true">
           <p><b>Venmo: @Judyli1357</b><br>
              <b>Zelle: 781-491-5618</b>
-             <span class="by">Put your foundation of choice in your byline.</span></p>
+             <span class="by">Put your foundation of choice in your&nbsp;byline.</span></p>
         </div>
 
         <p class="give__cta">click to learn more!</p>
@@ -1426,15 +1463,13 @@
           </div>
         </div>
 
+        <!-- Judy's own board. The non breaking space in front of it is load
+             bearing: it is the last word of the card and pretty alone cannot
+             save a word this long from being left on a line by itself. -->
         <div class="dnote dnote--a">
           <p class="dnote__t">Most importantly, wear something you can have
-             fun in and dance in. And if you need more inspo, refer here:
-             <!-- Waiting on the board's URL. Kept as a span rather than an
-                  <a href="#">, because a link that goes nowhere on a live
-                  invite is worse than no link: swap this one line for
-                  <a class="dnote__a" href="THE URL" target="_blank"
-                  rel="noopener">pinterest</a> the moment it lands. -->
-             <span class="dnote__a">pinterest</span></p>
+             fun in and dance in. And if you need more inspo, refer
+             here:&nbsp;<a class="dnote__a" href="https://www.pinterest.com/jujuli1219/1212-birthday-bash/" target="_blank" rel="noopener">pinterest</a></p>
         </div>
 
         <img class="dsp dsp--ball" src="../assets/img/1212/deco-discoball.webp" alt="" aria-hidden="true">
@@ -1447,7 +1482,7 @@
   <section class="s">
     <div class="girls">
       <div class="charms" aria-hidden="true"><i class="ch ch--7"></i><i class="ch ch--8"></i></div>
-      <h2 class="girls__k">meet the birthday girls</h2>
+      <h2 class="girls__k">meet the birthday&nbsp;girls</h2>
       <div class="girls__row">
 
         <div class="girl" data-girl="judy">
@@ -1508,7 +1543,7 @@
         <img class="dcor dcor--spark" src="../assets/img/1212/deco-sparkle-peach.webp" alt="" aria-hidden="true">
         <div class="doily__lines">
           <p class="l l--a">no phones</p>
-          <p class="l l--b">with beats by Ben Jacobs</p>
+          <p class="l l--b">with beats by our friend Ben</p>
           <p class="l l--c">beer, wine, and cake</p>
           <p class="l l--d">All of our favorite people</p>
           <p class="l l--e">A night of celebration, joy, and birthday wishes :)</p>
@@ -1614,7 +1649,7 @@
 
 </main>
 
-<p class="bash">Birthday bash. Saturday, December 12. 8:30pm to 11:30pm. Index Greenpoint.</p>
+<p class="bash">Birthday bash. Saturday, December 12. 8:30pm to 11:30pm. Index&nbsp;Greenpoint.</p>
 
 <footer class="foot">
   <div class="foot__col">
@@ -1639,7 +1674,7 @@
   <p class="lock__no" id="no" role="alert"></p>
 </div>
 
-<script src="../assets/js/menu.js?v=1794188800"></script>
+<script src="../assets/js/menu.js?v=1794452142"></script>
 <script>
 /* ---------- assets that may not be in the folder yet ----------
    The party hats, the signed polaroids and the rhinestone lettering are still
