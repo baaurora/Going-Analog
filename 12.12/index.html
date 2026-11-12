@@ -334,9 +334,15 @@
      replaced lay down at 565/405 and 565/340. Two portrait objects will not
      fit in a band this short, so the band got taller and the discs came down
      to 45 percent to sit under them. */
+  /* Rebuilt to Bianca's layout mockup, the same way the dress code and the
+     doily were: her picture is 850 by 625 of working area, so the frame
+     takes that ratio and every piece below is the position she drew,
+     measured off her image and divided through by it. Her mockup shows the
+     old pink clip card and bare text where the ticket is, but she sent it
+     "layout wise": the papers stay the ones she chose after it. */
   .give{position:relative;margin:clamp(40px,6vh,72px) 0 0;
     width:min(1380px,94vw);margin-left:50%;transform:translateX(-50%);
-    aspect-ratio:1630/1000}
+    aspect-ratio:1630/1200}
   .give > *{position:absolute}
 
   /* Fibrous grain, drawn rather than photographed: fractal noise desaturated
@@ -344,7 +350,7 @@
      from a rectangle of flat colour, and it costs no asset. */
   .sheet{--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
 
-  .give__note{left:0.5%;top:2.5%;width:31%;aspect-ratio:690/455;
+  .give__note{left:2%;top:2.5%;width:39%;aspect-ratio:690/455;
     transform:rotate(-5deg);padding:clamp(12px,2.2vw,26px);
     display:flex;align-items:center;justify-content:center;
     background-color:#F4A9CA;
@@ -358,7 +364,7 @@
   .give__note::before{content:'';position:absolute;inset:0;
     background-image:var(--grain);mix-blend-mode:soft-light;opacity:.55;
     pointer-events:none}
-  .give__note p{font-size:clamp(10.5px,1.52vw,17px);line-height:1.6;text-align:center}
+  .give__note p{font-size:clamp(11px,1.75vw,19px);line-height:1.6;text-align:center}
   .give__note b,.give__card b{font-weight:700}
   /* Kept on one line. It is the punchline, and the measure on this card is
      narrow enough that it was breaking after "That's". */
@@ -373,7 +379,12 @@
      at 50 percent would land exactly on the circle and shave off the hand
      cut wobble, which is the whole reason they do not look like vectors.
      The alpha channel already carries the edge. Let it. */
-  .found{aspect-ratio:1;color:inherit;text-decoration:none;
+  /* Behind the paper. All three discs lap onto a card now, and in every
+     case the card is the thing in front: the pink sheet covers the top left
+     of the first, the cream one covers the right of the third. Both cards
+     carry a rotate, which makes each of them a stacking context of its own
+     at auto, so -2 here is enough to put the tissue under all of it. */
+  .found{aspect-ratio:1;color:inherit;text-decoration:none;z-index:-2;
     border:0;padding:0;margin:0;font-family:inherit;cursor:pointer;
     background-color:transparent;
     display:flex;align-items:center;justify-content:center;text-align:center;
@@ -392,38 +403,56 @@
   /* Ten dots are filed, one per colour. Picking a foundation means pointing
      --pic at whichever one suits it: jade, red, pink, green, wine, yellow,
      gold, brown, white, blue. */
-  .found--1{left:43%;top:2%;width:18%;
+  /* All three are the same disc in her mockup, 224 across on an 850 wide
+     working area, which is 26.4 percent. A disc is square, so its height in
+     percent of this frame is its width times 1.36, the frame's own ratio:
+     26.4 across is 35.9 down, and that factor is what every top below was
+     solved against from the centre she drew.
+     Her centres, as fractions of her picture: 54.9 by 33.9, 18.8 by 60.8,
+     85.4 by 55.5. The first laps the right hand edge of the pink sheet, the
+     second stands directly over "click to learn more!", and the cream card
+     lies across the bottom left of the third. */
+  .found--1{left:41.7%;top:15.9%;width:26.4%;
     --pic:url(../assets/img/1212/dot-wine.png)}
-  .found--2{left:13%;top:45%;width:18.2%;
+  .found--2{left:5.6%;top:42.9%;width:26.4%;
     --pic:url(../assets/img/1212/dot-blue.png)}
-  /* The green disc comes down six points to make room for the payment card
-     above it. Not for the card itself, which cleared it by a hair, but for
-     the near white ring around it: the ring stands 13px proud of the box and
-     would have laid a pale band across the top of the circle. */
-  .found--3{left:75%;top:45%;width:18.2%;
+  .found--3{left:72.3%;top:37.7%;width:26.4%;
     --pic:url(../assets/img/1212/dot-green.png)}
   .found__k{font-size:clamp(10px,1.4vw,15px);line-height:1.5;font-weight:700;padding:0 12%}
 
-  /* One rule for both sheets. */
+  /* One rule for both sheets, and a second for a sheet that lies down. */
   .give__p{position:absolute;left:50%;top:50%;width:100%;height:auto;
-    transform:translate(-50%,-50%);filter:var(--obj-cast);z-index:-1}
+    transform:translate(-50%,-50%);filter:var(--obj-cast);z-index:-1;
+    pointer-events:none}
+  .give__p--turn{width:var(--turn);transform:translate(-50%,-50%) rotate(-90deg)}
 
-  .give__cta{left:1.5%;top:82%;width:20%;text-align:center;
+  .give__cta{left:3%;top:79%;width:34%;text-align:center;
     font-size:clamp(12px,1.95vw,22px);line-height:1.45}
 
   /* Real paper now, not a cream mount with a gradient in it. The sheet is
      photographed on white and cut out on its alpha, so it needs no box of
      its own: the box is only the frame the sheet is sized and placed in, and
      the shadow comes off the cutout rather than off a rectangle.
-     Cream, torn at every edge, with a black paperclip over the top right
-     and two gold stars overhanging opposite corners. Profiled on the file,
-     the paper itself runs x 6 to 91 and the stars are what reaches past it
-     at the very top and the very bottom. The words sit low enough to clear
-     the clip, which hangs into the top right quarter.
-     13 percent of the card is 2.34 of the frame: see .dnote--c for why. */
-  .give__card{left:44%;top:40%;width:18%;aspect-ratio:668/997}
-  .give__card p{position:absolute;left:0;right:0;top:55%;
-    transform:translateY(-50%);padding:0 2.34%;
+     Cream, torn at every edge, with a black paperclip and two gold stars
+     overhanging opposite corners. It is photographed upright and laid down
+     here, turned a quarter to the LEFT, which carries the clip from the top
+     right round to the top left and leaves a star at each of the other two
+     corners. --turn is 668/997, the width the upright picture needs before
+     the turn so that it fills a box of 997/668 exactly.
+     The words sit below the middle, clear of the clip, which lands in
+     x 12 to 32 by y 12 to 30 once it has been turned.
+     Padding here IS a share of the card, unlike .dnote--c: this p is
+     absolute and the card is its containing block. */
+  /* Both sheets lean left a little, which is Bianca's note, and the lean is
+     what makes each of them a stacking context, which is what lets the
+     tissue discs run underneath. The card also went 5 points right, to 45,
+     to leave the first disc the room it needs to reach the pink sheet's
+     corner without being swallowed by this one. The tilt composes with the
+     paper's own quarter turn, so the picture ends up at -94 degrees. */
+  .give__card{left:50.9%;top:66.4%;width:26.9%;aspect-ratio:997/668;--turn:67%;
+    transform:rotate(-4deg)}
+  .give__card p{position:absolute;left:0;right:0;top:58%;
+    transform:translateY(-50%);padding:0 12%;
     font-size:clamp(10.5px,1.52vw,17px);line-height:1.6;text-align:center}
   /* Who to pay is its own card in the top right of the collage, above the
      green disc, which leaves the pink one to say only the thing it says.
@@ -438,16 +467,19 @@
      line and the stub only gives up its middle. Profiled on the file, the
      printed rule and the torn edge take x 0 to 10 and the 146017 band takes
      80 to 100, so the words run 13 to 76 and are centred on 44.5, not 50.
-     Those are shares of the stub; against the frame they are 4.16 and 7.68,
-     the stub being 32 percent of it. The longest line fills its measure
-     almost exactly, so the four points between it and the band are the only
-     margin there is. */
-  .give__pay{left:64%;top:4%;width:32%;aspect-ratio:645/376}
+     Those really are shares of the stub, because this p is absolute and the
+     stub is its containing block. Written as shares of the frame instead,
+     which is right for .dnote--c and wrong here, they came out at a fifth
+     of their size: the short lines still looked centred because they are
+     centred, but the fine print filled its measure and ran across the
+     number band. */
+  .give__pay{left:69%;top:1.5%;width:30%;aspect-ratio:645/376;
+    transform:rotate(-3deg)}
   /* Set a little smaller than the pink card's. There are four things to say
      here rather than one, and the card can grow no taller: the discs begin at
      33 percent of the collage and this one has to end above them. */
   .give__pay p{margin:0;position:absolute;left:0;right:0;top:50%;
-    transform:translateY(-50%);padding:0 7.68% 0 4.16%;
+    transform:translateY(-50%);padding:0 24% 0 13%;
     font-size:clamp(8px,1.05vw,13px);line-height:1.6;text-align:center}
   /* Fine print, the way a ticket carries fine print. It is the one line of
      the four that is an instruction rather than a thing to copy down. */
@@ -499,7 +531,11 @@
   .fdlg__a:hover{background:var(--ink);color:var(--paper)}
 
   /* ------------ you can expect ------------ */
+  /* Lower case is a rule, not a spelling: every heading on the page reads
+     lower case whatever the markup says, which is how .girls__k has always
+     worked. Caps were tried on party details and taken straight back out. */
   .expect{text-align:center;font-weight:700;letter-spacing:.07em;
+    text-transform:lowercase;
     font-size:clamp(17px,2.1vw,25px);margin-top:clamp(56px,8.5vh,98px)}
   /* It opens its own section now rather than following the date block, and
      the sheet already carries the gap above it. Both and it is a chasm. */
@@ -525,52 +561,79 @@
      The frame is sized for the stars instead, which have the pixels to
      spare, and the lace is cut to 42 percent so it still lands at the 504
      it has always been drawn at.
-     It clips, because the starburst and the sparkle are meant to run off
-     the right hand edge and right hand overflow is what makes a page scroll
-     sideways. The dress code's squiggle gets away without this by bleeding
-     left, which costs nothing. */
+     It still clips, but nothing reaches the edge to be clipped any more:
+     the starburst and the sparkle used to run off the right and Bianca
+     wants them whole, so both were pulled inside the frame. The rule stays
+     as a guard, because right hand overflow is what makes a page scroll
+     sideways and these three are the only pieces near that edge. */
   .doily{position:relative;margin:clamp(16px,2.6vh,28px) 0 0;
     width:min(1200px,94vw);margin-left:50%;transform:translateX(-50%);
-    aspect-ratio:1140/914;overflow:hidden}
+    aspect-ratio:1140/706;overflow:hidden}
   /* The lace is centred on the page, the same centre the heading above it and
      the dress code below it are centred on. It used to sit at 53 percent,
      which meant three different centres in one section. Everything that was
      placed against the old one came 3 points left with it, so each line keeps
      the same seat on the lace. */
-  .doily__img{position:absolute;left:52.5%;top:64%;width:42%;
+  .doily__img{position:absolute;left:52.5%;top:42.25%;width:42%;
     transform:translate(-50%,-50%);opacity:.92;pointer-events:none;z-index:-1}
   /* The words sit on the same centre as the lace, which is where her mockup
-     has them: both are centred on 64 percent down, so the pair reads as one
-     object low in the frame with the stars in the air above it. */
-  .doily__lines{position:absolute;left:0;right:0;top:64%;
+     has them, so the pair reads as one object rather than two. That centre
+     came up from 64 percent to 54 when Bianca asked for the lace and the
+     words together to go up: it is one number in two places, and they have
+     to move together or the words slide off the lace. */
+  .doily__lines{position:absolute;left:0;right:0;top:42.25%;
     transform:translateY(-50%);display:flex;flex-direction:column}
 
   /* Three cut out stars. All three sit at z-index -1 with the lace, so none
-     of them can ever land on top of a word. */
+     of them can ever land on top of a word.
+     Every one of them is now wholly inside the frame, because Bianca asked
+     for no cut off stars. Worth knowing before anyone re-cuts the files:
+     none of the three is clipped in the picture itself, their shapes stop
+     well short of the file border on all four sides, so the cut was always
+     this frame's and not the artwork's.
+     The burst had been hanging 8 points off the right and 3 above the top,
+     the sparkle 6 off the right. Both are seated inside the right edge now.
+     Raising the lace to the cluster's shoulder shortened the frame, which
+     raised every percentage with it: the burst came to rest on the lace's
+     own right edge at 73.5 and the sparkle went down to 57, which is as low
+     as a 41.4 point tall thing can start and still end inside the frame. */
   .dcor{position:absolute;height:auto;pointer-events:none;z-index:-1}
   .dcor--cluster{left:1.5%;top:6.5%;width:19%;filter:var(--obj-cast)}
-  .dcor--burst{left:78%;top:-3%;width:30%}
-  .dcor--spark{left:81%;top:59%;width:25%}
+  .dcor--burst{left:73.5%;top:1%;width:26%}
+  .dcor--spark{left:74%;top:57%;width:25%}
 
   /* Five lines now that the dress code has a section of its own, and the
      same gap between every pair of them. The old run was 38, 16, 42, 38:
      the third line sat almost on the second because the dress code needed
      the room underneath. With that gone the scatter is left and right only,
      which is the half of it that was ever doing the work. One rule sets the
-     gap, so each .l--x below carries nothing but its offset. */
+     gap, so each .l--x below carries nothing but its offset.
+     Two of the five are meant to sit partly ON the lace, which is a thing
+     worth measuring rather than guessing: doily-square.png is not a circle
+     in a box, the pattern fills it almost corner to corner, covering x .02
+     to .97 of its own width at every row. So the lace really does begin at
+     frame x 32.3 and not somewhere inboard of it. "no phones" went from 17
+     to 28 and now runs 28 to 35.4, which is 42 percent of the word on lace,
+     and the celebration line went from 9 to 20 and runs 20 to 43.1, which
+     is 47 percent of it.
+     The two right hand lines were pulled in from 19 and 20 to 28 when the
+     block came up. They used to end at 81 and 80, out past the lace's right
+     edge at 73.5, which was fine while the burst was above them and is not
+     fine now that it is beside them. Both stop at 72 and the burst starts
+     at 73.5. */
   .l + .l{margin-top:clamp(20px,3.3vh,36px)}
-  .l--a{align-self:flex-start;margin-left:17%}
-  .l--b{align-self:flex-end;text-align:right;margin-right:19%}
+  .l--a{align-self:flex-start;margin-left:28%}
+  .l--b{align-self:flex-end;text-align:right;margin-right:28%}
   .l--c{align-self:flex-start;margin-left:29%}
-  .l--d{align-self:flex-end;text-align:right;margin-right:20%}
-  .l--e{align-self:flex-start;margin-left:9%;max-width:31ch}
+  .l--d{align-self:flex-end;text-align:right;margin-right:28%}
+  .l--e{align-self:flex-start;margin-left:20%;max-width:31ch}
 
   /* ------------ dress code ------------
      Built to Bianca's collage: a frame carrying her proportions, 1100 by 945,
      with every piece placed as a percentage of it, so the arrangement scales
      as one picture instead of six objects that have to be re-agreed at each
      width. */
-  .expect--lg{text-transform:uppercase;letter-spacing:.14em;
+  .expect--lg{letter-spacing:.14em;
     font-size:clamp(21px,2.9vw,35px)}
   /* --fw is the frame's own width, named because the wave has to do
      arithmetic with it. It holds Bianca's 1380 from 1468 up to 1769 and only
@@ -582,7 +645,7 @@
      ratio of gutter to frame at .141, under the .152 the wash can cover, at
      any width at all. */
   .dress{position:relative;margin:clamp(16px,2.6vh,30px) 0 0;
-    --fw:min(94vw, max(1380px, 80vw));
+    --fw:min(94vw, max(1380px, 88vw));
     width:var(--fw);margin-left:50%;transform:translateX(-50%);
     aspect-ratio:1100/975}
   .dress > *{position:absolute}
@@ -632,8 +695,8 @@
      measure and the type scale off the same frame, so the breaks hold at
      every width, and the longest of them, "wear something you", needs 18.6
      of the 20.4vw this leaves it. */
-  .dnote--c{left:15.9%;top:74.4%;width:37.5%;aspect-ratio:1108/665;--turn:60.02%;
-    transform:rotate(-3deg);padding:0 3% 0 12.75%;z-index:3}
+  .dnote--c{left:15.9%;top:72.5%;width:37.5%;aspect-ratio:1108/665;--turn:60.02%;
+    transform:rotate(-3deg);padding:0 3% 0 3.75%;z-index:3}
   .dnote--c .dnote__t{font-size:clamp(12px,1.72vw,22px)}
   /* One line, as it is in the collage. The measure is the note less 4.5
      percent of the frame a side, 466px at 1280, and twelve characters of
@@ -663,12 +726,12 @@
      frame is 94vw and this carries the other 3vw plus two pixels, so the end
      is past the edge at any width. The right one goes under the pink wash,
      which is z-index 3 to this 2: the right edge is set at 58 percent, well
-     inside the wash's 47 to 91, and the top at 20.7 so that the cut sits
-     centred in the window the wash gives it rather than against its bottom.
-     That one number has to satisfy both ends at once: the window is roomy at
-     1280, where anything from 20.5 to 26.4 works, and only six points wide
-     at 1920. Re-derive all four if the file or the wash ever changes. */
-  .dsp--wave{right:42%;left:auto;top:20.7%;
+     inside the wash's 47 to 91, and the top at 24, which is as low as the
+     wave can go and still have its cut land inside the window the wash
+     gives it. That one number has to satisfy every width at once, and the
+     widest screens are the tightest: --fw's floor above is what buys it the
+     room. Re-derive all four if the file or the wash ever changes. */
+  .dsp--wave{right:42%;left:auto;top:22.5%;
     width:calc(58% + (100vw - var(--fw)) / 2 + 2px);z-index:2}
   /* The ball is z-index 4, above every sheet of paper, so unlike the wave
      it cannot be allowed to reach the words: it paints over them rather
@@ -962,19 +1025,21 @@
        not, it OFFSETS by them, so the desktop left:64% and left:44% shoved
        both cards most of a screen to the right. */
     .give > .give__pay,.give > .give__card{position:relative;left:auto;top:auto}
-    .give__note{width:96%;transform:rotate(-3deg)}
+    /* Same arithmetic as the dress code's notes: a tilted card needs more
+       room across than it is wide, so none of these three may fill the
+       block. 93, 96 and 92 put every corner back inside it. */
+    .give__note{width:93%;transform:rotate(-3deg)}
     .give__note p,.give__card p{font-size:13px}
     .found{width:27%}
     .give__cta{width:100%;text-align:center;font-size:17px}
     /* These two cannot go nearly full width the way they used to. They are
        photographs of paper now, so the box has to keep the sheet's own ratio
        or the paper stretches. */
-    .give__card{width:62%;aspect-ratio:668/997;padding:0}
-    .give__card p{padding:0 13%}
+    .give__card{width:92%;aspect-ratio:997/668;padding:0}
     /* The stub is the one thing here that wants the whole width: landscape,
        and only its middle 64 percent takes type. */
-    .give__pay{width:100%;aspect-ratio:645/376;padding:0}
-    .give__pay p{padding:0 24% 0 13%;font-size:11px}
+    .give__pay{width:96%;aspect-ratio:645/376;padding:0}
+    .give__pay p{font-size:11px}
     .give__card p{font-size:13px}
     /* The phone reads this collage as a list, so the order is set by hand.
        The pay card comes straight after the note, where the dots would
@@ -1008,18 +1073,15 @@
        charms stay absolute against it so they still sit half on the paper.
        Only the notes become flow items. */
     /* The collage unstacks into a column. Only the notes become flow items,
-       so the ball, the squiggle and the stars stay absolute against the
-       block and still lap onto the paper. */
-    /* The collage unstacks into a column. Only the notes become flow items,
-       so the ball, the squiggle and the stars stay absolute against the
-       block and still lap onto the paper.
+       so the ball, the wave and the stars stay absolute against the block
+       and still lap onto the paper.
        The paper runs nearly edge to edge at this width, which leaves no
        clear ground for a sticker to sit on: dropped straight in, the
        squiggle covered 120 by 106 of the instruction and the ball clipped
        another 73 by 21. So the block is given a band of its own at each end,
        76px at the top and 150 at the bottom, and every sticker lives in one
        of them and laps only onto the strip of a note that carries no words.
-       Both notes centre their type, so each has a clear head and foot. */
+       All three notes centre their type, so each has a clear head and foot. */
     .dress{aspect-ratio:auto;display:flex;flex-direction:column;
       align-items:center;gap:clamp(18px,3.6vh,30px);
       width:100%;margin-left:0;transform:none;
@@ -1031,43 +1093,46 @@
        anyway, because it is the only thing set large. Stacked, whichever
        comes first is read first, so the order is set by hand. */
     .dnote--b{order:-1}
-    .dnote--a{left:auto;top:auto;width:100%;transform:rotate(-2deg);padding:0 9%}
-    .dnote--b{left:auto;top:auto;width:100%;transform:rotate(5deg);padding:0 8%}
-    .dnote--c{left:auto;top:auto;width:100%;transform:rotate(-3deg);padding:0 13% 0 28%}
+    /* 92 percent, not 100, and this is the thing that was being cut off.
+       A tilted note needs more room across than it is wide: the block is
+       339 at phone width, and a note filling it turns its corners out to
+       w*cos(t) + h*sin(t), which is 347 at 2 degrees, 360 at 5 and 349 at 3.
+       Every one of them was over the edge and the block's own overflow rule
+       was shaving the corners off all three. 92 brings the widest back to
+       331. Re-solve it if any tilt or any note's ratio changes. */
+    .dnote--a{left:auto;top:auto;width:92%;transform:rotate(-2deg);padding:0 9%}
+    .dnote--b{left:auto;top:auto;width:92%;transform:rotate(5deg);padding:0 8%}
+    .dnote--c{left:auto;top:auto;width:92%;transform:rotate(-3deg);padding:0 13% 0 14%}
     .dnote--c .dnote__t{font-size:13px}
     .dnote--a .dnote__t{font-size:13px}
     .dnote__t--big{font-size:30px}
-    .dsp--ball{left:auto;right:-5%;top:0;width:31%}
-    /* Same trick at this width: right edge pinned under the wash's clear
-       foot, width carrying var(--pad) so the left end still runs off the
-       screen. */
-    /* Same two jobs at this width and they pull against each other. The cut
-       is half the image's height, so a wide squiggle has a tall cut, and the
-       only clear paper to bury it in is the wash's foot below its type,
-       about 96px. Hence a right edge further in, at 61 percent, which lets
-       the width come down to just over 150 and the cut to 77, while still
-       carrying var(--pad) so the left end runs off the screen. */
-    /* Anchored from the top now that DISCO FORMAL leads. The wash is
-       z-index 3 and this is 2, so the half of the image carrying the cut is
-       simply covered by the paper: the top is set so that half lands between
-       the bottom of the words and the bottom of the sheet, and only the
-       flowing end comes out below it. Measured off the wash, so re-measure
-       if its copy or type size ever changes. */
-    /* The phone does not tuck the wave, it drops it. Turned a quarter and
-       blown up past the width of the screen it reads as a cascade running
-       down the back of the stack, and at z-index 0 it is behind all three
-       sheets and behind the stars, so the only places it shows are the gaps
-       between the notes and the margins beside them. Nothing has to hide
-       its cut ends any more because both of them are off the block.
-       Laid out at 300 percent it is 1017 wide and 758 tall; the quarter turn
-       swaps those, so it stands 1017 tall, and its centre sits at 379 down,
-       which puts it over the block from -129 to 888. The block clips, which
-       is what stops 758 pixels of width scrolling the page sideways. */
+    .dsp--ball{left:auto;right:0;top:0;width:31%}
+    /* The quarter turned cascade is gone. Bianca's note on it was that it
+       looked bad, and that the phone should read like the desktop, so this
+       is the desktop treatment solved for a screen with no side gutter to
+       hide a cut edge in.
+       The cut is the image's right hand edge, solid for its top 41 percent.
+       Desktop buries it under the pink wash. There is no room to do that
+       here, so the picture is mirrored instead: scaleX(-1) sends the cut to
+       the left hand end, and the left hand end is the one hanging off the
+       screen. What is left pointing into the block is the image's own left
+       edge, which is a thin flowing tail and not a cut at all.
+       The width carries var(--pad) for the same reason it does on desktop:
+       the block stops at the page gutter and the wash has to reach past it.
+       The block still clips, as a guard. Nothing reaches the right edge.
+       Seated at 26 percent of the block so the wash crosses the seam between
+       DISCO FORMAL and the note under it: a percentage and not the 62px it
+       started as, because the stack's own height moves with the screen.
+       What shows of it is the 31px strip down the left of the block, outside
+       the notes, which after the mirror is the paint right beside the cut,
+       solid and running to the edge of the screen. The rest is behind the
+       paper, which is where the desktop keeps it too. */
     .dress{overflow:hidden}
-    .dsp--wave{left:50%;right:auto;top:0;bottom:auto;width:300%;
-      max-width:none;
-      transform:translateX(-50%) rotate(90deg);z-index:0}
-    .dsp--stars{left:auto;right:-2%;top:auto;bottom:6%;width:30%}
+    .dsp--wave{left:calc(-1 * (var(--pad) + 2px));right:auto;
+      top:26%;bottom:auto;
+      width:calc(100% + var(--pad) + 2px);max-width:none;
+      transform:scaleX(-1);z-index:0}
+    .dsp--stars{left:auto;right:0;top:auto;bottom:6%;width:30%}
     .expect--lg{letter-spacing:.08em}
     .ch--6{left:10%;top:75%}
     .ch--10{left:86%;top:8%}
@@ -1080,9 +1145,12 @@
       padding:150px 0 126px}
     .doily__lines{position:static;transform:none}
     .doily__img{left:50%;top:50%;width:94%}
-    .dcor--cluster{left:-2%;top:0;width:27%}
-    .dcor--burst{left:auto;right:-11%;top:1%;width:40%}
-    .dcor--spark{left:auto;right:-8%;top:auto;bottom:0;width:34%}
+    /* Seated against the inside of each edge rather than hanging off it:
+       no cut off stars on the phone either. They keep their sizes, so this
+       is a move and not a shrink. */
+    .dcor--cluster{left:0;top:0;width:27%}
+    .dcor--burst{left:auto;right:0;top:1%;width:40%}
+    .dcor--spark{left:auto;right:0;top:auto;bottom:0;width:34%}
     .ch--9{left:38%;top:3%}
   }
 
@@ -1339,7 +1407,7 @@
   <section class="s">
     <div class="sheet sheet--when">
       <div class="charms" aria-hidden="true"><i class="ch ch--4"></i><i class="ch ch--5"></i></div>
-      <h2 class="expect">party details</h2>
+      <h2 class="expect expect--lg">party details</h2>
       <p class="when">Saturday, December 12<br>8:30pm to 11:30pm<br>Index Greenpoint</p>
     </div>
   </section>
@@ -1347,7 +1415,7 @@
   <!-- ---------- the cover ---------- -->
   <section class="s">
     <div class="sheet">
-      <h2 class="expect">cover details</h2>
+      <h2 class="expect expect--lg">cover details</h2>
 
       <p class="noent"><span>No donation, no entry.</span></p>
 
@@ -1386,7 +1454,7 @@
         <p class="give__cta">click to learn more!</p>
 
         <div class="give__card">
-          <img class="give__p" src="../assets/img/1212/note-stars-cream.webp" alt="" aria-hidden="true">
+          <img class="give__p give__p--turn" src="../assets/img/1212/note-stars-cream.webp" alt="" aria-hidden="true">
           <p>Stepping into next year committed to giving back.
              <b>That's hot.</b></p>
         </div>
@@ -1397,7 +1465,7 @@
   <!-- ---------- dress code ---------- -->
   <section class="s">
     <div class="sheet">
-      <h2 class="expect expect--lg">Dress code</h2>
+      <h2 class="expect expect--lg">dress code</h2>
 
       <!-- Built to Bianca's collage. Two sheets of real paper, both lying on
            their long side, both turned rather than cropped so their torn and
@@ -1488,7 +1556,7 @@
   <!-- ---------- what to expect ---------- -->
   <section class="s">
     <div class="sheet">
-      <h2 class="expect expect--lg">What to expect</h2>
+      <h2 class="expect expect--lg">what to expect</h2>
 
       <div class="doily">
         <div class="charms" aria-hidden="true"><i class="ch ch--9"></i><i class="ch ch--11"></i></div>
